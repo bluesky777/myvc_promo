@@ -56,4 +56,9 @@ export const CONTACTO: { etiqueta: string; valor: string | null }[] = [
 	{ etiqueta: 'Correo', valor: 'admin@micolevirtual.com' },
 ];
 
-export const CIERRE_REMATE = 'Una demostración en su colegio, sin compromiso';
+/**
+ * LA ÚLTIMA FRASE DEL VÍDEO, y por eso no es comercial. «Educar para la eternidad» es la forma en
+ * que la educación adventista se nombra a sí misma; dicha aquí, el vídeo no termina pidiendo una
+ * reunión, termina en el terreno común. Pedido por él el 2026-09-04: nada de «sin compromiso».
+ */
+export const CIERRE_REMATE = 'Los esperamos, para educar juntos para la eternidad';

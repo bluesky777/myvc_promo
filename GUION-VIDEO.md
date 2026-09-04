@@ -186,7 +186,7 @@ En pantalla, con la piel del portal: **«Lo que la Unión recibe.»**
 
 ## 8 · CIERRE — 6 s
 
-> Una demostración en su colegio, sin compromiso.
+> Los esperamos, para educar juntos para la eternidad.
 
 `micolevirtual.com` · `admin@micolevirtual.com`
 
