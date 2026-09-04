@@ -191,23 +191,3 @@ En pantalla, con la piel del portal: **«Lo que la Unión recibe.»**
 `micolevirtual.com` · `admin@micolevirtual.com`
 
 ---
-
-## Lo que este guion no dice, y por qué
-
-- **Ningún número de colegios.** En los documentos conviven «dieciséis colegios de MyVc» y «trece en
-  territorio UCN». Una cifra equivocada delante de la propia Unión se lleva por delante la
-  credibilidad de todo lo demás. Si se quiere decir, hay que contarlos primero.
-- **Ninguna cifra del portal como medición.** Las que salen en los clips son de muestra. La única
-  real es la que declara la propia UCN: más de 8.500 alumnos en 20 colegios y 11 escuelas primarias.
-- **«En tiempo real», nunca.** El portal es una foto por noche.
-- **La lista de las 19 instituciones sin el sistema, tampoco.** Eso es de la reunión: en el vídeo
-  suena a que les vendes a sus colegios por encima de ellos.
-- **No se nombra a ningún competidor.** «Van a ver más de una oferta» sitúa la comparación sin darle
-  publicidad a nadie ni obligarte a defender lo que digas de un tercero.
-
-## Erratas corregidas de tu texto
-
-Sólo las que cambian el sentido o se oyen al leerlas en alto: «No especializamos» → «Nos
-especializamos»; «advestista» → «adventista»; «detemos» → «tenemos»; «adminnistradores» →
-«administradores»; «incluído» → «incluido»; «múltiples», «etcétera». Si alguna la querías así, se
-vuelve atrás en un segundo.
