@@ -17,7 +17,22 @@ import { CON_ROTULO, ESCALA, PANTALLA, RAYA2, SANS, SERIF, TINTA, TINTA2 } from 
  * el borde. Sobre este tono se le ve el canto y la sombra lo despega de la mesa.
  */
 
-export const FONDO = '#E4DCCB';
+/*
+ * EL FONDO: MISMA SUPERFICIE QUE LOS CLIPS DE MyVC, OTRO COLOR.
+ *
+ * Los clips de la aplicación usan `radial-gradient(circle at 50% 34%, …)` en gris frío. Éstos usan
+ * **la misma geometría** --mismo centro, mismas paradas-- en cálido, y la diferencia es deliberada:
+ *
+ *   · EL TONO CUENTA ALGO: el portal es papel crema y sobre un fondo frío se le pierde el canto.
+ *     Que cambie el color al pasar de una sección a otra se lee como «otro producto», que es verdad.
+ *   · EL TRATAMIENTO NO CUENTA NADA: plano contra degradado no dice «otro producto», dice «otro
+ *     montador». Aquí era plano y, con los diez clips en un mismo vídeo, ese salto de superficie se
+ *     veía en el corte aunque cada clip por separado estuviera bien.
+ *
+ * Decisión de Joseth, 3 sep 2026: los diez van en un solo vídeo. Si algún día el portal vuelve a ser
+ * un vídeo aparte, esto puede volver a ser plano sin que se note en ningún corte.
+ */
+export const FONDO = 'radial-gradient(circle at 50% 34%, #F2EADA 0%, #E6DDC9 62%, #D8CDB5 100%)';
 
 export const Lienzo: React.FC<{ conRotulo: boolean; children: React.ReactNode }> = ({ conRotulo, children }) => {
 	cargarFuentes();
