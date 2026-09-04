@@ -61,22 +61,38 @@ export const PASO_OPCION = 9;
 export const CURSOR_PUBLICAR = 262;
 export const CLIC_PUBLICAR = 286;
 
-/* ── 5: el teléfono ───────────────────────────────────────────────────────────────────────── */
+/* ── 5: el teléfono, y el aviso que se sale de él ─────────────────────────────────────────── */
 
-/** Sube en cuanto se pulsa: la gracia es que las dos cosas pasen a la vez, no una después de otra. */
+/**
+ * EL TELÉFONO SUBE EN CUANTO SE PULSA. La gracia es que las dos cosas pasen a la vez, no una
+ * después de otra. Entra deslizando desde abajo y **sale de cuadro por abajo**: se enseña grande y
+ * cortado, porque lo que hay que leer está en su mitad de arriba y un móvil entero, a la escala a la
+ * que cabe en un 16:9, no se lee.
+ */
 export const MOVIL = 292;
-export const PUSH = 316;
-export const DEDO = 348;
-export const TOCA_PUSH = 366;
+
+/** El aviso cae en la bandeja, encima de lo que el docente estuviera mirando. */
+export const PUSH = 322;
+/** Y entonces se despega y crece por delante del portal, que es donde se puede leer. */
+export const PUSH_SALE = 340;
+export const PUSH_FUERA = 366;
+
+export const DEDO = 376;
+export const TOCA_PUSH = 394;
+/** Al tocarlo vuelve a su sitio: lo grande y lo pequeño son la misma notificación. */
+export const PUSH_VUELVE = 398;
+export const PUSH_DENTRO = 418;
+
 /** La pantalla del evento entra deslizando desde la derecha, como navega un teléfono. */
-export const EVENTO = 374;
-export const EVENTO_FILAS = 388;
+export const EVENTO = 410;
+export const EVENTO_FILAS = 424;
 
 /* ── 6: confirma, y el portal se entera ───────────────────────────────────────────────────── */
 
-export const DEDO_CONFIRMA = 418;
-export const TOCA_CONFIRMA = 436;
-export const CONFIRMADO = 442;
+export const DEDO_CONFIRMA = 462;
+export const TOCA_CONFIRMA = 480;
+export const CONFIRMADO = 486;
+
 /**
  * EL REMATE. El teléfono se retira y detrás queda la tarjeta del portal con el evento recién
  * publicado, en verde y con la cuenta ya movida. **El teléfono se va antes a propósito**: con él
@@ -85,7 +101,7 @@ export const CONFIRMADO = 442;
  * Entre confirmar y esto hay treinta fotogramas de teléfono quieto, y no sobran: es el tiempo de
  * leer «Asistencia confirmada» y el 251. Un botón que cambia y desaparece no se ha visto.
  */
-export const PORTAL_SUMA = 482;
+export const PORTAL_SUMA = 528;
 
-export const SALIDA = 522;
-export const DURACION = 568;
+export const SALIDA = 568;
+export const DURACION = 614;

@@ -67,8 +67,16 @@ export const PANTALLA = { ancho: 1440, alto: 812 };
 /** Cuánto se agranda la pantalla dentro del fotograma. Uno solo para los seis. */
 export const ESCALA = 1.28;
 
-/** Con rótulo abajo, la pantalla se encoge para dejarle sitio. Igual que en el resto de la casa. */
-export const CON_ROTULO = 0.9;
+/*
+ * CON RÓTULO ABAJO, LA PANTALLA SE ENCOGE PARA DEJARLE SITIO. El número no es una preferencia, es
+ * una cuenta: la pantalla mide 812 × 1,28 = 1.039 de alto, el rótulo ocupa unos 150 y hacen falta
+ * márgenes arriba y abajo. 1.039 × 0,84 = 873, que deja 45 px limpios entre el borde de la pantalla
+ * y el titular.
+ *
+ * ESTABA EN 0,9 Y EL TEXTO SE MONTABA ENCIMA DE LA PANTALLA. No daba ningún error: salía en el MP4
+ * y sólo se veía mirando un fotograma. Es la cuarta vez que pasa algo así en este proyecto.
+ */
+export const CON_ROTULO = 0.84;
 
 /** El rail de la izquierda, que es idéntico en las seis pantallas. */
 export const ANCHO_RAIL = 236;

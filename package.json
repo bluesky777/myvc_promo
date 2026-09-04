@@ -18,7 +18,20 @@
     "horarios": "remotion render Horarios out/sin-rotulo/horarios.mp4",
     "horarios-rotulo": "remotion render Horarios-Rotulo out/horarios-rotulo.mp4",
     "movil": "remotion render Movil out/sin-rotulo/movil.mp4",
-    "movil-rotulo": "remotion render Movil-Rotulo out/movil-rotulo.mp4"
+    "movil-rotulo": "remotion render Movil-Rotulo out/movil-rotulo.mp4",
+    "ucn-comunicados": "remotion render UCN-Comunicados out/sin-rotulo/ucn-comunicados.mp4",
+    "ucn-comunicados-rotulo": "remotion render UCN-Comunicados-Rotulo out/ucn-comunicados-rotulo.mp4",
+    "ucn-encuestas": "remotion render UCN-Encuestas out/sin-rotulo/ucn-encuestas.mp4",
+    "ucn-encuestas-rotulo": "remotion render UCN-Encuestas-Rotulo out/ucn-encuestas-rotulo.mp4",
+    "ucn-salud": "remotion render UCN-Salud-Escolar out/sin-rotulo/ucn-salud-escolar.mp4",
+    "ucn-salud-rotulo": "remotion render UCN-Salud-Escolar-Rotulo out/ucn-salud-escolar-rotulo.mp4",
+    "ucn-comparador": "remotion render UCN-Comparador out/sin-rotulo/ucn-comparador.mp4",
+    "ucn-comparador-rotulo": "remotion render UCN-Comparador-Rotulo out/ucn-comparador-rotulo.mp4",
+    "ucn-metas": "remotion render UCN-Metas out/sin-rotulo/ucn-metas.mp4",
+    "ucn-metas-rotulo": "remotion render UCN-Metas-Rotulo out/ucn-metas-rotulo.mp4",
+    "ucn-misional": "remotion render UCN-Misional out/sin-rotulo/ucn-misional.mp4",
+    "ucn-misional-rotulo": "remotion render UCN-Misional-Rotulo out/ucn-misional-rotulo.mp4",
+    "todo-ucn": "npm run ucn-comunicados && npm run ucn-comunicados-rotulo && npm run ucn-encuestas && npm run ucn-encuestas-rotulo && npm run ucn-salud && npm run ucn-salud-rotulo && npm run ucn-comparador && npm run ucn-comparador-rotulo && npm run ucn-metas && npm run ucn-metas-rotulo && npm run ucn-misional && npm run ucn-misional-rotulo"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",

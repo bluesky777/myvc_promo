@@ -62,6 +62,17 @@ export const Muestra: React.FC<{ color: string; children: React.ReactNode; redon
 	</div>
 );
 
+/**
+ * Punto de millar siempre, también en los cuatro dígitos: el portal escribe «3.716» y no «3716».
+ * Es la misma función que `graficos.tsx`, y está repetida a propósito para que ninguno de los dos
+ * ficheros dependa del otro por una línea.
+ */
+function agrupar(v: number, decimales: number): string {
+	const partes = v.toLocaleString('es-ES', { minimumFractionDigits: decimales, maximumFractionDigits: decimales, useGrouping: false }).split(',');
+	partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+	return partes.join(',');
+}
+
 /*
  * UNA CIFRA QUE SUBE. **No es un adorno**: una cifra que aparece ya puesta se lee como un rótulo,
  * y una que sube se lee como una medición. En un portal cuya gracia es decir «subió o bajó», esa
@@ -79,7 +90,7 @@ export const Cifra: React.FC<{
 	color?: string;
 }> = ({ valor, t, decimales = 0, sufijo = '', tam = 36, color = TINTA }) => {
 	const v = valor * interpolate(t, [0, 1], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-	const texto = v.toLocaleString('es-ES', { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
+	const texto = agrupar(v, decimales);
 	return (
 		<span
 			style={{

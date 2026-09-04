@@ -63,7 +63,7 @@ export const CATALOGO: Record<string, Ficha> = {
 	REL: { materia: 'REL', docente: 'A. Mejía', tono: 275, icono: 'religion' },
 	SOC: { materia: 'SOC', docente: 'C. Lozano', tono: 45, icono: 'sociales' },
 	NAT: { materia: 'NAT', docente: 'D. Cardona', tono: 110, icono: 'naturales' },
-	EDF: { materia: 'EDF', docente: 'R. Bermúdez', tono: 320, icono: 'deporte' },
+	EDF: { materia: 'EDF', docente: 'R. Vásquez', tono: 320, icono: 'deporte' },
 	ART: { materia: 'ART', docente: 'L. Salazar', tono: 340, icono: 'artistica' },
 	QUI: { materia: 'QUI', docente: 'V. Torres', tono: 185, icono: 'quimica' },
 	TEC: { materia: 'TEC', docente: 'N. Gómez', tono: 250, icono: 'tecnologia' },

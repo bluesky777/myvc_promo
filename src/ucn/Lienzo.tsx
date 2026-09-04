@@ -21,28 +21,42 @@ export const FONDO = '#E4DCCB';
 
 export const Lienzo: React.FC<{ conRotulo: boolean; children: React.ReactNode }> = ({ conRotulo, children }) => {
 	cargarFuentes();
+	return (
+		<AbsoluteFill style={{ background: FONDO, fontFamily: SANS, color: TINTA }}>{children}</AbsoluteFill>
+	);
+};
 
+/**
+ * LA PANTALLA DEL PORTAL DENTRO DEL FOTOGRAMA.
+ *
+ * **Va aparte del `Lienzo` a propósito, y esto costó un render entero.** Al principio el lienzo
+ * envolvía a todos sus hijos en esta caja escalada, y el rótulo, que también es hijo suyo, se
+ * escalaba con ella y acababa **impreso por encima de la pantalla**. No dio ningún error: salió en
+ * el MP4 y sólo se vio sacándole un fotograma al fichero ya renderizado.
+ *
+ * Ahora la caja escalada envuelve **sólo** a la pantalla; el rótulo es hermano suyo y vive en el
+ * fotograma, que es donde le toca.
+ */
+export const Pantalla: React.FC<{ conRotulo: boolean; children: React.ReactNode }> = ({ conRotulo, children }) => {
 	const escala = ESCALA * (conRotulo ? CON_ROTULO : 1);
 
 	return (
-		<AbsoluteFill style={{ background: FONDO, fontFamily: SANS, color: TINTA }}>
-			<AbsoluteFill style={{ alignItems: 'center', justifyContent: conRotulo ? 'flex-start' : 'center', paddingTop: conRotulo ? 42 : 0 }}>
-				<div
-					style={{
-						width: PANTALLA.ancho,
-						height: PANTALLA.alto,
-						transform: `scale(${escala})`,
-						transformOrigin: conRotulo ? 'top center' : 'center center',
-						borderRadius: 10,
-						overflow: 'hidden',
-						border: `1px solid ${RAYA2}`,
-						boxShadow: '0 30px 70px rgba(30,29,25,.22), 0 4px 14px rgba(30,29,25,.10)',
-						position: 'relative',
-					}}
-				>
-					{children}
-				</div>
-			</AbsoluteFill>
+		<AbsoluteFill style={{ alignItems: 'center', justifyContent: conRotulo ? 'flex-start' : 'center', paddingTop: conRotulo ? 26 : 0 }}>
+			<div
+				style={{
+					width: PANTALLA.ancho,
+					height: PANTALLA.alto,
+					transform: `scale(${escala})`,
+					transformOrigin: conRotulo ? 'top center' : 'center center',
+					borderRadius: 10,
+					overflow: 'hidden',
+					border: `1px solid ${RAYA2}`,
+					boxShadow: '0 30px 70px rgba(30,29,25,.22), 0 4px 14px rgba(30,29,25,.10)',
+					position: 'relative',
+				}}
+			>
+				{children}
+			</div>
 		</AbsoluteFill>
 	);
 };

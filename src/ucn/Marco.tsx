@@ -177,8 +177,21 @@ export const Marco: React.FC<{
 	pie?: [string, string];
 	desde?: number;
 	alto?: number;
+	/** Un velo oscuro sobre TODA la pantalla, de 0 a 1. Para cuando algo pasa por delante. */
+	velo?: number;
+	/**
+	 * SIN EL RAIL DE LA IZQUIERDA. Para las pantallas que en el vídeo tienen que llenar el ancho:
+	 * un menú de veinte apartados que no se va a usar en el clip son 236 píxeles de la franja
+	 * gastados en algo que ya se enseñó en los clips anteriores.
+	 */
+	sinRail?: boolean;
+	/**
+	 * LO QUE VA POR DELANTE DEL VELO, en coordenadas de la pantalla entera (1440 × 812) y no de la
+	 * columna de contenido. Aquí va el teléfono: tiene que poder cruzar el rail y quedar encima.
+	 */
+	encima?: React.ReactNode;
 	children: React.ReactNode;
-}> = ({ activo, overline, titulo, sub, acciones, pie, desde = 0, alto = PANTALLA.alto, children }) => {
+}> = ({ activo, overline, titulo, sub, acciones, pie, desde = 0, alto = PANTALLA.alto, velo = 0, sinRail = false, encima, children }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 
@@ -187,10 +200,10 @@ export const Marco: React.FC<{
 	const cursor = escribiendo(frame, titulo, desde + 10, 1.6);
 
 	return (
-		<div style={{ width: PANTALLA.ancho, height: alto, display: 'flex', background: PAPEL, fontFamily: SANS, color: TINTA, overflow: 'hidden' }}>
-			<Rail activo={activo} desde={desde} />
+		<div style={{ position: 'relative', width: PANTALLA.ancho, height: alto, display: 'flex', background: PAPEL, fontFamily: SANS, color: TINTA, overflow: 'hidden' }}>
+			{sinRail ? null : <Rail activo={activo} desde={desde} />}
 
-			<div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 22, padding: '30px 40px 20px', minWidth: 0, position: 'relative' }}>
+			<div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 22, padding: sinRail ? '30px 56px 20px' : '30px 40px 20px', minWidth: 0, position: 'relative' }}>
 				<div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 32, opacity: tCab }}>
 					<div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
 						<Over>{overline}</Over>
@@ -219,6 +232,12 @@ export const Marco: React.FC<{
 					</div>
 				) : null}
 			</div>
+
+			{/* El velo. Atenúa la pantalla entera --rail incluido-- sin tocar lo que va por delante. */}
+			{velo > 0.001 ? (
+				<div style={{ position: 'absolute', inset: 0, background: `rgba(24,22,18,${velo * 0.52})`, zIndex: 20, pointerEvents: 'none' }} />
+			) : null}
+			{encima ? <div style={{ position: 'absolute', inset: 0, zIndex: 30 }}>{encima}</div> : null}
 		</div>
 	);
 };

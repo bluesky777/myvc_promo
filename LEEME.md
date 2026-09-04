@@ -138,6 +138,40 @@ El combinado **no es pegar los dos primeros**: los dos sueltos empiezan cada uno
 pantalla, así que pegados se vería la planilla construirse dos veces. En el combinado se monta una
 vez, se usa, y cuando el aviso del lote se va vuelve el puntero y aparece «Calificar con rúbrica».
 
+## Los clips del portal de la UCN
+
+Son de **otro producto y de otro vídeo**: el portal nacional de la Unión Colombiana del Norte, cuyo diseño vive en `~/DESARROLLOS/myvc_ucn`. Viven en `src/ucn/` y no comparten nada con los de MyVC salvo `comunes/` y el aparato del teléfono.
+
+| clip | qué cuenta | dura |
+|---|---|---|
+| **UCN-Comunicados** | se escribe un evento, se pulsa publicar y está en el teléfono de 401 personas; el docente confirma y el portal lo cuenta | 18,9 s |
+| **UCN-Encuestas** | una respuesta abre unas preguntas y la otra abre otras distintas, encadenadas; al publicar, el aviso con su fecha | 19,0 s |
+| **UCN-Salud-Escolar** | once mil atenciones al año, y el brote de fiebre que un colegio solo no puede ver | 14,3 s |
+| **UCN-Comparador** | cada colegio contra los otros doce, sin ver el nombre de ninguno | 12,8 s |
+| **UCN-Metas** | seis metas en una sola escala, y por qué un 96 % pinta en rojo | 13,1 s |
+| **UCN-Misional** | ocho años de bautismos y la proporción por campo | 12,1 s |
+
+`npm run todo-ucn` los renderiza los doce. `todo` sigue siendo sólo el vídeo de MyVC.
+
+**Dónde se toca cada cosa**
+
+| lo que quieras cambiar | dónde |
+|---|---|
+| los colores y el tamaño del portal en el fotograma | `src/ucn/tema.ts` |
+| el cromo del portal (rail y cabecera) | `src/ucn/Marco.tsx` |
+| las piezas repetidas: tarjeta, cifra, píldora, barra, aviso | `src/ucn/piezas.tsx` |
+| los cuatro gráficos | `src/ucn/graficos.tsx` |
+| el teléfono flotante y el aviso | `src/ucn/Movil.tsx` |
+| el fondo, el encuadre y el rótulo | `src/ucn/Lienzo.tsx` |
+| las cifras y los textos de un clip | `src/ucn/<clip>/datos.ts` |
+| el ritmo de un clip | `src/ucn/<clip>/guion.ts` |
+
+**Tres cosas que conviene saber**
+
+- **La escala de estos seis NO está en `comunes/encuadre.ts`**, está en `src/ucn/tema.ts`. El portal es otro producto con otro ancho de diseño (1440), y meterlo allí haría que tocar el portal moviera de tamaño los clips de la aplicación. Lo que ese fichero protege se cumple igual: los seis comparten una sola escala entre ellos.
+- **El teléfono es el de `src/movil/Telefono.tsx`**, con su barra morada de `myvc_flutter`, aunque las maquetas del portal dibujen uno crema. Si el mismo teléfono cambiara de aspecto entre dos clips del mismo vídeo, se leería como dos aplicaciones — y lo que el clip afirma es justo lo contrario: al docente le llega dentro de la app que ya usa.
+- **Las cifras que salen son de muestra**, coherentes entre sí pero no medidas. Están en `myvc_ucn/docs/04-guion-video.md` con ese aviso; ninguna debe citarse como medición.
+
 ## Qué enseña el clip de disciplina
 
 Cuatro momentos encadenados, sin un solo corte seco:
@@ -176,6 +210,27 @@ fíe.
 4. **El informe.** El horario del grupo tal como sale de la impresora, con el dibujo de cada materia.
    Los iconos son **los del programa, copiados de `icono-materia.html`** (`src/horarios/iconos.ts`),
    no unos parecidos: el informe con dibujos es justo lo que este clip vende.
+
+### La copia de los iconos: cuándo caduca y cómo se comprueba
+
+Es la única dependencia de este proyecto que puede **caducar en silencio**: si en `myvc_horarios`
+cambian los dibujos, el clip sigue renderizando igual de bien un informe que ya no existe. Nada se
+pone rojo, porque un vídeo no compila contra nada.
+
+**Comprobado el 2026-09-03: los 12 copiados son idénticos a los del programa.** Comparados trazo a
+trazo —los 16 `@case` del `icono-materia.html` contra las 12 cadenas de `iconos.ts`, con los
+espacios normalizados y comparando `fill`, `stroke`, `stroke-width` y opacidades enteros—: 12
+idénticos, 0 distintos. La copia todavía no miente.
+
+Los cuatro que faltan --`biologia`, `civica`, `economia`, `filosofia`-- **nunca se copiaron**, no es
+que envejecieran. Hoy eso no se ve: los iconos sólo los usa el informe, que pinta las diez materias
+del catálogo del grupo, y las diez están entre las copiadas. `FIL` y `ECO` salen sólo como fichas de
+la bandeja, y la bandeja no dibuja iconos. **Si alguien mete una de esas cuatro en el catálogo del
+clip, saldrá un hueco sin dar ningún error** — hay que copiar el dibujo que falte.
+
+Cómo se vuelve a comprobar: sacar los `@case` del HTML y las cadenas del `.ts`, normalizar espacios
+y comparar cadena contra cadena. En minuto y medio se sabe. `myvc-horarios-21` quedó en avisar aquí
+si alguien toca esos doce dibujos, y eso está en su reparto, no en la memoria de una sesión.
 
 ## Qué enseña el clip del móvil
 

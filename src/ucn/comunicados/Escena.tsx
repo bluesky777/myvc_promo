@@ -4,9 +4,9 @@ import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } fr
 import { Cursor } from '../../comunes/Cursor';
 import { Toque } from '../../comunes/Toque';
 import { entra, escribiendo, escrito, llega, seVa } from '../../comunes/movimiento';
-import { Lienzo, Rotulo } from '../Lienzo';
+import { Lienzo, Pantalla, Rotulo } from '../Lienzo';
 import { AccionesPorDefecto, Marco } from '../Marco';
-import { AppDocente, MovilFlotante, Push } from '../Movil';
+import { AppDocente, AvisoQueSale, MovilFlotante } from '../Movil';
 import { Aviso, Barra, Boton, Chip, Num, Over, Pildora, Tarjeta } from '../piezas';
 import {
 	AZUL, AZUL_SUAVE, MONO, NARANJA, OCRE, PAPEL, RAYA, RAYA2, RELLENO, SERIF, TARJETA, TINTA,
@@ -17,8 +17,9 @@ import {
 	CLIC_COLEGIOS, CLIC_COORDINADORES, CLIC_DOCENTES, CLIC_PUBLICAR, CLIC_RECTORES, CLIC_TIPO,
 	COLUMNA_DERECHA, CONFIRMADO, CUANDO, CUENTA, CURSOR_ENTRA, CURSOR_PUBLICAR, DEDO,
 	DEDO_CONFIRMA, DESTINO_ROTULO, DONDE, EVENTO as EVENTO_ENTRA, EVENTO_FILAS, MARCO, MOVIL,
-	OPCIONES as OPCIONES_ENTRAN, PASO_OPCION, PORTAL_SUMA, PUSH as PUSH_BAJA, SALIDA,
-	TARJETA_COMPOSITOR, TITULO, TOCA_CONFIRMA, TOCA_PUSH, POR_TECLA,
+	OPCIONES as OPCIONES_ENTRAN, PASO_OPCION, PORTAL_SUMA, PUSH, PUSH_DENTRO, PUSH_FUERA,
+	PUSH_SALE, PUSH_VUELVE, SALIDA, TARJETA_COMPOSITOR, TITULO, TOCA_CONFIRMA, TOCA_PUSH,
+	POR_TECLA,
 } from './guion';
 
 /*
@@ -66,6 +67,32 @@ const Y_FILAS_OP = Y_OPCIONES + 20, H_OP = 42;
 const Y_BOTONES = Y_FILAS_OP + H_OP * OPCIONES.length + 14, H_BOTON = 42;
 
 const DERECHA_X = CARD + 24;
+
+/*
+ * ═══════════════════════════════════════════════════════════════════════════════════════════════
+ * EL TELÉFONO VA EN COORDENADAS DE LA PANTALLA ENTERA (1440 × 812) y no de la columna de contenido,
+ * porque tiene que poder salirse de ella: **se enseña grande y cortado por abajo**. La franja del
+ * portal mide 812 de alto y el teléfono, a esta escala, mide 891: los últimos ochenta píxeles de la
+ * app --que son lista vacía-- se quedan fuera de cuadro, y a cambio el texto de dentro se lee.
+ */
+const COLUMNA_X = 236 + 40;          // el rail, más el margen de la columna
+const MOVIL_X = COLUMNA_X + DERECHA_X;
+const MOVIL_Y = TOP;
+const MOVIL_ESCALA = 0.95;
+
+/** El hueco de la bandeja de avisos dentro del teléfono, ya en coordenadas de la pantalla. */
+const AVISO_DENTRO = {
+	x: MOVIL_X + 27 * MOVIL_ESCALA,
+	y: MOVIL_Y + 75 * MOVIL_ESCALA,
+	escala: MOVIL_ESCALA,
+};
+
+/**
+ * DÓNDE SE PLANTA EL AVISO CUANDO SE DESPEGA: por delante del compositor, que es el sitio que acaba
+ * de quedarse sin nada que mirar --ya está todo escrito y publicado-- y el único hueco donde cabe a
+ * un tamaño en el que la frase se lee de un vistazo.
+ */
+const AVISO_FUERA = { x: COLUMNA_X + 44, y: TOP + 176, escala: 1.62 };
 
 /** Un campo del formulario: su rótulo en versalitas y la caja de papel. */
 const Campo: React.FC<{ etiqueta: string; children: React.ReactNode; select?: boolean; ancho?: number | string; t: number }> = ({
@@ -224,6 +251,7 @@ export const EscenaComunicados: React.FC<{ conRotulo: boolean }> = ({ conRotulo 
 
 	return (
 		<Lienzo conRotulo={conRotulo}>
+			<Pantalla conRotulo={conRotulo}>
 			<div style={{ opacity: 1 - fuera, transform: `scale(${1 - fuera * 0.02})`, transformOrigin: 'center center' }}>
 				<Marco
 					activo="comunicados"
@@ -236,6 +264,59 @@ export const EscenaComunicados: React.FC<{ conRotulo: boolean }> = ({ conRotulo 
 						'El docente lo recibe en la misma app que ya usa para sus notas: no hay que instalar nada nuevo ni repartir otra contraseña.',
 						`${DESTINATARIOS} destinatarios · 6 comunicados este trimestre`,
 					]}
+					encima={
+						<>
+							<MovilFlotante desde={MOVIL} sale={PORTAL_SUMA - 14} x={MOVIL_X} y={MOVIL_Y} escala={MOVIL_ESCALA}>
+								<Reposo />
+								{/*
+								 * LA PANTALLA DEL EVENTO ENTRA DESLIZANDO POR ENCIMA DE LA LISTA, que se queda
+								 * debajo: es cómo navega un teléfono, y dice que se puede volver. Un corte seco
+								 * entre las dos se leería como dos capturas pegadas.
+								 */}
+								{frame >= EVENTO_ENTRA ? (
+									<div
+										style={{
+											position: 'absolute',
+											inset: 0,
+											transform: `translateX(${interpolate(frame, [EVENTO_ENTRA, EVENTO_ENTRA + 14], [100, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic) })}%)`,
+											boxShadow: '-16px 0 40px rgba(15,28,52,.18)',
+										}}
+									>
+										<PantallaEvento frame={frame} fps={fps} />
+									</div>
+								) : null}
+							</MovilFlotante>
+
+							<AvisoQueSale
+								titulo={EVENTO.titulo}
+								cuerpo="Sábado 19 de septiembre, 8:00. Toca para confirmar tu asistencia."
+								origen={AVISO_DENTRO}
+								destino={AVISO_FUERA}
+								cae={PUSH}
+								sale={PUSH_SALE}
+								plantado={PUSH_FUERA}
+								vuelve={PUSH_VUELVE}
+								dentro={PUSH_DENTRO}
+							/>
+
+							{/* El dedo toca el aviso donde está: grande y por delante del portal. */}
+							<Toque
+								puntos={[{ frame: DEDO, x: AVISO_FUERA.x + 300, y: AVISO_FUERA.y + 74 }]}
+								toques={[TOCA_PUSH]}
+								aparece={DEDO}
+								sale={TOCA_PUSH + 10}
+								tam={40}
+							/>
+							{/* Y después, el de confirmar, ya dentro de la app. */}
+							<Toque
+								puntos={[{ frame: DEDO_CONFIRMA, x: MOVIL_X + 212, y: MOVIL_Y + 330 }]}
+								toques={[TOCA_CONFIRMA]}
+								aparece={DEDO_CONFIRMA}
+								sale={TOCA_CONFIRMA + 12}
+								tam={38}
+							/>
+						</>
+					}
 				>
 					<div style={{ position: 'relative', height: 620 }}>
 						{/* ── El compositor ────────────────────────────────────────────────── */}
@@ -367,33 +448,6 @@ export const EscenaComunicados: React.FC<{ conRotulo: boolean }> = ({ conRotulo 
 							</Tarjeta>
 						</div>
 
-						{/* ── El teléfono, por delante de todo ──────────────────────────────── */}
-						<MovilFlotante desde={MOVIL} sale={PORTAL_SUMA - 10} x={DERECHA_X} y={0} escala={0.70}>
-							{frame >= EVENTO_ENTRA ? <PantallaEvento frame={frame} fps={fps} /> : <Reposo />}
-							<Push
-								desde={PUSH_BAJA}
-								sale={EVENTO_ENTRA - 4}
-								titulo={EVENTO.titulo}
-								cuerpo="Sábado 19 de septiembre, 8:00. Toca para confirmar tu asistencia."
-							/>
-						</MovilFlotante>
-
-						{/* El dedo, dentro del teléfono: primero toca el aviso, luego confirma. */}
-						<Toque
-							puntos={[{ frame: DEDO, x: DERECHA_X + 155, y: 104 }, { frame: TOCA_PUSH, x: DERECHA_X + 155, y: 104 }]}
-							toques={[TOCA_PUSH]}
-							aparece={DEDO}
-							sale={TOCA_PUSH + 10}
-							tam={34}
-						/>
-						<Toque
-							puntos={[{ frame: DEDO_CONFIRMA, x: DERECHA_X + 155, y: 243 }, { frame: TOCA_CONFIRMA, x: DERECHA_X + 155, y: 243 }]}
-							toques={[TOCA_CONFIRMA]}
-							aparece={DEDO_CONFIRMA}
-							sale={TOCA_CONFIRMA + 12}
-							tam={34}
-						/>
-
 						{/* El puntero del navegador: elige el tipo, los roles y publica. */}
 						<Cursor
 							color={AZUL}
@@ -414,13 +468,14 @@ export const EscenaComunicados: React.FC<{ conRotulo: boolean }> = ({ conRotulo 
 					</div>
 				</Marco>
 			</div>
+			</Pantalla>
 
 			{conRotulo ? (
 				<Rotulo
 					frases={[
 						{ desde: TITULO + 20, hasta: CLIC_COLEGIOS - 6, titulo: 'Se escribe una vez.', pie: 'Un evento de la Unión, con su fecha y su enlace.' },
-						{ desde: CUENTA + 6, hasta: CLIC_PUBLICAR - 4, titulo: '401 personas, trece colegios.', pie: 'Docentes, rectores y coordinadores. El portal sabe cuántos hay detrás de cada casilla.' },
-						{ desde: PUSH_BAJA + 10, hasta: DEDO_CONFIRMA - 8, titulo: 'Y ya está en su teléfono.', pie: 'Dentro de la misma app que usa para sus notas. Sin instalar nada, sin otra contraseña.' },
+						{ desde: CUENTA + 6, hasta: CLIC_PUBLICAR + 10, titulo: '401 personas, trece colegios.', pie: 'Docentes, rectores y coordinadores. El portal sabe cuántos hay detrás de cada casilla.' },
+						{ desde: PUSH_FUERA + 4, hasta: DEDO_CONFIRMA - 8, titulo: 'Y ya está en su teléfono.', pie: 'Dentro de la misma app que usa para sus notas. Sin instalar nada, sin otra contraseña.' },
 						{ desde: PORTAL_SUMA + 6, hasta: SALIDA, titulo: 'Lo que contesta, vuelve.', pie: 'Confirma desde el aviso y el portal lo cuenta. Un comunicado que no se puede medir no se ha enviado.' },
 					]}
 				/>

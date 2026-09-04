@@ -16,6 +16,16 @@ import { DURACION as DURACION_RUBRICAS } from './rubricas/guion';
 /* ── El portal de la Unión Colombiana del Norte. Otro producto, otro vídeo: `src/ucn/`. ────── */
 import { EscenaComunicados } from './ucn/comunicados/Escena';
 import { DURACION as DURACION_COMUNICADOS } from './ucn/comunicados/guion';
+import { EscenaEncuestas } from './ucn/encuestas/Escena';
+import { DURACION as DURACION_ENCUESTAS } from './ucn/encuestas/guion';
+import { EscenaComparador } from './ucn/comparador/Escena';
+import { DURACION as DURACION_COMPARADOR } from './ucn/comparador/guion';
+import { EscenaMetas } from './ucn/metas/Escena';
+import { DURACION as DURACION_METAS } from './ucn/metas/guion';
+import { EscenaMisional } from './ucn/misional/Escena';
+import { DURACION as DURACION_MISIONAL } from './ucn/misional/guion';
+import { EscenaSalud } from './ucn/salud/Escena';
+import { DURACION as DURACION_SALUD } from './ucn/salud/guion';
 
 /*
  * LOS CLIPS QUE SE PUEDEN RENDERIZAR. Cada uno sale como un fichero suelto para que quien monta el
@@ -147,6 +157,96 @@ export const Root: React.FC = () => (
 			id="UCN-Comunicados-Rotulo"
 			component={EscenaComunicados}
 			durationInFrames={DURACION_COMUNICADOS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		<Composition
+			id="UCN-Encuestas"
+			component={EscenaEncuestas}
+			durationInFrames={DURACION_ENCUESTAS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Encuestas-Rotulo"
+			component={EscenaEncuestas}
+			durationInFrames={DURACION_ENCUESTAS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		<Composition
+			id="UCN-Salud-Escolar"
+			component={EscenaSalud}
+			durationInFrames={DURACION_SALUD}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Salud-Escolar-Rotulo"
+			component={EscenaSalud}
+			durationInFrames={DURACION_SALUD}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		<Composition
+			id="UCN-Comparador"
+			component={EscenaComparador}
+			durationInFrames={DURACION_COMPARADOR}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Comparador-Rotulo"
+			component={EscenaComparador}
+			durationInFrames={DURACION_COMPARADOR}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		<Composition
+			id="UCN-Metas"
+			component={EscenaMetas}
+			durationInFrames={DURACION_METAS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Metas-Rotulo"
+			component={EscenaMetas}
+			durationInFrames={DURACION_METAS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		<Composition
+			id="UCN-Misional"
+			component={EscenaMisional}
+			durationInFrames={DURACION_MISIONAL}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Misional-Rotulo"
+			component={EscenaMisional}
+			durationInFrames={DURACION_MISIONAL}
 			fps={FPS}
 			width={1920}
 			height={1080}

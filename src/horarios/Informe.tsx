@@ -23,6 +23,26 @@ import { LINEA, PAPEL, TENUE, TINTA, fichaFondo, fichaLinea, fichaLetra } from '
  *
  * LOS ICONOS SON LOS DEL PROGRAMA, copiados de `icono-materia.html`: ver `iconos.ts`.
  *
+ * ── LA LICENCIA MÁS GRANDE DE ESTE CLIP, y hay que saberla (2026-09-03) ─────────────────────────
+ *
+ * Aquí el dibujo va a 52 px dentro de una fila de 96: se ve, y es lo que este clip vende. **En la
+ * hoja impresa de verdad ese mismo dibujo está topado a 8 px**, que en papel es una mota
+ * (`horario-grupo.scss`, el hueco de la casilla). No es un descuido de ellos: a 32 px las 13 hojas
+ * salían en 23 páginas, y bajarlo fue lo que devolvió una hoja por grupo con 8,5 mm de holgura.
+ *
+ * El que SÍ se lee en el papel es el otro, el que va **en línea con el nombre de la materia** --ése
+ * no toca el alto de la fila y no cuesta ninguna página--.
+ *
+ * O sea que el tamaño de aquí es una licencia de vídeo permitida --el sitio y el tamaño se mueven
+ * para que se note--, pero roza el límite: lo que el clip AFIRMA de refilón, que el dibujo del
+ * hueco se lee de un vistazo en la pared del salón, hoy sólo es cierto para el icono en línea. Si
+ * se quiere que sea cierto para los dos, no es un tope lo que hay que subir: es que la hoja no
+ * tiene sitio, y eso lo decide Joseth. Decidido eso, este comentario se actualiza o se borra.
+ *
+ * Y la distancia puede agrandarse sola: **el tope de 8 px está medido con 13 grupos y 7 franjas**.
+ * Un colegio de jornada más larga tiene más filas que hacer caber, así que ese número puede tener
+ * que bajar todavía más sin que nadie lo decida.
+ *
  * EL SALÓN SÓLO CUANDO NO ES EL AULA DEL GRUPO: repetir el aula siete veces al día no informa de
  * nada y le quita el sitio al docente.
  */
