@@ -46,13 +46,14 @@ export const TARJETA_PIE = 'Sin tope: se acumula colegio a colegio';
 /* ── EL CIERRE ─────────────────────────────────────────────────────────────────────────────── */
 
 /**
- * PENDIENTE: los datos de contacto. `null` se dibuja como un hueco rayado con su etiqueta, para que
- * quien vea el borrador sepa qué falta y para que **nadie pueda montar el vídeo sin darse cuenta**.
+ * PUESTOS EL 2026-09-04, salidos del guion. **No hay teléfono**, y es una decisión suya: el cierre
+ * lleva sólo la web y el correo. Si algún día hace falta, `valor: null` se dibuja como hueco rayado
+ * en vez de con un número inventado -- un teléfono falso en una tarjeta terminada se cuela en el
+ * montaje y acaba delante de la Unión.
  */
 export const CONTACTO: { etiqueta: string; valor: string | null }[] = [
-	{ etiqueta: 'Teléfono', valor: null },
-	{ etiqueta: 'Correo', valor: null },
-	{ etiqueta: 'Web', valor: null },
+	{ etiqueta: 'Web', valor: 'micolevirtual.com' },
+	{ etiqueta: 'Correo', valor: 'admin@micolevirtual.com' },
 ];
 
 export const CIERRE_REMATE = 'Una demostración en su colegio, sin compromiso';
