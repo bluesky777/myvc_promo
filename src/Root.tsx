@@ -13,6 +13,12 @@ import { DURACION as DURACION_MOVIL } from './movil/guion';
 import { EscenaRubricas } from './rubricas/Escena';
 import { DURACION as DURACION_RUBRICAS } from './rubricas/guion';
 
+/* ── Las piezas de pegamento del vídeo grande: portada, tarjeta y cierre. `src/piezas/`. ───── */
+import { Cierre } from './piezas/Cierre';
+import { Portada } from './piezas/Portada';
+import { Tarjeta } from './piezas/Tarjeta';
+import { DURACION_CIERRE, DURACION_PORTADA, DURACION_TARJETA } from './piezas/guion';
+
 /* ── El portal de la Unión Colombiana del Norte. Otro producto, otro vídeo: `src/ucn/`. ────── */
 import { EscenaComunicados } from './ucn/comunicados/Escena';
 import { DURACION as DURACION_COMUNICADOS } from './ucn/comunicados/guion';
@@ -252,5 +258,12 @@ export const Root: React.FC = () => (
 			height={1080}
 			defaultProps={{ conRotulo: true }}
 		/>
+		{/*
+		  * LAS PIEZAS DE PEGAMENTO. No llevan variante con rótulo: **son texto**, así que el rótulo
+		  * de abajo no tendría nada que explicar. Salen a `out/piezas/`.
+		  */}
+		<Composition id="Portada" component={Portada} durationInFrames={DURACION_PORTADA} fps={FPS} width={1920} height={1080} />
+		<Composition id="Tarjeta" component={Tarjeta} durationInFrames={DURACION_TARJETA} fps={FPS} width={1920} height={1080} />
+		<Composition id="Cierre" component={Cierre} durationInFrames={DURACION_CIERRE} fps={FPS} width={1920} height={1080} />
 	</>
 );

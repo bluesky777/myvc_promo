@@ -253,6 +253,38 @@ dentro** — se ve en la pantalla bloqueada, en el bus, con gente al lado, y la 
 algo que deba aparecer ahí. Un clip que enseñara la nota en el aviso vendería lo contrario de lo que
 el sistema hace bien a propósito.
 
+## Las tres piezas de pegamento del vídeo grande
+
+Portada, tarjeta del descuento y cierre. **No son clips**: no enseñan ninguna pantalla, son el texto
+que une lo demás. Viven en `src/piezas/` y salen a `out/piezas/`.
+
+| pieza | qué dice | dura |
+|---|---|---|
+| **Portada** | el nombre escribiéndose y, debajo, las cuatro palabras que **son el índice** — Notas, Disciplina, Asistencia, Horarios, en el orden en que vienen los clips | 5,5 s |
+| **Tarjeta** | el 30 % **contándose de 0 a 30**, y la condición entera debajo | 6,5 s |
+| **Cierre** | el nombre otra vez y los datos de contacto | 6,0 s |
+
+`npm run todo-piezas` las rehace las tres. **No tienen variante con rótulo** —son texto: un rótulo
+debajo no tendría nada que explicar—, y son la única excepción a la regla de las dos composiciones
+por clip.
+
+**Se mueven con `comunes/movimiento.ts`, igual que los clips**, y llevan el mismo fondo. Es
+deliberado: el corte de la portada al primer clip **no cambia de superficie**, sólo de contenido. Es
+lo que hace que el vídeo se lea como uno y no como piezas pegadas.
+
+**Tres decisiones que están dentro y que no se ven mirando el vídeo:**
+
+- **La portada no lleva ningún número de colegios.** En los documentos de la UCN conviven «los
+  dieciséis colegios de MyVc» y «trece en territorio UCN»; una cifra equivocada en la primera
+  pantalla, delante de la propia Unión, se lleva por delante la credibilidad de todo lo que venga
+  detrás. Las cifras van en los clips del portal, que sí están medidas.
+- **El 30 % es para quien TRAE al colegio**, no para el colegio que entra. Confirmado por él el
+  2026-09-03; las dos lecturas posibles están escritas en `piezas/datos.ts`. Quien cambie ese texto
+  está cambiando la oferta, no la redacción.
+- **Lo que falta se dibuja como hueco rayado**, no con un valor de relleno. Un teléfono inventado en
+  una tarjeta terminada se cuela en el montaje y acaba delante de la Unión; un hueco rayado se ve
+  desde la otra punta de la sala.
+
 ## Fidelidad: qué se copia y qué no
 
 **Los estilos se copian de la aplicación. El sitio y el tamaño, no.** El botón de rúbrica real es un
