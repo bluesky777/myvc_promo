@@ -1,0 +1,11 @@
+# Dependencias: se reinstalan con `npm install`
+node_modules/
+
+# Vídeos e imágenes renderizados: salen del código con `npm run todo`
+out/
+
+# Basura de macOS
+.DS_Store
+
+# Remotion
+.remotion/
