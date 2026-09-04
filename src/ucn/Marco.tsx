@@ -100,8 +100,8 @@ const Rail: React.FC<{ activo: string; desde: number }> = ({ activo, desde }) =>
 				borderRight: `1px solid ${RAYA}`,
 				display: 'flex',
 				flexDirection: 'column',
-				gap: 26,
-				padding: '28px 0 32px',
+				gap: 20,
+				padding: '24px 0 26px',
 				boxSizing: 'border-box',
 			}}
 		>
@@ -119,7 +119,7 @@ const Rail: React.FC<{ activo: string; desde: number }> = ({ activo, desde }) =>
 					const m = llega(frame, fps, i, desde + 4, 1.6, 12);
 					if ('seccion' in e) {
 						return (
-							<div key={e.seccion} style={{ padding: e.seccion === 'Indicadores' ? '0 10px 8px' : '18px 10px 8px', opacity: m.opacidad }}>
+							<div key={e.seccion} style={{ padding: e.seccion === 'Indicadores' ? '0 10px 6px' : '14px 10px 6px', opacity: m.opacidad }}>
 								<Over>{e.seccion}</Over>
 							</div>
 						);
@@ -132,7 +132,7 @@ const Rail: React.FC<{ activo: string; desde: number }> = ({ activo, desde }) =>
 								display: 'flex',
 								alignItems: 'center',
 								gap: 10,
-								padding: '9px 10px',
+								padding: '7px 10px',
 								borderRadius: 5,
 								fontSize: 13,
 								background: on ? TARJETA : 'transparent',

@@ -48,7 +48,7 @@ export const ALUMNOS: AlumnoDisciplina[] = [
 		],
 	},
 	{
-		nombre: 'Bermúdez Ochoa, Juan David',
+		nombre: 'Rojas Valencia, Mateo David',
 		sexo: 'hombre',
 		periodos: [
 			{ uniformes: 1, tardanzas: 0, tipos: [0, 0, 0] },
@@ -147,7 +147,7 @@ export const FICHAS: FichaDeComportamiento[] = [
 		},
 	},
 	{
-		nombre: 'Bermúdez Ochoa, Juan David',
+		nombre: 'Rojas Valencia, Mateo David',
 		sexo: 'hombre',
 		nota: '78',
 		pestanaInicial: 1,

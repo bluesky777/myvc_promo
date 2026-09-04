@@ -52,7 +52,11 @@ export const MovilFlotante: React.FC<{
 		extrapolateRight: 'clamp',
 		easing: Easing.out(Easing.cubic),
 	});
-	const fuera = interpolate(frame, [sale, sale + 16], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+	/* `sale` puede no llegar nunca --el teléfono se queda hasta el final-- y `interpolate` no admite
+	 * infinitos en el rango: por eso la salida se calcula sólo cuando hay una. */
+	const fuera = Number.isFinite(sale)
+		? interpolate(frame, [sale, sale + 16], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
+		: 0;
 	const visible = dentro * (1 - fuera);
 	if (visible <= 0.001) { return null; }
 
@@ -72,9 +76,8 @@ export const MovilFlotante: React.FC<{
 				filter: `drop-shadow(0 26px 60px rgba(30,29,25,${0.26 * visible}))`,
 			}}
 		>
-			<div style={{ transform: `scale(${1 / escala})`, transformOrigin: 'top left' }}>
-				<Telefono>{children}</Telefono>
-			</div>
+			{/* El teléfono se dibuja a su tamaño natural; lo encoge el `scale` de arriba. */}
+			<Telefono>{children}</Telefono>
 		</div>
 	);
 };
@@ -97,7 +100,9 @@ export const Push: React.FC<{
 		extrapolateRight: 'clamp',
 		easing: Easing.out(Easing.back(1.4)),
 	});
-	const fuera = interpolate(frame, [sale, sale + 12], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+	const fuera = Number.isFinite(sale)
+		? interpolate(frame, [sale, sale + 12], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
+		: 0;
 	const visible = Math.min(dentro, 1) * (1 - fuera);
 	if (visible <= 0.001) { return null; }
 

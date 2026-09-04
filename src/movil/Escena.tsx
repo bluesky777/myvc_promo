@@ -29,7 +29,7 @@ import { APAGADO, AUSENCIA, BARRA, BLANCO, ESTADO, FONDO, LINEA, PANTALLA, PRIMA
  *
  * `docs/notificaciones.md` lo dice con todas las letras: una notificación se ve en la pantalla
  * bloqueada, en el bus, con gente al lado, y la nota de un menor no es algo que deba aparecer ahí.
- * El aviso nombra al alumno y el hecho -- «Se registró una ausencia de Juan David hoy» -- y para ver
+ * El aviso nombra al alumno y el hecho -- «Se registró una ausencia de Mateo David hoy» -- y para ver
  * algo más hay que abrir la app y estar identificado. **Un clip que enseñara la nota en el aviso
  * vendería lo contrario de lo que el sistema hace bien.**
  *

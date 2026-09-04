@@ -28,8 +28,8 @@ export interface Hijo {
 }
 
 export const HIJOS: Hijo[] = [
-	{ nombre: 'Bermúdez Ochoa, Juan David', corto: 'Juan David', sexo: 'hombre', grupo: '9°B', parentesco: 'Hijo' },
-	{ nombre: 'Bermúdez Ochoa, Valentina', corto: 'Valentina', sexo: 'mujer', grupo: '5°A', parentesco: 'Hija' },
+	{ nombre: 'Rojas Valencia, Mateo David', corto: 'Mateo David', sexo: 'hombre', grupo: '9°B', parentesco: 'Hijo' },
+	{ nombre: 'Rojas Valencia, Antonella', corto: 'Antonella', sexo: 'mujer', grupo: '5°A', parentesco: 'Hija' },
 ];
 
 /** El que se abre y el del aviso: el mismo, que es lo que hace que la historia se sostenga. */

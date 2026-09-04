@@ -21,7 +21,7 @@ export interface Alumno {
 
 export const ALUMNOS: Alumno[] = [
 	{ nombre: 'Acosta Rivera, Sara Isabel', sexo: 'mujer', notas: [88, 91, 84] },
-	{ nombre: 'Bermúdez Ochoa, Juan David', sexo: 'hombre', notas: [74, null, 71] },
+	{ nombre: 'Rojas Valencia, Mateo David', sexo: 'hombre', notas: [74, null, 71] },
 	{ nombre: 'Cardona Ruiz, Mariana', sexo: 'mujer', notas: [95, 92, 97] },
 	{ nombre: 'Delgado Peña, Samuel', sexo: 'hombre', notas: [69, null, 73] },
 	{ nombre: 'Escobar Lozano, Valentina', sexo: 'mujer', notas: [58, null, 62] },

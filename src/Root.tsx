@@ -13,6 +13,10 @@ import { DURACION as DURACION_MOVIL } from './movil/guion';
 import { EscenaRubricas } from './rubricas/Escena';
 import { DURACION as DURACION_RUBRICAS } from './rubricas/guion';
 
+/* ── El portal de la Unión Colombiana del Norte. Otro producto, otro vídeo: `src/ucn/`. ────── */
+import { EscenaComunicados } from './ucn/comunicados/Escena';
+import { DURACION as DURACION_COMUNICADOS } from './ucn/comunicados/guion';
+
 /*
  * LOS CLIPS QUE SE PUEDEN RENDERIZAR. Cada uno sale como un fichero suelto para que quien monta el
  * vídeo los una: son piezas, no un vídeo terminado.
@@ -124,6 +128,25 @@ export const Root: React.FC = () => (
 			id="Movil-Rotulo"
 			component={EscenaMovil}
 			durationInFrames={DURACION_MOVIL}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		{/* ═══ El portal de la UCN ═══════════════════════════════════════════════════════ */}
+		<Composition
+			id="UCN-Comunicados"
+			component={EscenaComunicados}
+			durationInFrames={DURACION_COMUNICADOS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Comunicados-Rotulo"
+			component={EscenaComunicados}
+			durationInFrames={DURACION_COMUNICADOS}
 			fps={FPS}
 			width={1920}
 			height={1080}

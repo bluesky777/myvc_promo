@@ -74,11 +74,18 @@ export const EVENTO_FILAS = 388;
 
 /* ── 6: confirma, y el portal se entera ───────────────────────────────────────────────────── */
 
-export const DEDO_CONFIRMA = 424;
-export const TOCA_CONFIRMA = 442;
-export const CONFIRMADO = 448;
-/** El contador de la lista del portal, detrás del teléfono, se mueve solo. */
-export const PORTAL_SUMA = 458;
+export const DEDO_CONFIRMA = 418;
+export const TOCA_CONFIRMA = 436;
+export const CONFIRMADO = 442;
+/**
+ * EL REMATE. El teléfono se retira y detrás queda la tarjeta del portal con el evento recién
+ * publicado, en verde y con la cuenta ya movida. **El teléfono se va antes a propósito**: con él
+ * delante, lo que hay que ver al final quedaría tapado justo cuando importa.
+ *
+ * Entre confirmar y esto hay treinta fotogramas de teléfono quieto, y no sobran: es el tiempo de
+ * leer «Asistencia confirmada» y el 251. Un botón que cambia y desaparece no se ha visto.
+ */
+export const PORTAL_SUMA = 482;
 
-export const SALIDA = 496;
-export const DURACION = 540;
+export const SALIDA = 522;
+export const DURACION = 568;
