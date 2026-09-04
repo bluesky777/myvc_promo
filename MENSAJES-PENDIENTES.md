@@ -124,3 +124,30 @@ Tiene que presentarla como **lo que la Unión recibe**, no como algo que ya func
 mantiene cierta la promesa cuando la sección va detrás de los clips de la aplicación, que sí es real.
 Algo del tipo «Lo que la Unión tendrá encima de lo que ya usan sus colegios». Va con la piel del
 portal --papel crema--, no con el azul de MyVC.
+
+---
+
+## Huecos de producción del guion — interno, 2026-09-04
+
+**No van en el guion.** El vídeo es una propuesta y ahí todo se presenta como listo; esto es lo que
+hay que resolver de este lado para que eso sea verdad en pantalla.
+
+Medido contando las palabras de cada bloque a 150 por minuto y comparándolo con la duración real del
+fichero renderizado:
+
+| bloque | voz | clip | hueco |
+|---|---|---|---|
+| 1 · Notas y rúbricas | 24 s | 20 s | faltan 4 s de clip |
+| 2 · Disciplina | 30 s | 27 s | faltan 3 s |
+| 3 · Móvil | 28 s | 19 s | **faltan 9 s** |
+| 6.3 · Comparador | 15 s | 13 s | faltan 2 s |
+| 5 · Rótulo de sección | 6 s | — | **la pieza no existe** |
+| 6.7 · Traslados, QR, SunPlus | 40 s | — | **40 s de voz sin nada que enseñar** |
+
+**El grande es 6.7**: cuarenta segundos hablando de traslados, certificados con QR e integración con
+SunPlus. Las tres tienen pantalla diseñada en el portal (`12`, `13` y `9`) y **ninguna está
+animada**. O se animan tres clips cortos, o esos cuarenta segundos son una pantalla quieta.
+
+Los tres clips que se quedan cortos se arreglan alargando su `guion.ts` y volviendo a renderizar.
+
+**Y el vídeo dura 5:42, que es largo para una reunión.** Si hay que recortar, el primer sitio es 6.7.
