@@ -5,6 +5,7 @@
 	"description": "Animaciones cortas de MyVC para el vídeo promocional. Remotion: el clip se genera desde el código.",
 	"scripts": {
 		"studio": "remotion studio",
+		"tutorial": "remotion render Tutorial out/tutorial-se-acabo-la-nota-por-defecto.mp4 --muted",
 		"notas": "remotion render Notas-Aro out/sin-rotulo/notas-aro.mp4",
 		"notas-rotulo": "remotion render Notas-Aro-Rotulo out/notas-aro-rotulo.mp4",
 		"notas-alfa": "remotion render Notas-Aro out/sin-rotulo/notas-aro.mov --codec=prores --prores-profile=4444 --image-format=png",

@@ -13,6 +13,10 @@ import { DURACION as DURACION_MOVIL } from './movil/guion';
 import { EscenaRubricas } from './rubricas/Escena';
 import { DURACION as DURACION_RUBRICAS } from './rubricas/guion';
 
+/* ── Los tutoriales para el usuario. OTRO PRODUCTO: fotos de la aplicación de verdad con
+ * acercamiento, no dibujos. El porqué, en `src/tutorial/Tutorial.tsx`. ────────────────────── */
+import { FPS as FPS_TUTORIAL, TutorialDesdeDisco, duracionDe, leerGuion } from './tutorial/Tutorial';
+
 /* ── Las piezas de pegamento del vídeo grande: portada, tarjeta y cierre. `src/piezas/`. ───── */
 import { Cierre } from './piezas/Cierre';
 import { Portada } from './piezas/Portada';
@@ -41,6 +45,35 @@ import { DURACION as DURACION_SALUD } from './ucn/salud/guion';
  */
 export const Root: React.FC = () => (
 	<>
+		{/*
+			EL TUTORIAL. La duración NO se escribe aquí: sale de `tomas.json`, que es lo que deja el
+			capturador. Cuántos planos hay y lo que dura cada uno lo decide el guion de
+			`myvc_front/scripts/videos/guiones/`, y tenerlo también aquí sería el mismo dato en dos
+			sitios --y uno de los dos se quedaría viejo--. Por eso va por `calculateMetadata`.
+
+			`npm run tutorial` lo renderiza; si no hay tomas, la composición lo dice en pantalla en vez
+			de romper el estudio.
+		*/}
+		<Composition
+			id="Tutorial"
+			component={TutorialDesdeDisco}
+			durationInFrames={30 * 60}
+			fps={FPS_TUTORIAL}
+			width={1920}
+			height={1080}
+			defaultProps={{ slug: 'se-acabo-la-nota-por-defecto' }}
+			calculateMetadata={async ({ props }) => {
+				try {
+					const guion = await leerGuion(props.slug);
+
+					return { durationInFrames: duracionDe(guion), props: { ...props, guion } };
+				} catch {
+					/* Sin tomas en el disco: se deja la duración por defecto para que el estudio abra y la
+					 * propia composición explique qué comando hay que correr. */
+					return {};
+				}
+			}}
+		/>
 		<Composition
 			id="Notas-Aro"
 			component={Escena}
