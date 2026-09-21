@@ -9,8 +9,3 @@ out/
 
 # Remotion
 .remotion/
-
-# Las tomas del tutorial: PNG a 3200×1800 que saca `myvc_front/scripts/videos/capturar.mjs` contra
-# el docker. Son salida, como `out/`: se regeneran de un comando y pesan. Lo que se conserva es el
-# guion, que vive en el otro repo.
-public/tutoriales/
