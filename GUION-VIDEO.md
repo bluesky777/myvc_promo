@@ -149,37 +149,32 @@ En pantalla, con la piel del portal: **«Lo que la Unión recibe.»**
 > Y con la red conectada aparecen cosas que hoy son imposibles:
 >
 > Un estudiante **se traslada de un colegio a otro de la Unión con su historial completo** — sus
-> notas, su convivencia, sus certificados. Hoy eso es un sobre de papel que a veces no llega.
+> notas, su convivencia, y todos sus datos.
 >
-> **Certificados con código QR**: quien lo reciba comprueba en un segundo que es auténtico.
+> Los **Certificados se podrá validar con código QR**: quien lo reciba comprueba en un segundo que es auténtico.
 >
-> **Integración con los programas que ya usan** — SunPlus y los que hagan falta.
+> **Y nos integraremos con los programas que ya usan** — como SunPlus.
 >
-> Y el portal **se adapta a lo que la Unión pida**. No es un producto cerrado: lo que ustedes
-> decidan medir el año que viene, se mide.
+> Y el portal **se adapta a lo que la Unión pida**. No es un producto cerrado: lo que ustedes razonablemente
+> decidan medir, se medirá.
 
 ---
 
-## 7 · EL TRATO — 38 s  *(reescrito: ya no compite contra «hacerlo ellos», compite contra otras ofertas)*
+## 7 · EL TRATO — 38 s 
 
 *Sobre la tarjeta del 30 %.*
 
-> Van a ver más de una oferta, y todas les van a enseñar notas y boletines. Esa parte la tiene
-> cualquiera. La diferencia está en tres cosas que no vienen en ningún otro sobre.
+> ¿En qué nos diferenciamos?
+> En tres cosas que no vienen en ningún otro sobre.
 >
-> La primera: esto **no se adaptó a un colegio adventista, nació en uno**. El PIAR, el manual de
-> convivencia, los boletines como los pide Colombia, SunPlus. Son **más de quince años** metido en
-> esto, que es otra forma de decir que los errores que un sistema nuevo va a cometer, éste ya los
-> cometió y los corrigió.
+> La primera: esto **no se adaptó a un colegio adventista, nació en uno** y siempre está dispuesto a evolucionar.
 >
-> La segunda: **el programa de horarios va incluido y con licencia.** Eso hoy no lo trae nadie más,
-> y es lo que saca a sus colegios de una ilegalidad que ninguno decidió del todo.
+> La segunda: **el programa de horarios va incluido y con licencia.** Eso hoy no lo trae nadie más, aplicación completa en todas las tiendas móviles.
 >
-> Y la tercera: **el portal es de la Unión.** Ningún proveedor les va a construir la vista nacional
-> de su propia red; les venderán quince instalaciones sueltas.
->
-> No hay que esperar a que se construya: **está listo**. Y el trato es éste: **el 30 % de lo que
-> paguen sus colegios vuelve a la Unión**, y el portal no se cobra — es lo que reciben por hacer
+> Y la tercera: **el portal es de la Unión.** y será su mano derecha.
+> 
+> Si adoptan este ecosistema como el oficial de la UCN, obtendrán **El 30 % de lo que
+> paguen sus colegios**, y el portal administrativo no se cobra — es lo que reciben por hacer
 > suyo el sistema.
 
 ---

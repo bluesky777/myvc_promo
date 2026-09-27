@@ -40,10 +40,10 @@ en el guion de esa sección.
 
 | punto | ya existe | qué falta |
 |---|---|---|
-| 3 · Traslado con historial | **`12` Traslado entre colegios** — está en el núcleo del guion | nada: animarla |
-| 4 · Integración con SunPlus | **`9` Cartera y SunPlus** | nada: animarla |
+| 3 · Traslado con historial | **`12` Traslado entre colegios** — está en el núcleo del guion | **animado**: primer acto de `UCN-Red-Conectada`, en diagrama y no en captura |
+| 4 · Integración con SunPlus | **`9` Cartera y SunPlus** | **animado**: tercer acto de `UCN-Red-Conectada` |
 | 6 · Comparación con la media nacional | **`7` Comparador ciego** — hoy compara a cada colegio **contra los otros doce**, sin ver el nombre de ninguno | **la media nacional no está**: hay que decidir de dónde sale el dato (¿Saber 11 del ICFES?) y si se puede citar |
-| 7 · Certificados con QR | **`13` Certificados con QR** | nada: animarla |
+| 7 · Certificados con QR | **`13` Certificados con QR** | **animado**: segundo acto de `UCN-Red-Conectada` |
 | 1 · App en Play Store y App Store | **`15` la red en el móvil** enseña el móvil usándose | **no dice que se instala desde las tiendas**; es un argumento nuevo |
 | 2 · Modificaciones según lo que pida la Unión | — | es una promesa de servicio, no una pantalla |
 | 5 · Programas piratas de horario | — | es argumento del **clip de horarios**, no del portal |
@@ -88,23 +88,27 @@ ya está funcionando.
 
 ---
 
-## Redacciones propuestas — anotadas el 2026-09-04, SIN aplicar
+## Redacciones propuestas — anotadas el 2026-09-04
 
-Ninguna de estas está todavía en un vídeo. La tarjeta renderizada sigue diciendo lo de antes.
+### La tarjeta del 30 %, redactada de nuevo — **APLICADA el 2026-09-07**
 
-### La tarjeta del 30 %, redactada de nuevo
-
-Problema de la actual: dice **«30 % de descuento»**, y **a la Unión no se le puede descontar nada
+Problema de la que había: decía **«30 % de descuento»**, y **a la Unión no se le puede descontar nada
 porque la Unión no paga nada**. Un descuento sólo significa algo para quien tiene una factura
 delante. Lo que de verdad ocurre es que una parte de lo que pagan los colegios vuelve a la Unión.
 
-> **30 %**
-> de lo que paguen sus colegios **vuelve a la Unión**
-> ──
-> Y el portal no se cobra: es lo que recibe por hacer suyo el sistema
+Lo que dice ahora la tarjeta, y lo dicen las dos piezas donde sale porque está dibujada una sola vez
+(`src/piezas/Oferta.tsx`, texto en `src/piezas/datos.ts`):
 
-**El remate de abajo es un argumento que no está en ninguna pieza todavía, y puede que sea el más
-fuerte de todos: el portal no se le vende a la Unión, se le da por adoptar el sistema.**
+> **30 %**
+> de lo que paguen sus colegios vuelve a la Unión
+> ──
+> Si adoptan el ecosistema como el oficial de la UCN
+> Y el portal administrativo no se cobra: es lo que reciben por hacer suyo el sistema
+
+**El remate de abajo puede que sea el argumento más fuerte de todos --el portal no se le vende a la
+Unión, se le da por adoptar el sistema--, y ya está en pantalla.**
+
+Las otras dos redacciones de esta sección **siguen sin aplicar**.
 
 ### Los documentos de la junta
 
@@ -142,12 +146,24 @@ fichero renderizado:
 | 3 · Móvil | 28 s | 19 s | **faltan 9 s** |
 | 6.3 · Comparador | 15 s | 13 s | faltan 2 s |
 | 5 · Rótulo de sección | 6 s | — | **la pieza no existe** |
-| 6.7 · Traslados, QR, SunPlus | 40 s | — | **40 s de voz sin nada que enseñar** |
+| 6.7 · Traslados, QR, SunPlus | 40 s | 26,7 s | faltan 13 s |
+| 7 · El trato | 38 s | 20,0 s | faltan 18 s |
 
-**El grande es 6.7**: cuarenta segundos hablando de traslados, certificados con QR e integración con
-SunPlus. Las tres tienen pantalla diseñada en el portal (`12`, `13` y `9`) y **ninguna está
-animada**. O se animan tres clips cortos, o esos cuarenta segundos son una pantalla quieta.
+**6.7 YA TIENE CLIP** (`UCN-Red-Conectada`, hecho el 2026-09-06). No son tres clips cortos de las
+pantallas `12`, `13` y `9`: es **un diagrama de tres actos** --el traslado de una alumna con su
+historial, el certificado que alguien comprueba con el móvil, y MyVC y SunPlus mandándose datos en
+los dos sentidos--, porque las tres cosas pasan *entre* dos sitios y una captura de cualquiera de los
+dos extremos no enseña lo de en medio.
 
-Los tres clips que se quedan cortos se arreglan alargando su `guion.ts` y volviendo a renderizar.
+**Lo que le sigue faltando son unos trece segundos**, y son los del último párrafo de la voz: «el
+portal se adapta a lo que la Unión pida». Eso es una promesa de servicio y no una pantalla --ya está
+anotado arriba, punto 2--, así que o se dice sobre el final del diagrama, o se recorta del guion.
+
+**El punto 7 tiene pieza desde el 2026-09-07** (`Trato`, 20 s): las tres razones del guion llegando
+una a una, y detrás la tarjeta del 30 % con el texto ya corregido. Él la pidió de veinte segundos y
+dura veinte; la voz del bloque mide treinta y ocho, así que **o se alarga la pieza --las tres razones
+aguantan más tiempo juntas, es un número en `piezas/guion.ts`-- o se acorta lo que se dice**.
+
+Los clips que se quedan cortos se arreglan alargando su `guion.ts` y volviendo a renderizar.
 
 **Y el vídeo dura 5:42, que es largo para una reunión.** Si hay que recortar, el primer sitio es 6.7.

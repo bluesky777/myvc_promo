@@ -35,6 +35,42 @@ export const T_SALIDA = 158;
 export const T_PASO_SALIDA = 5;
 export const DURACION_TARJETA = 195;
 
+/*
+ * ── EL TRATO: 20 s ───────────────────────────────────────────────────────────────────────────
+ *
+ * ES LA PIEZA MÁS LARGA DE LAS CUATRO, y tiene por qué: las otras tres dicen una cosa cada una y
+ * ésta dice cuatro --tres razones y la oferta--. Aun así se reparte a la contra de lo que parecería:
+ * **las tres razones ocupan siete segundos entre las tres y la tarjeta ocupa ocho ella sola**, y es
+ * a propósito. Las razones se leen de un vistazo porque son un titular cada una; la cifra hay que
+ * creérsela, y eso lleva más tiempo que leerla.
+ *
+ * LAS TRES SE QUEDAN JUNTAS EN PANTALLA casi dos segundos antes de irse. Si cada una se fuera al
+ * llegar la siguiente, lo que se vería son tres cosas; juntas se ve **una oferta de tres patas**,
+ * que es lo que el bloque tiene que dejar dicho.
+ */
+export const TR_ENCABEZADO = 8;
+export const TR_POR_TECLA = 1.6;
+export const TR_RAZONES = 84;
+export const TR_PASO_RAZON = 46;
+/** Se van el encabezado primero y las tres detrás, de izquierda a derecha. */
+export const TR_SALEN_RAZONES = 258;
+export const TR_PASO_SALE_RAZON = 7;
+
+export const TR_TARJETA = 296;
+/*
+ * EL NÚMERO EMPIEZA A SUBIR MIENTRAS LA TARJETA TODAVÍA ENTRA, y no después. Si esperase a que la
+ * tarjeta estuviera puesta, se leería medio segundo de **«0 %»** en una tarjeta de oferta, que es la
+ * peor media frase posible de las que puede enseñar esta pieza.
+ */
+export const TR_CUENTA = 298;
+export const TR_FIN_CUENTA = 344;
+export const TR_TITULAR = 352;
+export const TR_CONDICION = 370;
+export const TR_PIE = 404;
+export const TR_SALIDA = 520;
+export const TR_PASO_SALIDA = 5;
+export const DURACION_TRATO = 600;
+
 /* ── CIERRE: 6 s ───────────────────────────────────────────────────────────────────────────── */
 export const C_TITULO = 10;
 export const C_POR_TECLA = 3;

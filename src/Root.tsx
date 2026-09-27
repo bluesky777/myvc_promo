@@ -17,7 +17,14 @@ import { DURACION as DURACION_RUBRICAS } from './rubricas/guion';
 import { Cierre } from './piezas/Cierre';
 import { Portada } from './piezas/Portada';
 import { Tarjeta } from './piezas/Tarjeta';
-import { DURACION_CIERRE, DURACION_PORTADA, DURACION_TARJETA } from './piezas/guion';
+import { Trato } from './piezas/Trato';
+import { DURACION_CIERRE, DURACION_PORTADA, DURACION_TARJETA, DURACION_TRATO } from './piezas/guion';
+
+/* ── Los vídeos de AYUDA, los que se embeben en la aplicación: `src/ayuda/`. ───────────────── */
+import { EscenaAyudaPlanilla } from './ayuda/planilla/Escena';
+import { DURACION as DURACION_AYUDA_PLANILLA } from './ayuda/planilla/guion';
+import { EscenaCompetencias } from './ayuda/competencias/Escena';
+import { DURACION as DURACION_AYUDA_COMPETENCIAS } from './ayuda/competencias/guion';
 
 /* ── El portal de la Unión Colombiana del Norte. Otro producto, otro vídeo: `src/ucn/`. ────── */
 import { EscenaComunicados } from './ucn/comunicados/Escena';
@@ -30,6 +37,8 @@ import { EscenaMetas } from './ucn/metas/Escena';
 import { DURACION as DURACION_METAS } from './ucn/metas/guion';
 import { EscenaMisional } from './ucn/misional/Escena';
 import { DURACION as DURACION_MISIONAL } from './ucn/misional/guion';
+import { EscenaRed } from './ucn/red/Escena';
+import { DURACION as DURACION_RED } from './ucn/red/guion';
 import { EscenaSalud } from './ucn/salud/Escena';
 import { DURACION as DURACION_SALUD } from './ucn/salud/guion';
 
@@ -259,11 +268,66 @@ export const Root: React.FC = () => (
 			defaultProps={{ conRotulo: true }}
 		/>
 		{/*
+		  * EL SÉPTIMO DEL PORTAL, Y EL ÚNICO QUE NO ES UNA PANTALLA: un diagrama. Lo que cuenta
+		  * --un traslado, un certificado que alguien comprueba, dos programas que se hablan-- pasa
+		  * ENTRE dos sitios, y una captura de cualquiera de los dos no enseña lo de en medio.
+		  */}
+		<Composition
+			id="UCN-Red-Conectada"
+			component={EscenaRed}
+			durationInFrames={DURACION_RED}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: false }}
+		/>
+		<Composition
+			id="UCN-Red-Conectada-Rotulo"
+			component={EscenaRed}
+			durationInFrames={DURACION_RED}
+			fps={FPS}
+			width={1920}
+			height={1080}
+			defaultProps={{ conRotulo: true }}
+		/>
+		{/*
 		  * LAS PIEZAS DE PEGAMENTO. No llevan variante con rótulo: **son texto**, así que el rótulo
 		  * de abajo no tendría nada que explicar. Salen a `out/piezas/`.
 		  */}
 		<Composition id="Portada" component={Portada} durationInFrames={DURACION_PORTADA} fps={FPS} width={1920} height={1080} />
 		<Composition id="Tarjeta" component={Tarjeta} durationInFrames={DURACION_TARJETA} fps={FPS} width={1920} height={1080} />
+		<Composition id="Trato" component={Trato} durationInFrames={DURACION_TRATO} fps={FPS} width={1920} height={1080} />
 		<Composition id="Cierre" component={Cierre} durationInFrames={DURACION_CIERRE} fps={FPS} width={1920} height={1080} />
+		{/*
+		  * ── LOS VÍDEOS DE AYUDA ───────────────────────────────────────────────────────────────
+		  *
+		  * NO LLEVAN VARIANTE «-Rotulo», y es la diferencia de fondo con todo lo de arriba. En un
+		  * clip promocional el rótulo es opcional porque quien monta el vídeo pone los suyos; aquí
+		  * **el texto es la voz**: sin él no hay vídeo, porque no hay audio que lo sustituya.
+		  *
+		  * Van a `out/ayuda/`, con el nombre de la clave que la aplicación usará para pedirlos
+		  * (`data: { ayuda: 'planilla-teclear' }` en `app.routes.ts`). Ver PLAN-VIDEOS-AYUDA.md.
+		  */}
+		<Composition
+			id="Ayuda-Planilla-Teclear"
+			component={EscenaAyudaPlanilla}
+			durationInFrames={DURACION_AYUDA_PLANILLA}
+			fps={FPS}
+			width={1920}
+			height={1080}
+		/>
+		{/*
+		  * EL SEGUNDO, Y EL PRIMERO QUE SE SALTA EL TOPE DE 90 s: 103. Es a propósito y está escrito
+		  * en la cabecera de su guion -- la pregunta del docente no es «cómo escribo un desempeño»,
+		  * es «y esto para qué», y la respuesta es el boletín. Cortar antes deja la pregunta abierta.
+		  */}
+		<Composition
+			id="Ayuda-Competencias"
+			component={EscenaCompetencias}
+			durationInFrames={DURACION_AYUDA_COMPETENCIAS}
+			fps={FPS}
+			width={1920}
+			height={1080}
+		/>
 	</>
 );

@@ -150,8 +150,16 @@ Son de **otro producto y de otro vídeo**: el portal nacional de la Unión Colom
 | **UCN-Comparador** | cada colegio contra los otros doce, sin ver el nombre de ninguno | 12,8 s |
 | **UCN-Metas** | seis metas en una sola escala, y por qué un 96 % pinta en rojo | 13,1 s |
 | **UCN-Misional** | ocho años de bautismos y la proporción por campo | 12,1 s |
+| **UCN-Red-Conectada** | **no es una pantalla, es un diagrama**: una alumna se traslada con su historial, un certificado con QR se comprueba con el teléfono, y MyVC y SunPlus se hablan en los dos sentidos | 26,7 s |
 
-`npm run todo-ucn` los renderiza los doce. `todo` sigue siendo sólo el vídeo de MyVC.
+`npm run todo-ucn` los renderiza los catorce. `todo` sigue siendo sólo el vídeo de MyVC.
+
+**El séptimo es un diagrama y no una pantalla, a propósito.** Las tres cosas que cuenta pasan
+**entre** dos sitios --dos colegios, un papel y el teléfono de quien lo recibe, dos programas--, y
+una captura de cualquiera de los dos extremos no enseña lo de en medio. Lleva la piel del portal
+--papel crema, azul de tinta, la serif de los titulares-- y se agranda hasta ocupar **el mismo ancho
+en el fotograma que las pantallas de los otros seis** (1.843 px), para que el corte no se lea como un
+alejamiento de cámara. La cuenta está en `src/ucn/red/Escena.tsx`, en `ESCALA`.
 
 **Dónde se toca cada cosa**
 
@@ -165,12 +173,85 @@ Son de **otro producto y de otro vídeo**: el portal nacional de la Unión Colom
 | el fondo, el encuadre y el rótulo | `src/ucn/Lienzo.tsx` |
 | las cifras y los textos de un clip | `src/ucn/<clip>/datos.ts` |
 | el ritmo de un clip | `src/ucn/<clip>/guion.ts` |
+| las formas del diagrama: colegio, ficha, certificado, QR, sello, insignias y flechas | `src/ucn/red/figuras.tsx` |
 
 **Tres cosas que conviene saber**
 
-- **La escala de estos seis NO está en `comunes/encuadre.ts`**, está en `src/ucn/tema.ts`. El portal es otro producto con otro ancho de diseño (1440), y meterlo allí haría que tocar el portal moviera de tamaño los clips de la aplicación. Lo que ese fichero protege se cumple igual: los seis comparten una sola escala entre ellos.
+- **La escala de estos siete NO está en `comunes/encuadre.ts`**, está en `src/ucn/tema.ts`. El portal es otro producto con otro ancho de diseño (1440), y meterlo allí haría que tocar el portal moviera de tamaño los clips de la aplicación. Lo que ese fichero protege se cumple igual: los seis de pantalla comparten una sola escala, y el diagrama saca la suya de ese mismo número para salir del mismo ancho que ellos.
 - **El teléfono es el de `src/movil/Telefono.tsx`**, con su barra morada de `myvc_flutter`, aunque las maquetas del portal dibujen uno crema. Si el mismo teléfono cambiara de aspecto entre dos clips del mismo vídeo, se leería como dos aplicaciones — y lo que el clip afirma es justo lo contrario: al docente le llega dentro de la app que ya usa.
 - **Las cifras que salen son de muestra**, coherentes entre sí pero no medidas. Están en `myvc_ucn/docs/04-guion-video.md` con ese aviso; ninguna debe citarse como medición.
+
+## Los vídeos de AYUDA — otra cosa, en la misma casa
+
+**No son promocionales y no van en el vídeo grande.** Son los cortos que se embeben en la propia
+aplicación, detrás de un botón de ayuda en cada pantalla: sin audio, con el texto explicando, y con
+la pantalla montándose igual que en todo lo demás. El plan entero --los ochenta temas, el gancho en
+`app.routes.ts` y cómo se publican-- está en **`PLAN-VIDEOS-AYUDA.md`**.
+
+```sh
+npm run todo-ayuda          # los dos
+npm run ayuda-planilla      # -> out/ayuda/planilla-teclear.mp4   42 s, siete pasos
+npm run ayuda-competencias  # -> out/ayuda/competencias.mp4      103 s, diecisiete pasos
+```
+
+| vídeo | qué contesta | dura |
+|---|---|---|
+| **Planilla: teclear** | qué significa el aro, por qué el aviso tarda y por qué sale uno para tres notas | 42 s |
+| **Calificar por competencias** | qué cambia para el docente cuando el colegio va por competencias, y cómo sale el boletín | 109 s |
+
+**En qué se diferencian de un clip promocional, y son tres cosas de fondo:**
+
+1. **Empiezan en el menú.** Un promocional enseña la pantalla; uno de ayuda tiene que enseñar
+   **cómo se llega**, porque «¿y eso dónde está?» es la pregunta que más llega. Por eso existe
+   `src/ayuda/Cascara.tsx` --la barra y el menú de la aplicación-- y por eso ese trozo no se salta.
+2. **El texto es la voz.** No hay variante «-Rotulo»: sin los rótulos no hay vídeo. Cada uno dura
+   `palabras ÷ 2,5 + 1 s` y hay una puerta (`ayuda/tiempos.ts`) que **revienta en el estudio** si
+   un paso dura menos de lo que se tarda en leerlo.
+3. **El ritmo es el de la aplicación, no el del anuncio.** El clip de notas comprime a 0,4 s los
+   hasta tres segundos que tarda el lote en volver, y hace bien. El de ayuda los enseña enteros,
+   porque «tarda un par de segundos» **es** lo que hay que explicar. Eso es lo único que se
+   parametrizó de la escena de notas: un `Ritmo`, y el de por defecto sigue siendo el promocional.
+
+**La planilla de los dos vídeos es la misma** (`src/notas/Escena.tsx`). Con ochenta vídeos por
+delante, una segunda planilla «la de ayuda» se separaría de la buena al tercer cambio de la
+aplicación, y entonces habría dos pantallas enseñándose como si fueran una.
+
+### «Unidad» y «subunidad» no son palabras de pantalla
+
+Son los nombres de la base de datos. En la aplicación **cada colegio escribe los suyos** y viajan en
+la sesión (`unidad_displayname`, `unidades_displayname`); la ficha del año lo dice al pedirlos:
+*«Por ejemplo: Logro, Indicador de desempeño, Descriptor»*. Lo más común con diferencia es
+**Logros e Indicadores**, y eso es lo que sale en los clips: está en `src/comunes/vocabulario.ts`,
+**una vez para todos** -- la planilla, la pantalla de logros y los rótulos.
+
+Y por eso el vídeo que enseña la palabra **dice una vez que la pone el colegio**. Sin esa frase, a
+quien en su pantalla ponga «Desempeños» el vídeo le parece de otro programa.
+
+*(Los MP4 promocionales que ya estén renderizados siguen diciendo «Unidad» hasta que se vuelva a
+correr `npm run todo`.)*
+
+### Dos cosas que hacen parpadear un vídeo, y cómo se cazan
+
+1. **Desmontar una pantalla a mitad de su salida.** Si el componente deja de pintarse cuando entra
+   el siguiente --y no cuando termina de irse--, media pantalla desaparece de un fotograma al otro.
+   Se ve como un salto de líneas y no lo caza ninguna puerta.
+2. **Reescalar un papel poco a poco.** Un boletín se sostiene con filetes de 0,8 px: al encuadre del
+   plano general son medio píxel, y moviendo la escala se dibujan en unos fotogramas sí y en otros
+   no. Por eso el acercamiento del boletín son **dos planos quietos encadenados**.
+
+**Cómo se comprueba:** se restan dos fotogramas seguidos. Una parte quieta tiene que salir
+**idéntica byte a byte** --lo está, medido--; una transición tiene que cambiar mucho píxel con poco
+salto, no al revés.
+
+| lo que quieras cambiar | dónde |
+|---|---|
+| la cabecera de ubicación, el rótulo y el contador de pasos | `src/ayuda/Marco.tsx` |
+| el velo que apaga lo que no hay que mirar | `src/ayuda/Foco.tsx` |
+| la tarjeta de tres líneas del final | `src/ayuda/Tarjeta.tsx` |
+| la barra y el menú de la aplicación | `src/ayuda/Cascara.tsx` y `src/ayuda/medidas.ts` |
+| la regla de cuánto dura un rótulo | `src/ayuda/tiempos.ts` |
+| los textos y los tiempos de un vídeo | `src/ayuda/<clip>/guion.ts` |
+| a qué tamaño se pinta la aplicación, y cómo se encuadra un papel | `src/ayuda/encuadre.ts` |
 
 ## Qué enseña el clip de disciplina
 
@@ -253,18 +334,24 @@ dentro** — se ve en la pantalla bloqueada, en el bus, con gente al lado, y la 
 algo que deba aparecer ahí. Un clip que enseñara la nota en el aviso vendería lo contrario de lo que
 el sistema hace bien a propósito.
 
-## Las tres piezas de pegamento del vídeo grande
+## Las cuatro piezas de texto del vídeo grande
 
-Portada, tarjeta del descuento y cierre. **No son clips**: no enseñan ninguna pantalla, son el texto
-que une lo demás. Viven en `src/piezas/` y salen a `out/piezas/`.
+Portada, el trato, la tarjeta suelta y cierre. **No son clips**: no enseñan ninguna pantalla, son el
+texto que une lo demás. Viven en `src/piezas/` y salen a `out/piezas/`.
 
 | pieza | qué dice | dura |
 |---|---|---|
 | **Portada** | el nombre escribiéndose y, debajo, las cuatro palabras que **son el índice** — Notas, Disciplina, Asistencia, Horarios, en el orden en que vienen los clips | 5,5 s |
-| **Tarjeta** | el 30 % **contándose de 0 a 30**, y la condición entera debajo | 6,5 s |
+| **Trato** | el punto 7: las **tres razones** llegando una a una y quedándose juntas, y detrás la tarjeta del 30 % | 20,0 s |
+| **Tarjeta** | la misma tarjeta del 30 %, **suelta**, por si el montador la necesita aparte | 6,5 s |
 | **Cierre** | el nombre otra vez y los datos de contacto | 6,0 s |
 
-`npm run todo-piezas` las rehace las tres. **No tienen variante con rótulo** —son texto: un rótulo
+**La tarjeta está dibujada una sola vez** (`piezas/Oferta.tsx`) y sale en las dos piezas, con el
+texto de `piezas/datos.ts`. Estaba dibujada dentro de la pieza suelta, y así es como se acaba con dos
+tarjetas del 30 % que dicen cosas distintas en el mismo vídeo. Si cambia la oferta, cambia en un
+sitio.
+
+`npm run todo-piezas` las rehace las cuatro. **No tienen variante con rótulo** —son texto: un rótulo
 debajo no tendría nada que explicar—, y son la única excepción a la regla de las dos composiciones
 por clip.
 
@@ -278,9 +365,12 @@ lo que hace que el vídeo se lea como uno y no como piezas pegadas.
   dieciséis colegios de MyVc» y «trece en territorio UCN»; una cifra equivocada en la primera
   pantalla, delante de la propia Unión, se lleva por delante la credibilidad de todo lo que venga
   detrás. Las cifras van en los clips del portal, que sí están medidas.
-- **El 30 % es para quien TRAE al colegio**, no para el colegio que entra. Confirmado por él el
-  2026-09-03; las dos lecturas posibles están escritas en `piezas/datos.ts`. Quien cambie ese texto
-  está cambiando la oferta, no la redacción.
+- **El 30 % es de lo que paguen sus colegios y vuelve a la Unión**, con la condición de que adopten
+  el ecosistema como el oficial de la UCN. **Esto cambió**: el 3 de septiembre se entendió que era
+  por cada colegio que la Unión trajera, y el 4 se corrigió (`MENSAJES-PENDIENTES.md` y
+  `myvc_ucn/docs/03-decisiones.md`). La historia entera está en `piezas/datos.ts`, encima de las
+  cadenas. Quien las cambie está cambiando la oferta, no la redacción — y la palabra «descuento» no
+  vuelve: a la Unión no se le puede descontar nada porque la Unión no paga nada.
 - **Lo que falta se dibuja como hueco rayado**, no con un valor de relleno. Un teléfono inventado en
   una tarjeta terminada se cuela en el montaje y acaba delante de la Unión; un hueco rayado se ve
   desde la otra punta de la sala.

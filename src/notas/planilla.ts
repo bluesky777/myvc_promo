@@ -1,3 +1,5 @@
+import { VOCABULARIO } from '../comunes/vocabulario';
+
 /*
  * LOS DATOS QUE SE VEN. Nombres inventados a propósito: esto se enseña fuera del colegio.
  *
@@ -30,7 +32,11 @@ export const ALUMNOS: Alumno[] = [
 
 export const COLUMNAS = ['Taller', 'Quiz', 'Examen'];
 
-export const UNIDAD = 'Unidad 2 · Álgebra';
+/*
+ * EL NOMBRE DE LA UNIDAD LO ESCRIBE EL DOCENTE, pero con la palabra que el colegio haya elegido --y
+ * «Unidad» es la de la base de datos, la que casi nadie ve. Ver `comunes/vocabulario.ts`.
+ */
+export const UNIDAD = `${VOCABULARIO.unidad} 2 · Álgebra`;
 
 export const CABECERA = {
 	asignatura: 'Matemáticas',

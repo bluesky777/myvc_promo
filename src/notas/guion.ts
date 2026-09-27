@@ -72,8 +72,47 @@ export const DURACION = 296;
 export const AVISO_DURA = SALIDA - CONFIRMA;
 
 /** Lo que el aviso dice, armado como lo arma `loQueSeGuardo()` en `planilla-notas.ts`. */
-export function textoDelAviso(): string {
-	const valores = TECLEOS.map((t) => t.valor);
+export function textoDelAviso(tecleos: Tecleo[] = TECLEOS): string {
+	const valores = tecleos.map((t) => t.valor);
 	const verbo = valores.length === 1 ? 'Cambiada' : 'Cambiadas';
 	return `${verbo}: ${valores.join(', ')}`;
 }
+
+/*
+ * ═══════════════════════════════════════════════════════════════════════════════════════════════
+ * EL RITMO, SUELTO DEL DIBUJO. **Para que la misma planilla pueda contarse a dos velocidades.**
+ *
+ * Lo de arriba es el ritmo del clip PROMOCIONAL, con su licencia declarada: entre la última tecla
+ * y el aviso pasan 0,4 s en vez de los hasta tres segundos de la aplicación, porque tres segundos
+ * de pantalla quieta en un promocional son tres segundos donde se pierde a quien mira.
+ *
+ * UN VÍDEO DE AYUDA QUIERE LO CONTRARIO. Ahí esos segundos **son el contenido**: «tarda un par de
+ * segundos porque está juntando la tanda» es justo la frase que evita la llamada de «se quedó
+ * pensando». Así que el clip de ayuda pasa su propio `Ritmo` con los tiempos de verdad.
+ *
+ * Y POR ESO ESTO ES UN PARÁMETRO Y NO UNA COPIA DE LA ESCENA. `combinado/Escena.tsx` explica por
+ * qué allí NO se parametrizó nada y se usó `<Sequence>`: porque el clip de rúbricas suelto y su
+ * segunda mitad **tienen que ser el mismo vídeo**, y dos guiones separados se habrían ido
+ * distanciando. Aquí la exigencia es al revés: los dos vídeos tienen que enseñar la misma pantalla
+ * **a distinta velocidad**, a propósito. Lo que no puede haber es dos planillas.
+ */
+
+export interface Ritmo {
+	TITULO: number;
+	CABECERAS: number;
+	PASO_CABECERA: number;
+	FILAS: number;
+	PASO_FILA: number;
+	POR_TECLA: number;
+	FOCO_ANTES: number;
+	TECLEOS: Tecleo[];
+	CONFIRMA: number;
+	SALIDA: number;
+	PASO_SALIDA: number;
+}
+
+/** El del clip promocional: el que lleva el vídeo que ya está hecho. Es el de por defecto. */
+export const RITMO: Ritmo = {
+	TITULO, CABECERAS, PASO_CABECERA, FILAS, PASO_FILA, POR_TECLA, FOCO_ANTES,
+	TECLEOS, CONFIRMA, SALIDA, PASO_SALIDA,
+};

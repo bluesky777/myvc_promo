@@ -10,10 +10,7 @@ import { entra, escribiendo, escrito, estiloDeSalida, llega, seVa } from '../com
 import { Aviso } from './Aviso';
 import { Casilla } from './Casilla';
 import { ALUMNOS, CABECERA, COLUMNAS, MINIMA_ACEPTADA, NOTA_ALTA, UNIDAD, total } from './planilla';
-import {
-	AVISO_DURA, CABECERAS, COLUMNA_TECLEADA, CONFIRMA, FILAS, FOCO_ANTES, PASO_CABECERA, PASO_FILA,
-	PASO_SALIDA, POR_TECLA, SALIDA, TECLEOS, TITULO, textoDelAviso,
-} from './guion';
+import { AVISO_DURA, COLUMNA_TECLEADA, RITMO, Ritmo, SALIDA, textoDelAviso } from './guion';
 import { ACENTO, BORDE, FUENTE, PERDIDA_LETRA, SUPERFICIE, SUPERIOR_LETRA, TEXTO, TEXTO_TENUE } from './tema';
 
 /*
@@ -71,15 +68,15 @@ const IZQUIERDA_COLUMNA = ANCHOS.num + ANCHOS.alumno + ANCHOS.nota * COLUMNA_TEC
 /** Las cabeceras, en el orden en que se escriben. */
 const TITULOS = ['No', 'Alumno', UNIDAD, ...COLUMNAS, 'Total'];
 
-function loTecleado(frame: number, valor: string, empieza: number): string {
+function loTecleado(frame: number, valor: string, empieza: number, porTecla: number): string {
 	if (frame < empieza) { return ''; }
-	const teclas = Math.min(valor.length, Math.floor((frame - empieza) / POR_TECLA) + 1);
+	const teclas = Math.min(valor.length, Math.floor((frame - empieza) / porTecla) + 1);
 	return valor.slice(0, teclas);
 }
 
-function tecleoActivo(frame: number): number | null {
+function tecleoActivo(frame: number, r: Ritmo): number | null {
 	let activo: number | null = null;
-	TECLEOS.forEach((t, i) => { if (frame >= t.empieza - FOCO_ANTES) { activo = i; } });
+	r.TECLEOS.forEach((t, i) => { if (frame >= t.empieza - r.FOCO_ANTES) { activo = i; } });
 	return activo;
 }
 
@@ -98,11 +95,23 @@ export const Escena: React.FC<{
 	avisoDura?: number;
 	/** El botón de rúbrica sobre una casilla, con su puntero. Ver `RubricaEnCasilla`. */
 	rubrica?: RubricaEnCasilla | null;
-}> = ({ conRotulo = false, salidaEn, avisoDura, rubrica = null }) => {
+	/**
+	 * A QUÉ VELOCIDAD SE CUENTA. Por defecto, el del clip promocional. El vídeo de ayuda pasa el
+	 * suyo, con los tiempos de verdad de la aplicación: ver la cabecera de `Ritmo` en `guion.ts`.
+	 */
+	ritmo?: Ritmo;
+	/**
+	 * DÓNDE CAE LA PANTALLA DENTRO DEL FOTOGRAMA. `conRotulo` es el caso del promocional --encoger y
+	 * subir para dejar sitio al texto de abajo-- y esto es lo mismo dicho con números, para cuando
+	 * encima hay además una cabecera de ayuda y el hueco no es el de siempre.
+	 */
+	ajuste?: { escala?: number; y?: number };
+}> = ({ conRotulo = false, salidaEn, avisoDura, rubrica = null, ritmo = RITMO, ajuste }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 
-	const salida = salidaEn ?? SALIDA;
+	const r = ritmo;
+	const salida = salidaEn ?? r.SALIDA;
 
 	/*
 	 * EL FOCO DE LA ÚLTIMA NOTA SE APAGA CUANDO VUELVE EL PUNTERO. Sin esto, en el clip combinado se
@@ -111,25 +120,25 @@ export const Escena: React.FC<{
 	 * docente ya no está en esa celda.
 	 */
 	const tecleando = rubrica === null || frame < rubrica.cursor;
-	const activo = tecleando ? tecleoActivo(frame) : null;
+	const activo = tecleando ? tecleoActivo(frame, r) : null;
 
 	/* La fila señalada es la que se teclea, y luego la que el ratón visita. */
 	const filaTocada = activo !== null
-		? TECLEOS[activo].fila
+		? r.TECLEOS[activo].fila
 		: rubrica && frame >= rubrica.llega && frame < rubrica.clic + 6
 			? rubrica.fila
 			: null;
 
 	/* Lo que hay en cada casilla AHORA. El total sale de aquí, así que se recalcula al escribir. */
 	const notasAhora = ALUMNOS.map((a) => [...a.notas]);
-	TECLEOS.forEach((t) => {
-		const texto = loTecleado(frame, t.valor, t.empieza);
+	r.TECLEOS.forEach((t) => {
+		const texto = loTecleado(frame, t.valor, t.empieza, r.POR_TECLA);
 		notasAhora[t.fila][COLUMNA_TECLEADA] = texto === '' ? null : Number(texto);
 	});
 
 	/* El panel: lo único que entra de golpe, porque es el marco y no el contenido. */
 	const panel = entra(frame, fps, 0, 14);
-	const escala = interpolate(frame, [0, 296], [ENCUADRE.planilla, ENCUADRE.planilla + 0.05]);
+	const escala = interpolate(frame, [0, salida + 46], [ENCUADRE.planilla, ENCUADRE.planilla + 0.05]);
 
 	/*
 	 * Y AL FINAL SE VA EL PANEL TAMBIÉN, después de las filas: primero se vacía y luego se recoge.
@@ -140,14 +149,18 @@ export const Escena: React.FC<{
 		extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
 	});
 
-	const salidaCabecera = seVa(frame, 0, salida, PASO_SALIDA);
+	const salidaCabecera = seVa(frame, 0, salida, r.PASO_SALIDA);
+
+	/* El encuadre: lo que diga `ajuste`, y si no, lo de siempre según lleve rótulo o no. */
+	const conEscala = ajuste?.escala ?? (conRotulo ? CON_ROTULO : 1);
+	const conY = ajuste?.y ?? (conRotulo ? -54 : 0);
 
 	return (
 		<AbsoluteFill style={{ background: 'radial-gradient(circle at 50% 34%, #f7f9fc 0%, #e6ebf2 62%, #dde3ec 100%)', fontFamily: FUENTE }}>
 			<AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
 				<div
 					style={{
-						transform: `translateY(${conRotulo ? -54 : 0}px) scale(${escala * (conRotulo ? CON_ROTULO : 1) * (1 - panelFuera * 0.03)})`,
+						transform: `translateY(${conY}px) scale(${escala * conEscala * (1 - panelFuera * 0.03)})`,
 						opacity: panel * (1 - panelFuera),
 					}}
 				>
@@ -161,7 +174,7 @@ export const Escena: React.FC<{
 							boxShadow: '0 24px 64px rgba(15, 28, 52, .16), 0 2px 8px rgba(15, 28, 52, .06)',
 						}}
 					>
-						<Titulo frame={frame} fps={fps} fuera={salidaCabecera} />
+						<Titulo frame={frame} fps={fps} fuera={salidaCabecera} r={r} />
 
 						<div
 							style={{
@@ -192,15 +205,15 @@ export const Escena: React.FC<{
 								/>
 							)}
 
-							<Cabecera frame={frame} fps={fps} fuera={salidaCabecera} />
+							<Cabecera frame={frame} fps={fps} fuera={salidaCabecera} r={r} />
 
 							{ALUMNOS.map((alumno, fila) => {
-								const t = TECLEOS.find((x) => x.fila === fila) ?? null;
-								const escrito2 = t ? loTecleado(frame, t.valor, t.empieza) : null;
+								const t = r.TECLEOS.find((x) => x.fila === fila) ?? null;
+								const escrito2 = t ? loTecleado(frame, t.valor, t.empieza, r.POR_TECLA) : null;
 								const suma = total(notasAhora[fila]);
 
-								const llegada = llega(frame, fps, fila, FILAS, PASO_FILA);
-								const fuera = estiloDeSalida(seVa(frame, fila + 1, salida, PASO_SALIDA));
+								const llegada = llega(frame, fps, fila, r.FILAS, r.PASO_FILA);
+								const fuera = estiloDeSalida(seVa(frame, fila + 1, salida, r.PASO_SALIDA));
 
 								return (
 									<div
@@ -238,13 +251,13 @@ export const Escena: React.FC<{
 												<Hueco key={col} ancho={ANCHOS.nota}>
 													<Casilla
 														valor={valor}
-														foco={esLaQueSeTeclea && activo !== null && TECLEOS[activo].fila === fila}
+														foco={esLaQueSeTeclea && activo !== null && r.TECLEOS[activo].fila === fila}
 														/*
 														 * EL ARO SE ENCIENDE CON LA PRIMERA TECLA y no cuando sale la petición:
 														 * la marca compara **lo que se ve** con lo último que el servidor confirmó.
 														 */
 														aroDesde={esLaQueSeTeclea && t ? t.empieza : null}
-														confirmadoEn={esLaQueSeTeclea ? CONFIRMA : null}
+														confirmadoEn={esLaQueSeTeclea ? r.CONFIRMA : null}
 													/>
 												</Hueco>
 											);
@@ -265,7 +278,7 @@ export const Escena: React.FC<{
 				</div>
 			</AbsoluteFill>
 
-			<Aviso texto={textoDelAviso()} desde={CONFIRMA} dura={avisoDura ?? AVISO_DURA} />
+			<Aviso texto={textoDelAviso(r.TECLEOS)} desde={r.CONFIRMA} dura={avisoDura ?? AVISO_DURA} />
 
 			{conRotulo && <Rotulo />}
 		</AbsoluteFill>
@@ -303,10 +316,10 @@ const RubricaSobreCasilla: React.FC<{ frame: number; fps: number; rubrica: Rubri
  * EL TÍTULO SE ESCRIBE, con su cursor. Es lo primero que se lee y por eso es lo primero que se monta:
  * antes de enseñar una tabla de notas hay que decir de qué asignatura y de qué grupo son.
  */
-const Titulo: React.FC<{ frame: number; fps: number; fuera: number }> = ({ frame, fps, fuera }) => {
-	const texto = escrito(frame, CABECERA.asignatura, TITULO, 2);
-	const cursor = escribiendo(frame, CABECERA.asignatura, TITULO, 2) && frame % 20 < 12;
-	const resto = entra(frame, fps, TITULO + CABECERA.asignatura.length * 2 + 4, 12);
+const Titulo: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo }> = ({ frame, fps, fuera, r }) => {
+	const texto = escrito(frame, CABECERA.asignatura, r.TITULO, 2);
+	const cursor = escribiendo(frame, CABECERA.asignatura, r.TITULO, 2) && frame % 20 < 12;
+	const resto = entra(frame, fps, r.TITULO + CABECERA.asignatura.length * 2 + 4, 12);
 
 	return (
 		<div
@@ -336,14 +349,14 @@ const Titulo: React.FC<{ frame: number; fps: number; fuera: number }> = ({ frame
  * el total. **La geometría no se mueve** -- se mueve el texto: si cada celda entrara volando, las
  * rayas de la tabla bailarían y lo que se ve sería un desorden, no una pantalla montándose.
  */
-const Cabecera: React.FC<{ frame: number; fps: number; fuera: number }> = ({ frame, fps, fuera }) => {
+const Cabecera: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo }> = ({ frame, fps, fuera, r }) => {
 	const letra = (i: number): React.CSSProperties => ({
 		fontSize: 19,
 		fontWeight: 600,
-		opacity: entra(frame, fps, CABECERAS + i * PASO_CABECERA, 8),
+		opacity: entra(frame, fps, r.CABECERAS + i * r.PASO_CABECERA, 8),
 		whiteSpace: 'pre',
 	});
-	const dice = (i: number) => escrito(frame, TITULOS[i], CABECERAS + i * PASO_CABECERA, 2);
+	const dice = (i: number) => escrito(frame, TITULOS[i], r.CABECERAS + i * r.PASO_CABECERA, 2);
 
 	const fondo: React.CSSProperties = {
 		/* Gris medio con alfa: sirve igual sobre fondo claro que sobre oscuro, y deja pasar la banda. */

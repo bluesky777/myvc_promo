@@ -23,25 +23,71 @@ export const PORTADA_BAJADA = 'El sistema con el que un colegio lleva su día';
 /** Las cuatro palabras son, en este orden, los cuatro clips que vienen detrás. Es el índice. */
 export const PORTADA_PILDORAS = ['Notas', 'Disciplina', 'Asistencia', 'Horarios'];
 
-/* ── LA TARJETA DEL DESCUENTO ──────────────────────────────────────────────────────────────── */
+/* ── LA TARJETA DEL TRATO ─────────────────────────────────────────────────────────────────── */
 
 export const DESCUENTO = 30;
 
-/**
- * CONFIRMADO POR ÉL EL 2026-09-03, y conviene que quede dicho cuál de las dos era. Sus palabras
- * originales --«dándoles un 30 % de descuento a cada colegio que me consigan ellos»-- admitían dos
- * lecturas que no valen lo mismo:
+/*
+ * ═══════════════════════════════════════════════════════════════════════════════════════════════
+ * QUÉ DICE LA TARJETA, Y POR QUÉ HA CAMBIADO DOS VECES. La historia importa: quien toque estas
+ * cuatro cadenas está cambiando **la oferta**, no la redacción.
  *
- *   a) el colegio NUEVO entra con 30 % de descuento;
- *   b) quien TRAE al colegio nuevo se gana un 30 % en lo suyo.   ← ESTA
+ *   3 sep 2026   Él dijo «un 30 % de descuento a cada colegio que me consigan ellos», y se entendió
+ *                que la Unión se descontaba un 30 % de lo suyo por cada colegio que trajera.
+ *   4 sep 2026   CORREGIDO, y está en `MENSAJES-PENDIENTES.md` y en `myvc_ucn/docs/03-decisiones.md`:
+ *                el 30 % es **de lo que paguen sus colegios** y **vuelve a la Unión**, sin que ella
+ *                tenga que traer a nadie. La condición es que adopten el ecosistema como el oficial.
+ *   6 sep 2026   El guion del vídeo (punto 7) ya lo dice así, y esta tarjeta se pone al día con él.
  *
- * Es la (b): **la Unión se descuenta un 30 % de lo suyo por cada colegio que consiga**, que es la
- * que la convierte en vendedora. Si alguien cambia este texto, que sepa que está cambiando la
- * oferta y no la redacción.
+ * DOS PALABRAS QUE NO VUELVEN. «Descuento» no, porque **a la Unión no se le puede descontar nada:
+ * la Unión no paga nada**, y un descuento sólo significa algo para quien tiene una factura delante.
+ * Y la mecánica --si el colegio le paga a él y él le devuelve, o al revés-- **no sale en el vídeo**:
+ * es fiscal y está abierta. Lo que el vídeo dice es a quién le llega el dinero.
  */
-export const TARJETA_TITULAR = 'de descuento';
-export const TARJETA_CONDICION = 'por cada colegio que la Unión traiga';
-export const TARJETA_PIE = 'Sin tope: se acumula colegio a colegio';
+export const TARJETA_TITULAR = 'de lo que paguen sus colegios vuelve a la Unión';
+export const TARJETA_CONDICION = 'Si adoptan el ecosistema como el oficial de la UCN';
+export const TARJETA_PIE = 'Y el portal administrativo no se cobra: es lo que reciben por hacer suyo el sistema';
+
+/* ── EL TRATO: LAS TRES RAZONES ───────────────────────────────────────────────────────────── */
+
+/*
+ * LAS TRES COSAS QUE NO TRAE NINGÚN OTRO SOBRE. Son las del punto 7 del guion, en su orden y sin
+ * añadir ninguna: **la fuerza del bloque está en que sean tres**, y una cuarta razón --por buena que
+ * sea-- convierte una lista que se recuerda en una lista que se olvida.
+ *
+ * NINGUNA LLEVA UNA CIFRA DE COLEGIOS, por lo mismo que no la lleva la portada: en los documentos de
+ * la UCN conviven «dieciséis» y «trece», y una cifra equivocada delante de la propia Unión se lleva
+ * por delante lo demás.
+ */
+export const TRATO_ENCABEZADO = 'Tres cosas que no vienen en ningún otro sobre';
+
+export interface Razon {
+	numero: string;
+	icono: 'colegio' | 'horario' | 'portal';
+	titulo: string;
+	pie: string;
+}
+
+export const TRATO_RAZONES: Razon[] = [
+	{
+		numero: '01',
+		icono: 'colegio',
+		titulo: 'Nació en un colegio adventista',
+		pie: 'No se adaptó a uno: nació dentro. Y sigue evolucionando con lo que piden los colegios.',
+	},
+	{
+		numero: '02',
+		icono: 'horario',
+		titulo: 'El horario va incluido y con licencia',
+		pie: 'Hoy no lo trae nadie más. Y la aplicación completa, en Play Store y App Store.',
+	},
+	{
+		numero: '03',
+		icono: 'portal',
+		titulo: 'El portal es de la Unión',
+		pie: 'Su mano derecha. Hoy no lo tiene ninguna otra Unión.',
+	},
+];
 
 /* ── EL CIERRE ─────────────────────────────────────────────────────────────────────────────── */
 
