@@ -12,8 +12,9 @@ import { ACADEMICO, MEDIDAS } from '../medidas';
 import { Tarjeta } from '../Tarjeta';
 import { FONDO, FUENTE, HUECO_DE_LA_AYUDA, SUBE_LA_PANTALLA } from '../tema';
 import { pasoEn } from '../tiempos';
+import { Efecto } from '../voz';
 import { Boletin } from './Boletin';
-import { DESEMPENOS } from './datos';
+import { DESEMPENOS, INFORMES_TEXTOS } from './datos';
 import { Informes } from './Informes';
 import { MisAsignaturas } from '../planilla/MisAsignaturas';
 import { MisDesempenos } from './MisDesempenos';
@@ -75,12 +76,39 @@ export const EscenaCompetencias: React.FC = () => {
 				hasta={paso?.focoHasta ?? acaba - 12}
 			/>
 
+			<Sonidos />
+
 			<Marco pasos={PASOS} final={TARJETA} />
 
 			<Tarjeta cierre={CIERRE} desde={TARJETA} />
 		</AbsoluteFill>
 	);
 };
+
+/*
+ * LO QUE SUENA, además de los clics (que los pone el `Cursor`): el tecleo --una tecla cada pocos
+ * fotogramas, alternando las tres-- y el aviso cuando la aplicación enseña algo: la franja ámbar del
+ * periodo ajeno y el «Cambiadas» del lote en la planilla.
+ */
+const TECLAS = ['tecla1', 'tecla2', 'tecla3'] as const;
+const tecleo = (desde: number, hasta: number, cada: number, clave: string) =>
+	Array.from({ length: Math.floor((hasta - desde) / cada) + 1 }, (_, i) => (
+		<Efecto key={`${clave}${i}`} cual={TECLAS[i % 3]} en={desde + i * cada} />
+	));
+
+const Sonidos: React.FC = () => (
+	<>
+		{/* El desempeño va a una letra por fotograma: suena una tecla cada cuatro. */}
+		{tecleo(T.tecleaDesempeno, T.tecleaDesempeno + DESEMPENOS.find((d) => d.seEscribe)!.texto.length - 1, 4, 'd')}
+		{/* La búsqueda va a tres fotogramas por letra: suena cada letra. */}
+		{tecleo(T.tecleaBusqueda, T.tecleaBusqueda + (INFORMES_TEXTOS.busqueda.length - 1) * 3, 3, 'b')}
+		<Efecto cual="aviso" en={T.pulsaPeriodo3 + 4} />
+		{RITMO_PLANILLA.TECLEOS.flatMap((t, i) =>
+			[...t.valor].map((_, k) => <Efecto key={`p${i}-${k}`} cual={TECLAS[k % 3]} en={T.entraLaPlanilla + t.empieza + k * RITMO_PLANILLA.POR_TECLA} />),
+		)}
+		<Efecto cual="aviso" en={T.entraLaPlanilla + RITMO_PLANILLA.CONFIRMA} />
+	</>
+);
 
 /*
  * ACTO 6: EL BOLETÍN. DOS PLANOS QUIETOS, ENCADENADOS.
@@ -201,13 +229,14 @@ const ActoEnLaCascara: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
 					{ frame: T.cursorEntra, ...PUNTOS.entrada },
 					{ frame: T.llegaAcademico, ...PUNTOS.academico },
 					{ frame: T.llegaMisAsignaturas, ...PUNTOS.misAsignaturas },
+					{ frame: T.llegaUnidades - 18, ...PUNTOS.misAsignaturas },
 					{ frame: T.llegaUnidades, ...PUNTOS.botonUnidades },
 					/*
 					 * SE QUEDA QUIETO DONDE PULSÓ. Sin este punto, el puntero cruzaría la pantalla
 					 * despacio durante los catorce segundos de «Unidades» -- y un puntero que se mueve
 					 * solo se lee como que algo está pasando, justo mientras hay que leer un párrafo.
 					 */
-					{ frame: T.llegaMisDesempenos - 70, ...PUNTOS.botonUnidades },
+					{ frame: T.llegaMisDesempenos - 20, ...PUNTOS.botonUnidades },
 					{ frame: T.llegaMisDesempenos, ...PUNTOS.misDesempenos },
 				]}
 				clics={[T.pulsaAcademico, T.pulsaMisAsignaturas, T.pulsaUnidades, T.pulsaMisDesempenos]}

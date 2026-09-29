@@ -3,6 +3,7 @@ import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from 'remo
 
 import { entra } from '../comunes/movimiento';
 import { FONDO, FUENTE, PAPEL, TINTA, TINTA_SUAVE } from './tema';
+import { Efecto, RETRASO_VOZ, Voz } from './voz';
 
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
@@ -25,13 +26,21 @@ export interface Cierre {
 	seVe: string;
 	/** El vídeo siguiente, o lo que conviene aprender después. Puede faltar. */
 	despues?: string;
+	/** Lo que dice la voz sobre la tarjeta. Si falta, dice `despues`, o `seVe` si tampoco hay. */
+	voz?: string;
 }
 
 export const Tarjeta: React.FC<{ cierre: Cierre; desde: number }> = ({ cierre, desde }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 
-	if (frame < desde - 12) { return null; }
+	const sonido = (
+		<>
+			<Efecto cual="tarjeta" en={desde} />
+			<Voz texto={cierre.voz ?? cierre.despues ?? cierre.seVe} en={desde + RETRASO_VOZ} />
+		</>
+	);
+	if (frame < desde - 12) { return sonido; }
 
 	const a = entra(frame, fps, desde, 18);
 
@@ -46,6 +55,7 @@ export const Tarjeta: React.FC<{ cierre: Cierre; desde: number }> = ({ cierre, d
 				zIndex: 50,
 			}}
 		>
+			{sonido}
 			<div
 				style={{
 					width: 1180,

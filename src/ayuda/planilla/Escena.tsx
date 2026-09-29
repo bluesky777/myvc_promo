@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, Sequence, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
+import { AbsoluteFill, Easing, Sequence, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 
 import { Cursor } from '../../comunes/Cursor';
 import { entra } from '../../comunes/movimiento';
@@ -13,7 +13,10 @@ import { Tarjeta } from '../Tarjeta';
 import { FONDO, FUENTE, HUECO_DE_LA_AYUDA, SUBE_LA_PANTALLA } from '../tema';
 import { pasoEn } from '../tiempos';
 import { MisAsignaturas } from './MisAsignaturas';
-import { AVISO_DURA, CIERRE, DURACION, LLEGADA, PASOS, PUNTOS, RITMO_AYUDA, TARJETA } from './guion';
+import { Efecto } from '../voz';
+import { AVISO_DURA, CIERRE, DURACION, EL_HISTORIAL, LLEGADA, PASOS, PUNTOS, RITMO_TECLEAR, TARJETA } from './guion';
+import { ColumnaHistorial, DialogoHistorial } from './Historial';
+import { CORRE, HISTORIAL, historialEnElFotograma } from './historial-geometria';
 
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
@@ -44,6 +47,17 @@ export const EscenaAyudaPlanilla: React.FC = () => {
 	const paso = cual >= 0 ? PASOS[cual] : null;
 	const acabaElPaso = cual >= 0 && cual + 1 < PASOS.length ? PASOS[cual + 1].desde : TARJETA;
 
+	/* Lo que la cámara se ha corrido para el historial, y dónde cae la celda que se pulsa. */
+	const corrido = interpolate(frame, [EL_HISTORIAL.seCorre, EL_HISTORIAL.yaCorrida], [0, 1], {
+		extrapolateLeft: 'clamp',
+		extrapolateRight: 'clamp',
+		easing: Easing.inOut(Easing.cubic),
+	});
+	const celda = (() => {
+		const r = historialEnElFotograma(HISTORIAL.celda(0), EL_HISTORIAL.llegaCelda - LLEGADA.entraLaPlanilla, RITMO_TECLEAR.SALIDA);
+		return { x: r.x + r.ancho / 2 - 20, y: r.y + r.alto / 2 };
+	})();
+
 	/* La cáscara deja de pintarse cuando ya se ha ido del todo: detrás de la planilla no hace nada. */
 	const enLaCascara = frame < LLEGADA.entraLaPlanilla;
 
@@ -52,16 +66,42 @@ export const EscenaAyudaPlanilla: React.FC = () => {
 			{enLaCascara && <ActoDeLlegada frame={frame} fps={fps} />}
 
 			{/*
-			  * LA PLANILLA, con `<Sequence>`: sus tiempos están escritos desde cero en `RITMO_AYUDA` y
+			  * LA PLANILLA, con `<Sequence>`: sus tiempos están escritos desde cero en `RITMO_TECLEAR` y
 			  * aquí sólo se dice CUÁNDO empieza. Es el mismo aparejo que usa `combinado/Escena.tsx`.
 			  */}
-			<Sequence from={LLEGADA.entraLaPlanilla}>
-				<EscenaPlanilla
-					ritmo={RITMO_AYUDA}
-					avisoDura={AVISO_DURA}
-					ajuste={{ escala: HUECO_DE_LA_AYUDA, y: SUBE_LA_PANTALLA }}
-				/>
-			</Sequence>
+			{/*
+			  * Y AL FINAL, EL HISTORIAL: la cámara se corre a la izquierda para que quepa la última
+			  * columna, que se pinta encima del panel con el `sobre` de la escena (ver `Historial.tsx`).
+			  */}
+			<AbsoluteFill style={{ transform: `translateX(${-CORRE * corrido}px)` }}>
+				<Sequence from={LLEGADA.entraLaPlanilla}>
+					<EscenaPlanilla
+						ritmo={RITMO_TECLEAR}
+						avisoDura={AVISO_DURA}
+						ajuste={{ escala: HUECO_DE_LA_AYUDA, y: SUBE_LA_PANTALLA }}
+						sobre={
+							<ColumnaHistorial
+								aparece={EL_HISTORIAL.seCorre - LLEGADA.entraLaPlanilla}
+								seVa={RITMO_TECLEAR.SALIDA - 6}
+								senalada={frame >= EL_HISTORIAL.llegaCelda && frame < EL_HISTORIAL.abreDialogo + 4 ? 0 : null}
+							/>
+						}
+					/>
+				</Sequence>
+			</AbsoluteFill>
+
+			<DialogoHistorial abre={EL_HISTORIAL.abreDialogo} cierra={EL_HISTORIAL.cierraDialogo} />
+
+			<Cursor
+				puntos={[
+					{ frame: EL_HISTORIAL.cursorEntra, x: celda.x + 150, y: celda.y + 190 },
+					{ frame: EL_HISTORIAL.llegaCelda, x: celda.x, y: celda.y },
+				]}
+				clics={[EL_HISTORIAL.pulsaCelda]}
+				aparece={EL_HISTORIAL.cursorEntra}
+				sale={EL_HISTORIAL.cursorSale}
+				tam={30}
+			/>
 
 			{/*
 			  * EL FOCO VA SÓLO EN LA LLEGADA, y no es un descuido. En el menú hay que señalar cuál de
@@ -77,8 +117,16 @@ export const EscenaAyudaPlanilla: React.FC = () => {
 				 * recortando un sitio de una pantalla que ya se está yendo, y eso se lee como que
 				 * el recuadro señala el fotograma y no la aplicación.
 				 */
-				hasta={Math.min(acabaElPaso - 10, LLEGADA.seVaLaCascara - 6)}
+				hasta={paso?.focoHasta ?? acabaElPaso - 10}
 			/>
+
+			{/* Lo que suena de la planilla: cada tecla (alternando las tres) y el aviso cuando vuelve el lote. */}
+			{RITMO_TECLEAR.TECLEOS.flatMap((t, i) =>
+				[...t.valor].map((_, k) => (
+					<Efecto key={`t${i}-${k}`} cual={(['tecla1', 'tecla2', 'tecla3'] as const)[(i * 2 + k) % 3]} en={LLEGADA.entraLaPlanilla + t.empieza + k * RITMO_TECLEAR.POR_TECLA} />
+				)),
+			)}
+			<Efecto cual="aviso" en={LLEGADA.entraLaPlanilla + RITMO_TECLEAR.CONFIRMA} />
 
 			<Marco pasos={PASOS} final={TARJETA} />
 
@@ -156,6 +204,7 @@ const ActoDeLlegada: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
 							{ frame: LLEGADA.cursorEntra, ...PUNTOS.entrada },
 							{ frame: LLEGADA.llegaAcademico, ...PUNTOS.academico },
 							{ frame: LLEGADA.llegaMisAsignaturas, ...PUNTOS.misAsignaturas },
+							{ frame: LLEGADA.dejaMisAsignaturas, ...PUNTOS.misAsignaturas },
 							{ frame: LLEGADA.llegaBoton, ...PUNTOS.botonPlanilla },
 						]}
 						clics={[LLEGADA.pulsaAcademico, LLEGADA.pulsaMisAsignaturas, LLEGADA.pulsaBoton]}

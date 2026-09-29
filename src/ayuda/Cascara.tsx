@@ -1,10 +1,10 @@
 import React from 'react';
 import { interpolate } from 'remotion';
 
-import { Avatar } from '../comunes/Avatar';
-import { ACENTO, BORDE, SUPERFICIE, TEXTO, TEXTO_TENUE } from '../notas/tema';
-import { Icono, MEDIDAS, SECCIONES } from './medidas';
+import { BORDE, TEXTO_TENUE } from '../notas/tema';
+import { Icono, MEDIDAS, SECCIONES, Seccion } from './medidas';
 import { FUENTE } from './tema';
+import { BarraDeHoy, BarraDeHoyProps, EstiloCascara, MEDIDAS_HOY, PALETA_CLARA, PaletaCascara, estiloDelMenu } from './BarraDeHoy';
 
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
@@ -15,7 +15,7 @@ import { FUENTE } from './tema';
  *
  * Un clip promocional enseña **la pantalla**: la planilla flotando, grande y sin cromo, porque lo
  * que vende es lo que la pantalla hace. Un vídeo de ayuda tiene que enseñar además **cómo se llega
- * hasta ella**, y eso es exactamente el cromo: el menú, sus nueve secciones y la entrada que hay
+ * hasta ella**, y eso es exactamente el cromo: el menú, sus secciones y la entrada que hay
  * que pulsar. Sin la cáscara, un vídeo de ayuda contesta «qué hace» y deja sin contestar «dónde
  * está», que es la pregunta que más llega.
  *
@@ -25,124 +25,98 @@ import { FUENTE } from './tema';
  * ────────────────────────────────────────────────────────────────────────────────────────────
  * EL SELECTOR DE AÑO Y PERIODO SE VE SIEMPRE, AUNQUE EL VÍDEO NO LO TOQUE
  *
- * «2026 · Periodo 2», arriba a la derecha. Casi todos los «no me deja» empiezan ahí, y que salga en
+ * «📅 2026 | Periodo 2», arriba a la derecha. Casi todos los «no me deja» empiezan ahí, y que salga en
  * todos los vídeos --aunque ninguno lo use-- es lo que hace que el día que alguien tenga que
  * cambiarlo sepa dónde estaba mirando todo este tiempo.
  */
 
 export const Cascara: React.FC<{
-	/** Si «Académico» está desplegado. Entre 0 y 1: se abre con animación. */
-	academico: number;
+	/** Si «Académico» está desplegado. Entre 0 y 1: se abre con animación. Atajo de `abierta`. */
+	academico?: number;
+	/**
+	 * QUÉ SECCIÓN ESTÁ DESPLEGADA, y cuánto (0..1). Una sola a la vez, como en la aplicación. Si se
+	 * pasa, manda sobre `academico`. El índice es dentro de `menu`.
+	 */
+	abierta?: { seccion: number; t: number } | null;
+	/** El menú que se pinta: el del docente por defecto; `MENU_DIRECTIVO` para rector y coordinación. */
+	menu?: Seccion[];
 	/** La entrada resaltada como la que el ratón tiene encima, o `null`. */
 	senalada?: { seccion: number; hija: number | null } | null;
 	/** La pantalla de dentro. */
 	children?: React.ReactNode;
-}> = ({ academico, senalada = null, children }) => (
+	/**
+	 * Lo que dice el selector de año y periodo, «2026 · Periodo 2». Los vídeos del cierre del año lo
+	 * ponen en el 4. Es el atajo de `hoy` para los que no tocan la barra.
+	 */
+	periodo?: string;
+	/** La hija de tercer nivel desplegada dentro de la sección abierta («Votaciones»), y cuánto. */
+	subAbierta?: { hija: string; t: number } | null;
+	/** La nieta resaltada como la que el ratón tiene encima: índice dentro de `subAbierta`. */
+	nietaSenalada?: number | null;
+	/**
+	 * LA BARRA, que es la de hoy en app2 (desde el 2026-09-26) en todos los vídeos: botón de plegar,
+	 * «Buscador mágico…» con su tecla «/», el selector con su calendario y su tajo, y los mandos de
+	 * aspecto, ayuda y campana. Sólo hace falta pasarla para señalar un mando o abrir el selector;
+	 * si no, sale del `periodo`. Ver `BarraDeHoy`.
+	 */
+	hoy?: BarraDeHoyProps;
+	/** El menú plegado a iconos (0..1): de `MEDIDAS.menu` a `MEDIDAS_HOY.menuPlegado`. */
+	plegado?: number;
+	/** Los colores de la cáscara. Por defecto, los de siempre; `PALETA_OSCURA` es el modo oscuro. */
+	paleta?: PaletaCascara;
+}> = ({ academico = 0, abierta, menu = SECCIONES, senalada = null, children, periodo = '2026 · Periodo 2', subAbierta = null, nietaSenalada = null, hoy, plegado = 0, paleta = PALETA_CLARA }) => (
+	<EstiloCascara.Provider value={{ p: paleta, plegado }}>
 	<div
 		style={{
 			position: 'relative',
 			width: MEDIDAS.ancho,
 			height: MEDIDAS.alto,
-			background: '#f5f7fa',
+			background: paleta.fondo,
 			borderRadius: 12,
 			overflow: 'hidden',
 			fontFamily: FUENTE,
 			boxShadow: '0 24px 64px rgba(15, 28, 52, .16), 0 2px 8px rgba(15, 28, 52, .06)',
 		}}
 	>
-		<Barra />
+		<BarraDeHoy {...(hoy ?? barraDe(periodo))} />
 
 		<div style={{ display: 'flex', height: MEDIDAS.alto - MEDIDAS.barra }}>
-			<Menu academico={academico} senalada={senalada} />
+			<Menu
+				menu={menu}
+				abierta={abierta === undefined ? { seccion: menu.findIndex((m) => m.etiqueta === 'Académico'), t: academico } : abierta}
+				senalada={senalada}
+				subAbierta={subAbierta}
+				nietaSenalada={nietaSenalada}
+			/>
 			<div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>{children}</div>
 		</div>
 	</div>
+	</EstiloCascara.Provider>
 );
 
-/*
- * LA BARRA. Cuatro cosas y en el orden de la aplicación: la marca, el disparador del buscador
- * --con su atajo escrito, que es como se aprende que existe--, el año y el periodo, y el retrato.
- *
- * EL RETRATO ES UNA CARA Y NO UNAS INICIALES: en la aplicación se prefiere la foto porque «la
- * secretaria entra con su cuenta y con la del rector el mismo día». Aquí va dibujada (`Avatar`),
- * como en todos los clips: en un vídeo que se publica no sale la cara de nadie.
- */
-const Barra: React.FC = () => (
-	<div
-		style={{
-			height: MEDIDAS.barra,
-			display: 'flex',
-			alignItems: 'center',
-			gap: 18,
-			padding: '0 18px',
-			background: SUPERFICIE,
-			borderBottom: `1px solid ${BORDE}`,
-		}}
-	>
-		<div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-			<div style={{ width: 26, height: 26, borderRadius: 7, background: ACENTO }} />
-			<span style={{ fontSize: 17, fontWeight: 700, color: TEXTO }}>MyVC</span>
-		</div>
+/** «2026 · Periodo 4» -> el año y el número, que es lo que pinta la barra de hoy. */
+function barraDe(periodo: string): BarraDeHoyProps {
+	const m = /^(\d{4})\s*·\s*Periodo\s*(\d+)$/.exec(periodo.trim());
+	if (!m) { throw new Error(`Cáscara: «${periodo}» no es «AAAA · Periodo N».`); }
+	return { anio: m[1], periodo: Number(m[2]) };
+}
 
-		<div
-			style={{
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'space-between',
-				width: 300,
-				height: 32,
-				padding: '0 12px',
-				borderRadius: 8,
-				border: `1px solid ${BORDE}`,
-				color: TEXTO_TENUE,
-				fontSize: 14,
-			}}
-		>
-			<span>Navegar…</span>
-			<span style={{ fontSize: 12, border: `1px solid ${BORDE}`, borderRadius: 5, padding: '1px 6px' }}>Ctrl K</span>
-		</div>
-
-		<div style={{ flex: 1 }} />
-
-		<div
-			style={{
-				display: 'flex',
-				alignItems: 'center',
-				gap: 8,
-				height: 32,
-				padding: '0 12px',
-				borderRadius: 8,
-				border: `1px solid ${BORDE}`,
-				fontSize: 14,
-				fontWeight: 600,
-				color: TEXTO,
-			}}
-		>
-			2026 · Periodo 2
-			<Chevron />
-		</div>
-
-		<Avatar tipo="hombre" variante={2} tam={32} />
-	</div>
-);
-
-const Menu: React.FC<{ academico: number; senalada: { seccion: number; hija: number | null } | null }> = ({
-	academico, senalada,
-}) => (
-	<div
-		style={{
-			width: MEDIDAS.menu,
-			background: SUPERFICIE,
-			borderRight: `1px solid ${BORDE}`,
-			paddingTop: MEDIDAS.menuArriba,
-		}}
-	>
-		{SECCIONES.map((seccion, i) => (
+const Menu: React.FC<{
+	menu: Seccion[];
+	abierta: { seccion: number; t: number } | null;
+	senalada: { seccion: number; hija: number | null } | null;
+	subAbierta?: { hija: string; t: number } | null;
+	nietaSenalada?: number | null;
+}> = ({ menu, abierta, senalada, subAbierta = null, nietaSenalada = null }) => (
+	<div style={estiloDelMenu(React.useContext(EstiloCascara))}>
+		{menu.map((seccion, i) => {
+			const t = abierta !== null && abierta.seccion === i ? abierta.t : 0;
+			return (
 			<div key={seccion.etiqueta}>
 				<Entrada
 					etiqueta={seccion.etiqueta}
 					icono={seccion.icono}
-					abierta={seccion.hijas ? academico : 0}
+					abierta={seccion.hijas ? t : 0}
 					conHijas={Boolean(seccion.hijas)}
 					senalada={senalada?.seccion === i && senalada.hija === null}
 				/>
@@ -153,58 +127,99 @@ const Menu: React.FC<{ academico: number; senalada: { seccion: number; hija: num
 					 * es una columna que crece: si aquí salieran flotando, el vídeo enseñaría un menú que
 					 * no existe, y quien fuera a repetirlo buscaría un panel que no se abre.
 					 */
-					<div style={{ height: seccion.hijas.length * MEDIDAS.hija * academico, overflow: 'hidden' }}>
-						{seccion.hijas.map((hija, h) => (
-							<Hija
-								key={hija}
-								etiqueta={hija}
-								opacidad={interpolate(academico, [0.45, 1], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}
-								senalada={senalada?.seccion === i && senalada.hija === h}
-							/>
-						))}
+					<div style={{ height: (seccion.hijas.length * MEDIDAS.hija + extraDeNietas(seccion, t > 0 ? subAbierta : null)) * t, overflow: 'hidden' }}>
+						{seccion.hijas.map((hija, h) => {
+							const nietas = seccion.nietas?.[hija];
+							const sub = t > 0 && subAbierta?.hija === hija ? subAbierta.t : 0;
+							return (
+								<React.Fragment key={hija}>
+									<Hija
+										etiqueta={hija}
+										opacidad={interpolate(t, [0.45, 1], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}
+										senalada={senalada?.seccion === i && senalada.hija === h}
+										giro={nietas ? sub * 180 : undefined}
+									/>
+									{nietas && (
+										/* El tercer nivel, empujando como el segundo, con la raya guía del `ul` anidado. */
+										<div style={{ height: nietas.length * MEDIDAS.hija * sub, overflow: 'hidden', position: 'relative' }}>
+											<div style={{ position: 'absolute', left: 52, top: 4, bottom: 4, width: 1, background: BORDE }} />
+											{nietas.map((nieta, n) => (
+												<Hija
+													key={nieta}
+													etiqueta={nieta}
+													opacidad={interpolate(sub, [0.45, 1], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}
+													senalada={sub > 0 && nietaSenalada === n}
+													sangria={64}
+												/>
+											))}
+										</div>
+									)}
+								</React.Fragment>
+							);
+						})}
 					</div>
 				)}
 			</div>
-		))}
+			);
+		})}
 	</div>
 );
 
 const Entrada: React.FC<{ etiqueta: string; icono: Icono; abierta: number; conHijas: boolean; senalada: boolean }> = ({
 	etiqueta, icono, abierta, conHijas, senalada,
-}) => (
+}) => {
+	/* Los colores y el plegado vienen de la cáscara (`paleta`, `plegado`); por defecto, los de siempre. */
+	const { p, plegado } = React.useContext(EstiloCascara);
+	return (
 	<div
 		style={{
 			height: MEDIDAS.seccion,
 			display: 'flex',
 			alignItems: 'center',
-			gap: 12,
-			padding: '0 16px',
+			gap: plegado ? 12 * (1 - plegado) : 12,
+			/* Plegado, el icono se centra en la columna de iconos, como `nzInlineCollapsed`. */
+			padding: plegado ? `0 ${16 * (1 - plegado)}px 0 ${16 + (MEDIDAS_HOY.menuPlegado / 2 - 9 - 16) * plegado}px` : '0 16px',
 			fontSize: 15,
 			fontWeight: 600,
-			color: abierta > 0.5 ? ACENTO : TEXTO,
-			background: senalada ? `${ACENTO}14` : 'transparent',
+			color: abierta > 0.5 ? p.acento : p.texto,
+			background: senalada ? `${p.acento}14` : 'transparent',
+			whiteSpace: plegado ? 'nowrap' : undefined,
 		}}
 	>
-		<IconoDeSeccion cual={icono} color={abierta > 0.5 ? ACENTO : TEXTO_TENUE} />
-		<span style={{ flex: 1 }}>{etiqueta}</span>
-		{conHijas && <Chevron giro={abierta * 180} color={abierta > 0.5 ? ACENTO : TEXTO_TENUE} />}
+		<IconoDeSeccion cual={icono} color={abierta > 0.5 ? p.acento : p.tenue} />
+		<span style={{ flex: 1, opacity: plegado ? Math.max(0, 1 - plegado * 2.5) : undefined, ...(plegado ? { minWidth: 0, overflow: 'hidden' } : {}) }}>{etiqueta}</span>
+		{conHijas && !plegado && <Chevron giro={abierta * 180} color={abierta > 0.5 ? p.acento : p.tenue} />}
+		{conHijas && plegado > 0 && plegado < 0.4 && (
+			<span style={{ display: 'inline-flex', opacity: 1 - plegado * 2.5 }}>
+				<Chevron giro={abierta * 180} color={abierta > 0.5 ? p.acento : p.tenue} />
+			</span>
+		)}
 	</div>
-);
+	);
+};
 
-const Hija: React.FC<{ etiqueta: string; opacidad: number; senalada: boolean }> = ({ etiqueta, opacidad, senalada }) => (
+/** Lo que crece la sección por la hija de tercer nivel que está desplegada. */
+const extraDeNietas = (seccion: Seccion, sub: { hija: string; t: number } | null) =>
+	sub && seccion.nietas?.[sub.hija] ? seccion.nietas[sub.hija].length * MEDIDAS.hija * sub.t : 0;
+
+const Hija: React.FC<{ etiqueta: string; opacidad: number; senalada: boolean; giro?: number; sangria?: number }> = ({
+	etiqueta, opacidad, senalada, giro, sangria = 44,
+}) => (
 	<div
 		style={{
 			height: MEDIDAS.hija,
 			display: 'flex',
 			alignItems: 'center',
-			paddingLeft: 44,
+			paddingLeft: sangria,
+			paddingRight: giro === undefined ? 0 : 16,
 			fontSize: 14,
-			color: TEXTO,
+			color: React.useContext(EstiloCascara).p.texto,
 			opacity: opacidad,
-			background: senalada ? `${ACENTO}14` : 'transparent',
+			background: ((acento) => (senalada ? `${acento}14` : 'transparent'))(React.useContext(EstiloCascara).p.acento),
 		}}
 	>
-		{etiqueta}
+		{giro === undefined ? etiqueta : <span style={{ flex: 1 }}>{etiqueta}</span>}
+		{giro !== undefined && <Chevron giro={giro} color={TEXTO_TENUE} />}
 	</div>
 );
 
@@ -243,6 +258,25 @@ const IconoDeSeccion: React.FC<{ cual: Icono; color: string }> = ({ cual, color 
 					<circle cx="6.8" cy="6.5" r="2.2" {...trazo} />
 					<circle cx="12.4" cy="7.4" r="1.7" {...trazo} />
 					<path d="M2.6 14.4 C2.6 11.6 4.5 10.4 6.8 10.4 C9.1 10.4 11 11.6 11 14.4" {...trazo} />
+				</>
+			)}
+			{cual === 'compromisos' && (
+				<>
+					<path d="M4 3.4 H14 V14.6 H4 Z" {...trazo} />
+					<path d="M6.4 9.2 L8.3 11 L11.8 7.4" {...trazo} />
+				</>
+			)}
+			{cual === 'actividades' && (
+				<>
+					<path d="M3.6 3.6 H14.4 V14.4 H3.6 Z" {...trazo} />
+					<path d="M6 7 H12 M6 9.6 H12 M6 12.2 H9.4" {...trazo} />
+				</>
+			)}
+			{cual === 'matriculas' && (
+				<>
+					<path d="M4 4 H14 V15 H4 Z" {...trazo} />
+					<path d="M6.8 2.8 H11.2 V5 H6.8 Z" {...trazo} />
+					<path d="M6.4 10 L8.3 11.8 L11.8 8.2" {...trazo} />
 				</>
 			)}
 			{cual === 'disciplina' && <path d="M9 2.8 L14.6 5 V9.3 C14.6 12.4 12.2 14.4 9 15.2 C5.8 14.4 3.4 12.4 3.4 9.3 V5 Z" {...trazo} />}

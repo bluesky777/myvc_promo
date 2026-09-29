@@ -61,10 +61,10 @@ export const PUNTO_DETALLE = {
 };
 
 /* Los dos iconos administrativos de Ant (`user` y `clock-circle`), dibujados. */
-const IconoUniforme: React.FC = () => (
+export const IconoUniforme: React.FC = () => (
 	<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden><circle cx="12" cy="8" r="4" fill="currentColor" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor" /></svg>
 );
-const IconoTardanza: React.FC = () => (
+export const IconoTardanza: React.FC = () => (
 	<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M12 7v5.4l3.4 2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
 );
 

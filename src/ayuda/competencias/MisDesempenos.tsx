@@ -5,7 +5,7 @@ import { entra, escribiendo, escrito, estiloDeSalida, llega, seVa } from '../../
 import { ACENTO, BORDE, SUPERFICIE, TEXTO, TEXTO_TENUE } from '../../notas/tema';
 import { FOCO } from '../tema';
 import {
-	ANCHO, CLASE, DESEMPENOS, DESEMPENOS_ALTO, DESEMPENOS_DEL_COLEGIO, DESEMPENOS_TEXTOS, MIS_CLASES,
+	ANCHO, CLASE, DESEMPENOS, DESEMPENOS_ALTO, DESEMPENOS_DEL_COLEGIO, DESEMPENOS_TEXTOS, MIS_CLASES, PASTILLA_CLASE,
 } from './datos';
 
 /*
@@ -78,15 +78,17 @@ export const MisDesempenos: React.FC<{
 			</div>
 
 			{/* ── La tira de clases. La elegida va en el color del colegio. ─────────────────── */}
-			<div style={{ height: D.tira, display: 'flex', alignItems: 'center', gap: 10, opacity: llega(frame, fps, 0, BLOQUES, PASO).opacidad * (1 - fuera) }}>
+			<div style={{ height: D.tira, display: 'flex', alignItems: 'center', gap: PASTILLA_CLASE.hueco, opacity: llega(frame, fps, 0, BLOQUES, PASO).opacidad * (1 - fuera) }}>
 				{MIS_CLASES.map((clase, i) => (
 					<div
 						key={clase}
 						style={{
 							height: 36,
+							width: PASTILLA_CLASE.ancho,
+							boxSizing: 'border-box',
 							display: 'flex',
 							alignItems: 'center',
-							padding: '0 16px',
+							justifyContent: 'center',
 							borderRadius: 8,
 							border: `1px solid ${i === 0 ? ACENTO : BORDE}`,
 							background: i === 0 ? `${ACENTO}14` : SUPERFICIE,

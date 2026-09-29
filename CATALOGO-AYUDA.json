@@ -1,0 +1,3284 @@
+{
+  "_leeme": [
+    "El catálogo de los vídeos de ayuda, para que app2 lo copie a catalogo-de-ayuda.ts.",
+    "La CLAVE es el contrato: es lo que la ruta declara en data.ayuda y lo que no debe cambiar.",
+    "El identificador de YouTube lo rellena Joseth al subir cada vídeo (hoy va en null).",
+    "estado 'hecho' = el mp4 existe y sus tiempos son los de verdad, medidos sobre el guion.",
+    "estado 'planeado' = todavía no hay vídeo: la duración es una estimación y no hay capítulos,",
+    "porque los capítulos sólo se saben cuando el guion está escrito.",
+    "Los segundos salen de los fotogramas del guion a 30 fps. Si un guion cambia, esto hay que",
+    "volver a pasar `node tools/catalogo.mjs`, que lo reescribe desde los guiones."
+  ],
+  "_avisos_para_el_front": [
+    "1. «planilla-teclear» dura 42 s y NO enseña la nota rápida en ningún segundo: en su 0:38 está",
+    "   la tarjeta del final. La maqueta le pone seis capítulos (0:38 nota rápida, 0:52 nivelar,",
+    "   1:05 ausencias) y 1:15 de duración: ese vídeo no existe. Sus capítulos de verdad son los",
+    "   cuatro que van aquí abajo. El «?» de la nota rápida tiene que apuntar a «planilla-nota-rapida»,",
+    "   que está planeado; nivelar es «cierre-3-nivelaciones» y ausencias «docente-asistencia».",
+    "2. En el menú la entrada se llama «Mis desempeños», no «Mis competencias» (menu.ts:596).",
+    "3. La clave del vídeo de competencias es «competencias-docente» y no «competencias», porque",
+    "   habrá otro del mismo tema para coordinación (el plan de evaluación). Si el front prefiere",
+    "   «competencias», se cambia aquí y en su guion: es una línea."
+  ],
+  "version": "2026-09-29",
+  "fps": 30,
+  "videos": [
+    {
+      "clave": "planilla-teclear",
+      "titulo": "La planilla: teclear y que quede guardado",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 38.5,
+      "rutas": [
+        "planilla-notas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/planilla-teclear.mp4",
+      "composicion": "Ayuda-Planilla-Teclear",
+      "guion": "src/ayuda/planilla/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está la planilla"
+        },
+        {
+          "s": 8.3,
+          "titulo": "La pantalla: una fila por alumno"
+        },
+        {
+          "s": 12.4,
+          "titulo": "El aro: escrita y sin confirmar"
+        },
+        {
+          "s": 20.6,
+          "titulo": "Un aviso por tanda"
+        },
+        {
+          "s": 23.9,
+          "titulo": "El historial de cada fila"
+        }
+      ],
+      "revision": "arreglado: miga del paso 2 · limpio"
+    },
+    {
+      "clave": "competencias-docente",
+      "titulo": "Calificar por competencias",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 73.2,
+      "rutas": [
+        "mis-desempenos",
+        "unidades/:asignatura_id",
+        "informes/boletines-periodo-6/:grupo_id/:periodo_a_calcular"
+      ],
+      "fichero": "out/ayuda/competencias-docente.mp4",
+      "composicion": "Ayuda-Competencias",
+      "guion": "src/ayuda/competencias/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Qué cambia: la columna es un instrumento"
+        },
+        {
+          "s": 21,
+          "titulo": "Mis competencias: lo que sale en el boletín"
+        },
+        {
+          "s": 44.2,
+          "titulo": "La planilla no cambia"
+        },
+        {
+          "s": 50.7,
+          "titulo": "Sacar el boletín en Informes"
+        },
+        {
+          "s": 60,
+          "titulo": "El boletín por competencias"
+        }
+      ],
+      "revision": "arreglado: clases coherentes con el reparto; foco del buscador medido a mano · limpio"
+    },
+    {
+      "clave": "planilla-nota-rapida",
+      "titulo": "La nota rápida",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 45.2,
+      "rutas": [
+        "planilla-notas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/planilla-nota-rapida.mp4",
+      "composicion": "Ayuda-Nota-Rapida",
+      "guion": "src/ayuda/planilla-nota-rapida/guion.ts",
+      "youtube": "https://youtu.be/f0c8jTcwl7c",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la planilla"
+        },
+        {
+          "s": 8.5,
+          "titulo": "Encender la nota rápida"
+        },
+        {
+          "s": 12.5,
+          "titulo": "El campo vacío borra"
+        },
+        {
+          "s": 21.2,
+          "titulo": "Un 0 no es vacío"
+        },
+        {
+          "s": 28.6,
+          "titulo": "Columna y fila, con el buscador"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "cierre-1-quien-falta",
+      "titulo": "Antes de cerrar: a quién le falta",
+      "serie": "cierre",
+      "orden": 1,
+      "estado": "hecho",
+      "dura_s": 42.9,
+      "rutas": [
+        "notas-perdidas",
+        "definitivas-periodos/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/cierre-1-quien-falta.mp4",
+      "composicion": "Ayuda-Cierre-1",
+      "guion": "src/ayuda/cierre-1/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Académico, Notas perdidas"
+        },
+        {
+          "s": 3.9,
+          "titulo": "La lista: una fila por alumno"
+        },
+        {
+          "s": 7.1,
+          "titulo": "Calificar sin abrir la planilla"
+        },
+        {
+          "s": 20.3,
+          "titulo": "Definitivas: Auto al lado de Final"
+        },
+        {
+          "s": 27.5,
+          "titulo": "Corregir una Final: el indicador, no a mano"
+        }
+      ],
+      "revision": "arreglado: focos que duraban de más o recortaban filas aún fuera · limpio"
+    },
+    {
+      "clave": "cierre-2-candados",
+      "titulo": "Cerrar el periodo: el semáforo",
+      "serie": "cierre",
+      "orden": 2,
+      "estado": "hecho",
+      "dura_s": 44.1,
+      "rutas": [
+        "colegio/:yearId/periodos"
+      ],
+      "fichero": "out/ayuda/cierre-2-candados.mp4",
+      "composicion": "Ayuda-Cierre-2",
+      "guion": "src/ayuda/cierre-2/guion.ts",
+      "youtube": "https://youtu.be/QF9tceUKgOU",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Configuración, El colegio"
+        },
+        {
+          "s": 4.1,
+          "titulo": "El semáforo: cuatro tramos"
+        },
+        {
+          "s": 8.3,
+          "titulo": "Cerrar: pasar a «Nivelando»"
+        },
+        {
+          "s": 25.7,
+          "titulo": "Después, y lo que no se toca"
+        }
+      ],
+      "cartel": "rojo",
+      "revision": "arreglado: URL con otro id de año · limpio"
+    },
+    {
+      "clave": "cierre-3-nivelaciones",
+      "titulo": "Nivelar no es corregir",
+      "serie": "cierre",
+      "orden": 3,
+      "estado": "hecho",
+      "dura_s": 46.7,
+      "rutas": [
+        "nivelaciones/:asignatura_id",
+        "planilla-notas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/cierre-3-nivelaciones.mp4",
+      "composicion": "Ayuda-Cierre-3",
+      "guion": "src/ayuda/cierre-3/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: Mis asignaturas, Planilla"
+        },
+        {
+          "s": 6.4,
+          "titulo": "La semana de nivelaciones"
+        },
+        {
+          "s": 10.9,
+          "titulo": "Modo nivelación y su diálogo"
+        },
+        {
+          "s": 24.9,
+          "titulo": "La regla del colegio topa la nota"
+        },
+        {
+          "s": 29.1,
+          "titulo": "Corregir no es nivelar"
+        }
+      ],
+      "revision": "arreglado: el aviso tapaba la miga; foco sobre la lista que salía · limpio"
+    },
+    {
+      "clave": "cierre-4-boletines",
+      "titulo": "Sacar los boletines del periodo",
+      "serie": "cierre",
+      "orden": 4,
+      "estado": "hecho",
+      "dura_s": 40.9,
+      "rutas": [
+        "informes/boletines-periodo/:grupo_id/:periodo_a_calcular"
+      ],
+      "fichero": "out/ayuda/cierre-4-boletines.mp4",
+      "composicion": "Ayuda-Cierre-4",
+      "guion": "src/ayuda/cierre-4/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: Informes"
+        },
+        {
+          "s": 4.5,
+          "titulo": "El periodo: el que tienes puesto arriba"
+        },
+        {
+          "s": 9.5,
+          "titulo": "Elegir el boletín y el grupo"
+        },
+        {
+          "s": 24.7,
+          "titulo": "La hoja, con lo nivelado tachado"
+        }
+      ],
+      "revision": "arreglado: foco del selector medido a mano; 18 grupos → 13; foco sobre la pantalla vacía · golpes revisados (app)"
+    },
+    {
+      "clave": "cierre-5-recuperacion",
+      "titulo": "Recuperación del año",
+      "serie": "cierre",
+      "orden": 5,
+      "estado": "hecho",
+      "dura_s": 37,
+      "rutas": [
+        "recuperacion-anual",
+        "recuperacion-anual/:grupo_id"
+      ],
+      "fichero": "out/ayuda/cierre-5-recuperacion.mp4",
+      "composicion": "Ayuda-Cierre-5",
+      "guion": "src/ayuda/cierre-5/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Académico, Recuperación del año"
+        },
+        {
+          "s": 2.5,
+          "titulo": "Elegir el grupo"
+        },
+        {
+          "s": 9.7,
+          "titulo": "Lo perdido del año, por alumno"
+        },
+        {
+          "s": 20.7,
+          "titulo": "Escribir la nota y guardar con el botón"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "cierre-6-definitivas-promovidos",
+      "titulo": "Recalcular definitivas y calcular promovidos",
+      "serie": "cierre",
+      "orden": 6,
+      "estado": "hecho",
+      "dura_s": 53.8,
+      "rutas": [
+        "informes-old",
+        "informes/promovidos/:grupo_id"
+      ],
+      "fichero": "out/ayuda/cierre-6-definitivas-promovidos.mp4",
+      "composicion": "Ayuda-Cierre-6",
+      "guion": "src/ayuda/cierre-6/guion.ts",
+      "youtube": "https://youtu.be/zB4-Z9eARvw",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "No están en el menú nuevo"
+        },
+        {
+          "s": 9.9,
+          "titulo": "El tablero viejo: /informes-old"
+        },
+        {
+          "s": 14.1,
+          "titulo": "Recalcular definitivas"
+        },
+        {
+          "s": 26.1,
+          "titulo": "Calcular promovidos"
+        },
+        {
+          "s": 39.7,
+          "titulo": "Comprobarlo: Promovidos y no promovidos"
+        }
+      ],
+      "cartel": "rojo",
+      "revision": "arreglado: el velo se cortaba un fotograma (70 % del cuadro) · golpes revisados (app y cortes)"
+    },
+    {
+      "clave": "cierre-7-acta",
+      "titulo": "El acta de evaluación y promoción",
+      "serie": "cierre",
+      "orden": 7,
+      "estado": "hecho",
+      "dura_s": 55.1,
+      "rutas": [
+        "informes/acta-evaluacion-promocion"
+      ],
+      "fichero": "out/ayuda/cierre-7-acta.mp4",
+      "composicion": "Ayuda-Cierre-7",
+      "guion": "src/ayuda/cierre-7/guion.ts",
+      "youtube": "https://youtu.be/EnaoBAOmvMI",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Informes, Cierre de año"
+        },
+        {
+          "s": 12.1,
+          "titulo": "Qué se imprime, y el aviso de descuadre"
+        },
+        {
+          "s": 23.5,
+          "titulo": "La hoja académica: la que tarda"
+        },
+        {
+          "s": 37.5,
+          "titulo": "La hoja de cada grupo"
+        }
+      ],
+      "revision": "arreglado: el foco no crecía con el panel · golpes revisados (app)"
+    },
+    {
+      "clave": "cierre-8-acta-nivelacion",
+      "titulo": "El acta de nivelación",
+      "serie": "cierre",
+      "orden": 8,
+      "estado": "hecho",
+      "dura_s": 42.5,
+      "rutas": [
+        "informes/acta-nivelacion/:grupo_id"
+      ],
+      "fichero": "out/ayuda/cierre-8-acta-nivelacion.mp4",
+      "composicion": "Ayuda-Cierre-8",
+      "guion": "src/ayuda/cierre-8/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Informes, Cierre de año"
+        },
+        {
+          "s": 10.5,
+          "titulo": "Antes de firmarla"
+        },
+        {
+          "s": 20,
+          "titulo": "Sección A: la regla y el asterisco"
+        },
+        {
+          "s": 29.2,
+          "titulo": "Sección B: la recuperación del año"
+        }
+      ],
+      "revision": "arreglado: rótulo y foco antes del clic · golpes revisados (app)"
+    },
+    {
+      "clave": "docente-portada",
+      "titulo": "La portada: lo que tienes hoy",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 36,
+      "rutas": [
+        ""
+      ],
+      "fichero": "out/ayuda/docente-portada.mp4",
+      "composicion": "Ayuda-Portada",
+      "guion": "src/ayuda/docente-portada/guion.ts",
+      "youtube": "https://youtu.be/AdHH1uW1yjs",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Inicio"
+        },
+        {
+          "s": 4.4,
+          "titulo": "Clases de hoy: de dónde salen"
+        },
+        {
+          "s": 13.6,
+          "titulo": "Abrir una clase"
+        },
+        {
+          "s": 26.7,
+          "titulo": "Lo que viene y los avisos"
+        }
+      ],
+      "revision": "arreglado: 9°B: número de Logros coherente · golpes revisados (app)"
+    },
+    {
+      "clave": "docente-asistencia",
+      "titulo": "Pasar asistencia desde la planilla",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 49.5,
+      "rutas": [
+        "planilla-notas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/docente-asistencia.mp4",
+      "composicion": "Ayuda-Asistencia",
+      "guion": "src/ayuda/docente-asistencia/guion.ts",
+      "youtube": "https://youtu.be/Hef4ewKO3KA",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la planilla"
+        },
+        {
+          "s": 10.8,
+          "titulo": "Aus y Tard: el número y las fechas"
+        },
+        {
+          "s": 15.6,
+          "titulo": "Anotar una ausencia y una tardanza"
+        },
+        {
+          "s": 35.4,
+          "titulo": "Periodo cerrado: el mismo candado"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "docente-comportamiento",
+      "titulo": "Comportamiento y el libro rojo",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 42.5,
+      "rutas": [
+        "comportamiento-notas/:grupo_id"
+      ],
+      "fichero": "out/ayuda/docente-comportamiento.mp4",
+      "composicion": "Ayuda-Comportamiento",
+      "guion": "src/ayuda/docente-comportamiento/guion.ts",
+      "youtube": "https://youtu.be/PK1ipBxafNM",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Mis asignaturas, Grupos titularía"
+        },
+        {
+          "s": 8.7,
+          "titulo": "La nota de comportamiento"
+        },
+        {
+          "s": 14.5,
+          "titulo": "El libro rojo abre en Periodo 1"
+        },
+        {
+          "s": 23.8,
+          "titulo": "Las tres filas y cuándo se guardan"
+        }
+      ],
+      "revision": "arreglado: foco del menú tapaba secciones; titularía sin notas; tarjeta «Después: Después» · limpio"
+    },
+    {
+      "clave": "docente-situacion",
+      "titulo": "Registrar una situación",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 56,
+      "rutas": [
+        "disciplina"
+      ],
+      "fichero": "out/ayuda/docente-situacion.mp4",
+      "composicion": "Ayuda-Situacion",
+      "guion": "src/ayuda/docente-situacion/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Disciplina, y el grupo"
+        },
+        {
+          "s": 8.5,
+          "titulo": "La rejilla y sus colores"
+        },
+        {
+          "s": 14,
+          "titulo": "Crear una situación con el +"
+        },
+        {
+          "s": 31.1,
+          "titulo": "Editarla: el ordinal se guarda solo"
+        },
+        {
+          "s": 46.5,
+          "titulo": "Lo demás, con Guardar cambios"
+        }
+      ],
+      "revision": "arreglado: foco del menú · golpes revisados (app)"
+    },
+    {
+      "clave": "docente-uniforme-tardanzas",
+      "titulo": "Uniforme y llegadas tarde",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 37.7,
+      "rutas": [
+        "disciplina"
+      ],
+      "fichero": "out/ayuda/docente-uniforme-tardanzas.mp4",
+      "composicion": "Ayuda-UniformeTardanzas",
+      "guion": "src/ayuda/docente-uniforme-tardanzas/guion.ts",
+      "youtube": "https://youtu.be/4qS9hRXRc50",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Disciplina, y el grupo"
+        },
+        {
+          "s": 8.5,
+          "titulo": "Uniforme y tardanzas en la celda"
+        },
+        {
+          "s": 13.3,
+          "titulo": "Agregar una falla de uniforme"
+        },
+        {
+          "s": 28.7,
+          "titulo": "Las tardanzas: dónde se ponen"
+        }
+      ],
+      "revision": "arreglado: foco del menú; foco sobre un hueco vacío · golpes revisados (app)"
+    },
+    {
+      "clave": "docente-observador",
+      "titulo": "El observador del grupo",
+      "serie": "docente",
+      "estado": "hecho",
+      "dura_s": 43.1,
+      "rutas": [
+        "disciplina/observador-completo/:grupo_id",
+        "disciplina/observador-periodo/:grupo_id"
+      ],
+      "fichero": "out/ayuda/docente-observador.mp4",
+      "composicion": "Ayuda-Observador",
+      "guion": "src/ayuda/docente-observador/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Disciplina, y el grupo"
+        },
+        {
+          "s": 8.7,
+          "titulo": "Los botones del observador"
+        },
+        {
+          "s": 14.7,
+          "titulo": "Abrirlo escribe en la base"
+        },
+        {
+          "s": 24.2,
+          "titulo": "Los márgenes, antes de imprimir"
+        }
+      ],
+      "revision": "arreglado: foco del menú · golpes revisados (app)"
+    },
+    {
+      "clave": "asignaturas-crear",
+      "titulo": "Crear una asignatura",
+      "serie": "montar-el-ano",
+      "estado": "hecho",
+      "dura_s": 36.7,
+      "rutas": [
+        "asignaturas"
+      ],
+      "fichero": "out/ayuda/asignaturas-crear.mp4",
+      "composicion": "Ayuda-AsignaturasCrear",
+      "guion": "src/ayuda/asignaturas-crear/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Asignaturas"
+        },
+        {
+          "s": 4.3,
+          "titulo": "El cuadre: lo que le falta a un grupo"
+        },
+        {
+          "s": 12.8,
+          "titulo": "La ficha: materia, grupo y docente"
+        },
+        {
+          "s": 28.1,
+          "titulo": "Quién la califica"
+        }
+      ],
+      "revision": "arreglado: foco sobre la rejilla que se movía · golpes revisados (app)"
+    },
+    {
+      "clave": "asignaturas-modificar",
+      "titulo": "Cambiar o quitar una asignatura",
+      "serie": "montar-el-ano",
+      "estado": "hecho",
+      "dura_s": 50.8,
+      "rutas": [
+        "asignaturas"
+      ],
+      "fichero": "out/ayuda/asignaturas-modificar.mp4",
+      "composicion": "Ayuda-AsignaturasModificar",
+      "guion": "src/ayuda/asignaturas-modificar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Asignaturas"
+        },
+        {
+          "s": 7.5,
+          "titulo": "Cambiar el docente a mitad de año"
+        },
+        {
+          "s": 19.8,
+          "titulo": "Quitar una asignatura"
+        },
+        {
+          "s": 33.1,
+          "titulo": "La papelera la devuelve"
+        }
+      ],
+      "revision": "arreglado: tres focos sobre cosas que se movían · re-renderizado; golpes revisados (app)"
+    },
+    {
+      "clave": "asignaturas-copiar",
+      "titulo": "Copiar las asignaturas de un grupo a otro",
+      "serie": "montar-el-ano",
+      "estado": "hecho",
+      "dura_s": 35.7,
+      "rutas": [
+        "asignaturas"
+      ],
+      "fichero": "out/ayuda/asignaturas-copiar.mp4",
+      "composicion": "Ayuda-AsignaturasCopiar",
+      "guion": "src/ayuda/asignaturas-copiar/guion.ts",
+      "youtube": "https://youtu.be/l7GW6Zayrh4",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Asignaturas"
+        },
+        {
+          "s": 8.2,
+          "titulo": "Copiar de 9°A a 9°B"
+        },
+        {
+          "s": 18.3,
+          "titulo": "Qué copia y qué no"
+        }
+      ],
+      "revision": "arreglado: foco sobre la página bajando; golpe al cortarse · re-renderizado; golpes revisados (app)"
+    },
+    {
+      "clave": "asignaturas-dias",
+      "titulo": "Los días de clase de una asignatura",
+      "serie": "montar-el-ano",
+      "estado": "hecho",
+      "dura_s": 37.5,
+      "rutas": [
+        "asignaturas"
+      ],
+      "fichero": "out/ayuda/asignaturas-dias.mp4",
+      "composicion": "Ayuda-AsignaturasDias",
+      "guion": "src/ayuda/asignaturas-dias/guion.ts",
+      "youtube": "https://youtu.be/bZMjW7LWihQ",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Asignaturas"
+        },
+        {
+          "s": 8,
+          "titulo": "Marcar los días"
+        },
+        {
+          "s": 19.8,
+          "titulo": "Para qué sirven: Clases de hoy"
+        },
+        {
+          "s": 24.2,
+          "titulo": "El horario y el interruptor del año"
+        }
+      ],
+      "revision": "golpes revisados (app y rótulo)"
+    },
+    {
+      "clave": "grupos-crear",
+      "titulo": "Crear los grupos del año",
+      "serie": "montar-el-ano",
+      "estado": "hecho",
+      "dura_s": 41.2,
+      "rutas": [
+        "grupos"
+      ],
+      "fichero": "out/ayuda/grupos-crear.mp4",
+      "composicion": "Ayuda-GruposCrear",
+      "guion": "src/ayuda/grupos-crear/guion.ts",
+      "youtube": "https://youtu.be/vXJ390MNo7U",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Grupos"
+        },
+        {
+          "s": 5.3,
+          "titulo": "La ficha: nombre, grado e IH semanal"
+        },
+        {
+          "s": 18.5,
+          "titulo": "La fila nueva"
+        },
+        {
+          "s": 28.7,
+          "titulo": "Por qué van antes que las asignaturas"
+        }
+      ],
+      "revision": "arreglado: 2 parpadeos en el desplazamiento de la lista: velocidad constante · re-renderizado: 0 parpadeos"
+    },
+    {
+      "clave": "grupos-juntos",
+      "titulo": "Grupos que van siempre juntos",
+      "serie": "montar-el-ano",
+      "estado": "hecho",
+      "dura_s": 31.5,
+      "rutas": [
+        "grupos"
+      ],
+      "fichero": "out/ayuda/grupos-juntos.mp4",
+      "composicion": "Ayuda-GruposJuntos",
+      "guion": "src/ayuda/grupos-juntos/guion.ts",
+      "youtube": "https://youtu.be/Woun9HM9UVs",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Grupos"
+        },
+        {
+          "s": 8,
+          "titulo": "Juntar grupos"
+        },
+        {
+          "s": 15.9,
+          "titulo": "Qué cambia: sólo el horario"
+        }
+      ],
+      "revision": "arreglado: foco más largo que su paso · golpes revisados (app)"
+    },
+    {
+      "clave": "certificado-membrete",
+      "titulo": "Los membretes del colegio",
+      "serie": "certificado",
+      "estado": "hecho",
+      "dura_s": 48.6,
+      "rutas": [
+        "colegio/:yearId/certificados"
+      ],
+      "fichero": "out/ayuda/certificado-membrete.mp4",
+      "composicion": "Ayuda-Certificado-Membrete",
+      "guion": "src/ayuda/certificado-membrete/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: El colegio, Certificados"
+        },
+        {
+          "s": 10.5,
+          "titulo": "Son del colegio, no del año"
+        },
+        {
+          "s": 20.8,
+          "titulo": "Cambiar un membrete"
+        },
+        {
+          "s": 32.5,
+          "titulo": "Borrar una plantilla"
+        }
+      ],
+      "cartel": "rojo",
+      "revision": "arreglado: nombre del colegio en minúscula · limpio"
+    },
+    {
+      "clave": "certificado-del-ano",
+      "titulo": "Lo que imprime este año",
+      "serie": "certificado",
+      "estado": "hecho",
+      "dura_s": 33.3,
+      "rutas": [
+        "colegio/:yearId/certificados"
+      ],
+      "fichero": "out/ayuda/certificado-del-ano.mp4",
+      "composicion": "Ayuda-Certificado-Del-Ano",
+      "guion": "src/ayuda/certificado-del-ano/guion.ts",
+      "youtube": "https://youtu.be/nQF5eg26WiQ",
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: El colegio, Certificados"
+        },
+        {
+          "s": 5.2,
+          "titulo": "Qué membrete usa 2026"
+        },
+        {
+          "s": 14,
+          "titulo": "Los textos del año"
+        },
+        {
+          "s": 21.6,
+          "titulo": "El escudo sólo sale sin membrete"
+        }
+      ],
+      "revision": "arreglado: foco mientras se iba la cáscara · limpio"
+    },
+    {
+      "clave": "certificado-imprimir",
+      "titulo": "Sacar certificados de estudio",
+      "serie": "certificado",
+      "estado": "hecho",
+      "dura_s": 31.6,
+      "rutas": [
+        "informes/certificados-estudio/:grupo_id",
+        "informes/certificados-estudio-periodo/:grupo_id/:periodo_a_calcular",
+        "certificados/:alumno_id"
+      ],
+      "fichero": "out/ayuda/certificado-imprimir.mp4",
+      "composicion": "Ayuda-Certificado-Imprimir",
+      "guion": "src/ayuda/certificado-imprimir/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Informes"
+        },
+        {
+          "s": 3.1,
+          "titulo": "Tres papeles: buscar «certificado»"
+        },
+        {
+          "s": 8.5,
+          "titulo": "Hasta un periodo: gasta un número"
+        },
+        {
+          "s": 19.6,
+          "titulo": "La hoja y su N.º"
+        }
+      ],
+      "revision": "arreglado: 24 grupos → 13 · limpio"
+    },
+    {
+      "clave": "constancia-estudio",
+      "titulo": "La constancia de estudio",
+      "serie": "certificado",
+      "estado": "hecho",
+      "dura_s": 31.5,
+      "rutas": [
+        "informes/constancia-estudio/:alumno_id"
+      ],
+      "fichero": "out/ayuda/constancia-estudio.mp4",
+      "composicion": "Ayuda-Constancia-Estudio",
+      "guion": "src/ayuda/constancia-estudio/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Informes"
+        },
+        {
+          "s": 5.7,
+          "titulo": "No es el certificado: no lleva notas"
+        },
+        {
+          "s": 9.4,
+          "titulo": "Grupo, estudiante y cargar"
+        },
+        {
+          "s": 16.3,
+          "titulo": "La hoja: lo que dice y lo que no"
+        }
+      ],
+      "revision": "arreglado: foco antes de que llegaran las fichas; nombre del colegio · limpio"
+    },
+    {
+      "clave": "periodo-arriba",
+      "titulo": "El año y el periodo se cambian arriba",
+      "serie": "moverse",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 45.8,
+      "rutas": [
+        "*"
+      ],
+      "fichero": "out/ayuda/periodo-arriba.mp4",
+      "composicion": "Ayuda-Periodo-Arriba",
+      "guion": "src/ayuda/periodo-arriba/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la barra de arriba"
+        },
+        {
+          "s": 7.3,
+          "titulo": "Elegido no es «en curso»"
+        },
+        {
+          "s": 20.8,
+          "titulo": "Cambiar de periodo"
+        },
+        {
+          "s": 24.8,
+          "titulo": "Cambiar de año: te mueve y lo avisa"
+        },
+        {
+          "s": 34.2,
+          "titulo": "Se guarda en tu cuenta"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "buscar-escribiendo",
+      "titulo": "Ir a cualquier sitio escribiendo",
+      "serie": "moverse",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 43.2,
+      "rutas": [
+        "*"
+      ],
+      "fichero": "out/ayuda/buscar-escribiendo.mp4",
+      "composicion": "Ayuda-Buscar-Escribiendo",
+      "guion": "src/ayuda/buscar-escribiendo/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: / o Ctrl K"
+        },
+        {
+          "s": 12,
+          "titulo": "Por sinónimos: «fallas»"
+        },
+        {
+          "s": 19.5,
+          "titulo": "Personas"
+        },
+        {
+          "s": 28,
+          "titulo": "Abrir con Intro"
+        }
+      ],
+      "revision": "golpes revisados: resultados que cambian (app)"
+    },
+    {
+      "clave": "mis-asignaturas",
+      "titulo": "Mis asignaturas, por donde se empieza",
+      "serie": "docente",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 39.6,
+      "rutas": [
+        "mis-asignaturas"
+      ],
+      "fichero": "out/ayuda/mis-asignaturas.mp4",
+      "composicion": "Ayuda-Mis-Asignaturas",
+      "guion": "src/ayuda/mis-asignaturas/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Académico, Mis asignaturas"
+        },
+        {
+          "s": 4.3,
+          "titulo": "Una fila por asignatura"
+        },
+        {
+          "s": 13.2,
+          "titulo": "El marco rojo: lo que falta"
+        },
+        {
+          "s": 32.4,
+          "titulo": "Dónde se arregla"
+        }
+      ],
+      "revision": "arreglado: último rótulo no casaba con el puntero · limpio"
+    },
+    {
+      "clave": "unidades-100",
+      "titulo": "Unidades e indicadores: el 100 %",
+      "serie": "docente",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 50.4,
+      "rutas": [
+        "unidades/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/unidades-100.mp4",
+      "composicion": "Ayuda-Unidades-100",
+      "guion": "src/ayuda/unidades-100/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Mis asignaturas, botón Logros"
+        },
+        {
+          "s": 9.5,
+          "titulo": "Los Logros suman 100"
+        },
+        {
+          "s": 14.5,
+          "titulo": "Corregir un porcentaje"
+        },
+        {
+          "s": 29.4,
+          "titulo": "Los Indicadores de cada Logro suman 100"
+        }
+      ],
+      "revision": "arreglado: docente de 9°A incoherente; migas · golpes revisados (app)"
+    },
+    {
+      "clave": "menu-secciones",
+      "titulo": "Dónde está cada cosa: el menú",
+      "serie": "moverse",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 39.4,
+      "rutas": [
+        "*"
+      ],
+      "fichero": "out/ayuda/menu-secciones.mp4",
+      "composicion": "Ayuda-Menu-Secciones",
+      "guion": "src/ayuda/menu-secciones/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Las secciones"
+        },
+        {
+          "s": 7.5,
+          "titulo": "Abrir una sección"
+        },
+        {
+          "s": 14.8,
+          "titulo": "Plegar a iconos"
+        },
+        {
+          "s": 26.3,
+          "titulo": "Lateral o superior"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "volver-rastro",
+      "titulo": "Volver sobre tus pasos",
+      "serie": "moverse",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 35.3,
+      "rutas": [
+        "*"
+      ],
+      "fichero": "out/ayuda/volver-rastro.mp4",
+      "composicion": "Ayuda-Volver-Rastro",
+      "guion": "src/ayuda/volver-rastro/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Un atajo desde la portada"
+        },
+        {
+          "s": 4.4,
+          "titulo": "El rastro: de qué pantalla cuelga"
+        },
+        {
+          "s": 16.4,
+          "titulo": "Subir con las migas"
+        },
+        {
+          "s": 23.2,
+          "titulo": "El Atrás del navegador"
+        }
+      ],
+      "revision": "arreglado: número de Logros de 9°B incoherente entre pantallas · golpes revisados: fila que se abre (app)"
+    },
+    {
+      "clave": "a-tu-gusto",
+      "titulo": "Ponerlo a tu gusto",
+      "serie": "moverse",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 33.3,
+      "rutas": [
+        "*"
+      ],
+      "fichero": "out/ayuda/a-tu-gusto.mp4",
+      "composicion": "Ayuda-A-Tu-Gusto",
+      "guion": "src/ayuda/a-tu-gusto/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: el engranaje"
+        },
+        {
+          "s": 7.5,
+          "titulo": "Modo oscuro"
+        },
+        {
+          "s": 15.5,
+          "titulo": "Densidad de las tablas"
+        },
+        {
+          "s": 19.8,
+          "titulo": "Se guarda en este navegador"
+        }
+      ],
+      "revision": "golpes revisados: modo oscuro y densidad (app)"
+    },
+    {
+      "clave": "entrega-de-notas",
+      "titulo": "Entrega de notas: bloquear y qué imprimir",
+      "serie": "informes",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 72.4,
+      "rutas": [
+        "informes",
+        "colegio/:yearId/periodos"
+      ],
+      "fichero": "out/ayuda/entrega-de-notas.mp4",
+      "composicion": "Ayuda-Entrega-De-Notas",
+      "guion": "src/ayuda/entrega-de-notas/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Bloquear: Configuración, El colegio"
+        },
+        {
+          "s": 4.1,
+          "titulo": "Cerrar el periodo: el semáforo"
+        },
+        {
+          "s": 27.8,
+          "titulo": "«Poner en curso» no se toca"
+        },
+        {
+          "s": 33.2,
+          "titulo": "Informes: el periodo de arriba"
+        },
+        {
+          "s": 41.6,
+          "titulo": "Qué imprimir según el periodo"
+        },
+        {
+          "s": 63.4,
+          "titulo": "La pila: todo de una vez"
+        }
+      ],
+      "revision": "nuevo 2026-09-29"
+    },
+    {
+      "clave": "informes-encontrar",
+      "titulo": "Encontrar el papel que necesitas",
+      "serie": "informes",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 44.8,
+      "rutas": [
+        "informes"
+      ],
+      "fichero": "out/ayuda/informes-encontrar.mp4",
+      "composicion": "Ayuda-Informes-Encontrar",
+      "guion": "src/ayuda/informes-encontrar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: Informes"
+        },
+        {
+          "s": 4.5,
+          "titulo": "Las familias son un filtro"
+        },
+        {
+          "s": 16,
+          "titulo": "Buscar con tus palabras: «sabana»"
+        },
+        {
+          "s": 28.3,
+          "titulo": "«Vive fuera»: se saca en otra pantalla"
+        },
+        {
+          "s": 32.2,
+          "titulo": "«paz y salvo», y cuando no sale nada"
+        }
+      ],
+      "revision": "arreglado: foco que se encendía antes de acabar la búsqueda · golpes revisados (app)"
+    },
+    {
+      "clave": "informes-ajustes",
+      "titulo": "Los ajustes de impresión",
+      "serie": "informes",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 57.1,
+      "rutas": [
+        "informes",
+        "informes/boletines-periodo/:grupo_id/:periodo_a_calcular"
+      ],
+      "fichero": "out/ayuda/informes-ajustes.mp4",
+      "composicion": "Ayuda-Informes-Ajustes",
+      "guion": "src/ayuda/informes-ajustes/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: con cada papel, en Informes"
+        },
+        {
+          "s": 14.3,
+          "titulo": "Antes de cargar: «Cómo sale este informe»"
+        },
+        {
+          "s": 27,
+          "titulo": "Con el papel delante: el panel"
+        },
+        {
+          "s": 39.8,
+          "titulo": "El engranaje"
+        },
+        {
+          "s": 43.6,
+          "titulo": "«La hoja» y la galleta compartida"
+        }
+      ],
+      "revision": "arreglado: foco sobre «Cargando…» o sobre el plegable cerrado · re-renderizado tras el arreglo; golpes revisados (app)"
+    },
+    {
+      "clave": "informes-pila",
+      "titulo": "La pila: trece grupos, una impresión",
+      "serie": "informes",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 51.7,
+      "rutas": [
+        "informes",
+        "informes/pila"
+      ],
+      "fichero": "out/ayuda/informes-pila.mp4",
+      "composicion": "Ayuda-Informes-Pila",
+      "guion": "src/ayuda/informes-pila/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Qué es la pila"
+        },
+        {
+          "s": 8.4,
+          "titulo": "Añadir a la pila, grupo por grupo"
+        },
+        {
+          "s": 19.4,
+          "titulo": "El tope: caben veinte"
+        },
+        {
+          "s": 24.5,
+          "titulo": "Vertical y apaisado no se mezclan"
+        },
+        {
+          "s": 38.3,
+          "titulo": "Imprimir todo, y vaciarla"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "semaforo",
+      "titulo": "Semáforo",
+      "serie": "informes",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 55.6,
+      "rutas": [
+        "informes",
+        "informes/semaforo/:grupo_id/:periodo_a_calcular"
+      ],
+      "fichero": "out/ayuda/semaforo.mp4",
+      "composicion": "Ayuda-Semaforo",
+      "guion": "src/ayuda/semaforo/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Buscarlo: «preinforme»"
+        },
+        {
+          "s": 12.9,
+          "titulo": "El periodo y la fecha de entrega"
+        },
+        {
+          "s": 24.7,
+          "titulo": "La hoja de riesgo y las medias hojas"
+        },
+        {
+          "s": 42.1,
+          "titulo": "El número o la valoración"
+        },
+        {
+          "s": 46.9,
+          "titulo": "Sin escala del año"
+        }
+      ],
+      "revision": "arreglado: el corte decía «otro colegio» · golpes revisados (app)"
+    },
+    {
+      "clave": "puestos",
+      "titulo": "Los cuatro papeles de puestos",
+      "serie": "informes",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 48.2,
+      "rutas": [
+        "informes",
+        "informes/puestos-grupo-periodo/:grupo_id",
+        "informes/puestos-grupo-year/:grupo_id/:periodo_a_calcular",
+        "informes/puestos-todos-periodo",
+        "informes/puestos-todos-year/:periodo_a_calcular"
+      ],
+      "fichero": "out/ayuda/puestos.mp4",
+      "composicion": "Ayuda-Puestos",
+      "guion": "src/ayuda/puestos/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: «Cómo va el grupo»"
+        },
+        {
+          "s": 5.1,
+          "titulo": "Cuatro papeles en dos fichas"
+        },
+        {
+          "s": 18.4,
+          "titulo": "La hoja y los empates"
+        },
+        {
+          "s": 27.2,
+          "titulo": "El puesto se calcula, no se guarda"
+        }
+      ],
+      "revision": "arreglado: foco antes del clic y sobre el configurador que se iba · re-renderizado; golpes revisados (app)"
+    },
+    {
+      "clave": "notas-perdidas-comision",
+      "titulo": "Notas perdidas para la comisión",
+      "serie": "informes",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 40.3,
+      "rutas": [
+        "informes",
+        "informes/notas-perdidas-todos/:periodo_a_calcular/:solo_periodo"
+      ],
+      "fichero": "out/ayuda/notas-perdidas-comision.mp4",
+      "composicion": "Ayuda-Notas-Perdidas-Comision",
+      "guion": "src/ayuda/notas-perdidas-comision/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Buscarla: «comision»"
+        },
+        {
+          "s": 10.2,
+          "titulo": "Sólo pide hasta qué periodo"
+        },
+        {
+          "s": 18.2,
+          "titulo": "La hoja: lo perdido por alumno"
+        },
+        {
+          "s": 27.7,
+          "titulo": "Las columnas en blanco, y una hoja por docente"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "planillas-aula",
+      "titulo": "Planillas y controles del aula",
+      "serie": "informes",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 47.3,
+      "rutas": [
+        "informes",
+        "informes/planillas/grupo/:grupo_id",
+        "informes/control-asistencia-clase"
+      ],
+      "fichero": "out/ayuda/planillas-aula.mp4",
+      "composicion": "Ayuda-Planillas-Aula",
+      "guion": "src/ayuda/planillas-aula/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: «Para el aula»"
+        },
+        {
+          "s": 13.7,
+          "titulo": "«La hoja», antes de imprimir"
+        },
+        {
+          "s": 18.1,
+          "titulo": "Las columnas de la planilla"
+        },
+        {
+          "s": 31.5,
+          "titulo": "Los controles y su mes"
+        }
+      ],
+      "revision": "arreglado: foco antes del clic; definitivas incoherentes con el semáforo · golpes revisados (app)"
+    },
+    {
+      "clave": "inasistencias-alumno",
+      "titulo": "Inasistencias por alumno",
+      "serie": "informes",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 41.9,
+      "rutas": [
+        "informes",
+        "informes/inasistencias-alumno/:grupo_id"
+      ],
+      "fichero": "out/ayuda/inasistencias-alumno.mp4",
+      "composicion": "Ayuda-Inasistencias-Alumno",
+      "guion": "src/ayuda/inasistencias-alumno/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: «Quién vino»"
+        },
+        {
+          "s": 14.2,
+          "titulo": "El % vacío, y por qué"
+        },
+        {
+          "s": 18.6,
+          "titulo": "Días de clase y umbral"
+        },
+        {
+          "s": 32.8,
+          "titulo": "Sólo faltas de portería"
+        }
+      ],
+      "revision": "arreglado: foco antes de elegir y sobre «Trayendo…» · golpes revisados (app)"
+    },
+    {
+      "clave": "ficha-matricula",
+      "titulo": "La ficha de matrícula",
+      "serie": "informes",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 38.5,
+      "rutas": [
+        "informes",
+        "informes/ficha-matricula/:alumno_id"
+      ],
+      "fichero": "out/ayuda/ficha-matricula.mp4",
+      "composicion": "Ayuda-Ficha-Matricula",
+      "guion": "src/ayuda/ficha-matricula/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Buscarla"
+        },
+        {
+          "s": 8.3,
+          "titulo": "Un alumno, no un grupo"
+        },
+        {
+          "s": 17.3,
+          "titulo": "La hoja: datos, requisitos y firmas"
+        }
+      ],
+      "revision": "arreglado: la tabla pisaba el pie; foco sobre «Trayendo…» · re-renderizado; golpes revisados (app)"
+    },
+    {
+      "clave": "alumno-crear",
+      "titulo": "Crear un alumno",
+      "serie": "secretaria",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 39.8,
+      "rutas": [
+        "alumnos",
+        "alumnos/nuevo"
+      ],
+      "fichero": "out/ayuda/alumno-crear.mp4",
+      "composicion": "Ayuda-AlumnoCrear",
+      "guion": "src/ayuda/alumno-crear/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Personas, Alumnos"
+        },
+        {
+          "s": 5.9,
+          "titulo": "La ficha en blanco"
+        },
+        {
+          "s": 11.6,
+          "titulo": "Si ya existe: la tarjeta y el freno"
+        },
+        {
+          "s": 23.8,
+          "titulo": "Es otra persona: crear igual"
+        },
+        {
+          "s": 27.9,
+          "titulo": "El grupo y Crear"
+        }
+      ],
+      "revision": "arreglado: el aviso tapaba la miga · golpes revisados (app)"
+    },
+    {
+      "clave": "matricular",
+      "titulo": "Matricular",
+      "serie": "secretaria",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 61.4,
+      "rutas": [
+        "matriculas",
+        "alumnos"
+      ],
+      "fichero": "out/ayuda/matricular.mp4",
+      "composicion": "Ayuda-Matricular",
+      "guion": "src/ayuda/matricular/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Personas, Matricular"
+        },
+        {
+          "s": 9.9,
+          "titulo": "Los candidatos: el grado anterior"
+        },
+        {
+          "s": 14.7,
+          "titulo": "Matric, con el año nuevo arriba"
+        },
+        {
+          "s": 24.9,
+          "titulo": "Al que se va no se le borra"
+        },
+        {
+          "s": 31.5,
+          "titulo": "Cambiar de grupo, desde Alumnos"
+        },
+        {
+          "s": 46.5,
+          "titulo": "Las notas que se quedan atrás"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "alumnos-directorio",
+      "titulo": "El directorio de alumnos",
+      "serie": "secretaria",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 64.1,
+      "rutas": [
+        "alumnos"
+      ],
+      "fichero": "out/ayuda/alumnos-directorio.mp4",
+      "composicion": "Ayuda-AlumnosDirectorio",
+      "guion": "src/ayuda/alumnos-directorio/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Personas, Alumnos"
+        },
+        {
+          "s": 9.2,
+          "titulo": "Editar en la celda: se guarda al salir"
+        },
+        {
+          "s": 13.9,
+          "titulo": "Los alumnos no se borran: se retiran"
+        },
+        {
+          "s": 20.6,
+          "titulo": "La opción rápida al cambiar de año"
+        },
+        {
+          "s": 41.5,
+          "titulo": "La papelera no es retirar"
+        },
+        {
+          "s": 47.9,
+          "titulo": "Restaurar desde el buscador"
+        }
+      ],
+      "revision": "arreglado: el aviso rozaba la miga · golpes revisados (app)"
+    },
+    {
+      "clave": "prematriculas",
+      "titulo": "Prematrículas",
+      "serie": "secretaria",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 34.1,
+      "rutas": [
+        "prematriculas"
+      ],
+      "fichero": "out/ayuda/prematriculas.mp4",
+      "composicion": "Ayuda-Prematriculas",
+      "guion": "src/ayuda/prematriculas/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Personas, Prematrículas"
+        },
+        {
+          "s": 8.9,
+          "titulo": "Paso 1: el tablero de grupos"
+        },
+        {
+          "s": 13.9,
+          "titulo": "Paso 2: quién prematricula"
+        },
+        {
+          "s": 19,
+          "titulo": "Quitar una prematrícula"
+        },
+        {
+          "s": 24.3,
+          "titulo": "Lo que apuntó la familia"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "requisitos-alumno",
+      "titulo": "Requisitos y compromisos del alumno",
+      "serie": "secretaria",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 34.5,
+      "rutas": [
+        "persona/:persona_id/:tipo"
+      ],
+      "fichero": "out/ayuda/requisitos-alumno.mp4",
+      "composicion": "Ayuda-RequisitosAlumno",
+      "guion": "src/ayuda/requisitos-alumno/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la ficha del alumno"
+        },
+        {
+          "s": 11.5,
+          "titulo": "Los requisitos del año"
+        },
+        {
+          "s": 20.5,
+          "titulo": "Referencias arma la lista; aquí se marca"
+        },
+        {
+          "s": 24.7,
+          "titulo": "Los compromisos"
+        }
+      ],
+      "revision": "arreglado: el aviso tapaba la miga · golpes revisados (app)"
+    },
+    {
+      "clave": "usuarios",
+      "titulo": "Usuarios: entrar al sistema",
+      "serie": "secretaria",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 32.5,
+      "rutas": [
+        "usuarios"
+      ],
+      "fichero": "out/ayuda/usuarios.mp4",
+      "composicion": "Ayuda-Usuarios",
+      "guion": "src/ayuda/usuarios/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Personas, Usuarios"
+        },
+        {
+          "s": 4,
+          "titulo": "Abre vacía: elige a quién"
+        },
+        {
+          "s": 9.6,
+          "titulo": "Sin cuenta, sin botones"
+        },
+        {
+          "s": 14.4,
+          "titulo": "Cambiar una contraseña"
+        },
+        {
+          "s": 24.1,
+          "titulo": "Sus datos, en el perfil"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "documento-usuario",
+      "titulo": "El documento como nombre de usuario",
+      "serie": "secretaria",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 34.4,
+      "rutas": [
+        "alumnos"
+      ],
+      "fichero": "out/ayuda/documento-usuario.mp4",
+      "composicion": "Ayuda-DocumentoUsuario",
+      "guion": "src/ayuda/documento-usuario/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Alumnos, contraseñas y usuarios"
+        },
+        {
+          "s": 8.1,
+          "titulo": "«Todos» es todo el colegio"
+        },
+        {
+          "s": 14.7,
+          "titulo": "Revisar: la cifra antes de cambiar"
+        },
+        {
+          "s": 24.6,
+          "titulo": "Cambiar"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "cartera",
+      "titulo": "Cartera",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 40.2,
+      "rutas": [
+        "cartera"
+      ],
+      "fichero": "out/ayuda/cartera.mp4",
+      "composicion": "Ayuda-Cartera",
+      "guion": "src/ayuda/cartera/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Personas, Cartera"
+        },
+        {
+          "s": 3.1,
+          "titulo": "Elegir el grupo"
+        },
+        {
+          "s": 11.4,
+          "titulo": "Marcar alumnos y aplicar"
+        },
+        {
+          "s": 19.9,
+          "titulo": "La deuda, aparte"
+        },
+        {
+          "s": 26.3,
+          "titulo": "Lo que MyVC no lleva"
+        },
+        {
+          "s": 29.2,
+          "titulo": "Antes de subir el Excel"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "duplicados",
+      "titulo": "Alumnos duplicados",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 39.6,
+      "rutas": [
+        "duplicados"
+      ],
+      "fichero": "out/ayuda/duplicados.mp4",
+      "composicion": "Ayuda-Duplicados",
+      "guion": "src/ayuda/duplicados/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está, y por qué pasa"
+        },
+        {
+          "s": 7.3,
+          "titulo": "Los dos bloques de la lista"
+        },
+        {
+          "s": 16.5,
+          "titulo": "Unir: cuál se queda"
+        },
+        {
+          "s": 20.2,
+          "titulo": "Ver qué se movería"
+        },
+        {
+          "s": 30.1,
+          "titulo": "Lo que no se deshace"
+        }
+      ],
+      "revision": "re-renderizado: el MP4 anterior tenía parpadeos en mosaico"
+    },
+    {
+      "clave": "importar-hojas",
+      "titulo": "Importar de Excel: hojas y columnas",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 48.1,
+      "rutas": [
+        "alumnos/importar"
+      ],
+      "fichero": "out/ayuda/importar-hojas.mp4",
+      "composicion": "Ayuda-Importar-Hojas",
+      "guion": "src/ayuda/importar-hojas/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Alumnos, Importar alumnos"
+        },
+        {
+          "s": 7,
+          "titulo": "El ensayo: lee sin escribir"
+        },
+        {
+          "s": 16.7,
+          "titulo": "Las hojas: una por grupo"
+        },
+        {
+          "s": 31.3,
+          "titulo": "Las columnas y la que falta"
+        }
+      ],
+      "revision": "re-renderizado: el MP4 anterior tenía un parpadeo"
+    },
+    {
+      "clave": "importar-decidir",
+      "titulo": "Importar de Excel: decidir y comprobar",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 55.5,
+      "rutas": [
+        "alumnos/importar"
+      ],
+      "fichero": "out/ayuda/importar-decidir.mp4",
+      "composicion": "Ayuda-Importar-Decidir",
+      "guion": "src/ayuda/importar-decidir/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está, con el libro leído"
+        },
+        {
+          "s": 14.6,
+          "titulo": "Celdas vacías"
+        },
+        {
+          "s": 19.1,
+          "titulo": "Valores que no caben"
+        },
+        {
+          "s": 27.7,
+          "titulo": "Volver a leer y ver el plan"
+        },
+        {
+          "s": 41.2,
+          "titulo": "Importar"
+        },
+        {
+          "s": 47.1,
+          "titulo": "Lo que pasó: Cuadra o No cuadra"
+        }
+      ],
+      "revision": "arreglado: la pantalla se montaba con la miga de la anterior; foco sobre la página en movimiento · golpes revisados (app)"
+    },
+    {
+      "clave": "acudientes",
+      "titulo": "Acudientes",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 34.3,
+      "rutas": [
+        "acudientes"
+      ],
+      "fichero": "out/ayuda/acudientes.mp4",
+      "composicion": "Ayuda-Acudientes",
+      "guion": "src/ayuda/acudientes/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está, y por qué no deja entrar"
+        },
+        {
+          "s": 14.4,
+          "titulo": "Quién sí entra: la lista por grupo"
+        }
+      ],
+      "revision": "arreglado: la pantalla se montaba 94 f antes de su paso · limpio"
+    },
+    {
+      "clave": "editar-docentes",
+      "titulo": "Editar docentes y contratar",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 32.3,
+      "rutas": [
+        "profesores"
+      ],
+      "fichero": "out/ayuda/editar-docentes.mp4",
+      "composicion": "Ayuda-Editar-Docentes",
+      "guion": "src/ayuda/editar-docentes/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está, y qué no se toca"
+        },
+        {
+          "s": 8.5,
+          "titulo": "Contratar para el año"
+        },
+        {
+          "s": 18.4,
+          "titulo": "Contratados para 2026"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "certificados-alumno",
+      "titulo": "Certificados de un alumno",
+      "serie": "secretaria",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 32.4,
+      "rutas": [
+        "informes/certificados-alumno/:alumno_id"
+      ],
+      "fichero": "out/ayuda/certificados-alumno.mp4",
+      "composicion": "Ayuda-Certificados-Alumno",
+      "guion": "src/ayuda/certificados-alumno/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la ficha del alumno"
+        },
+        {
+          "s": 11.8,
+          "titulo": "Un certificado por año cursado"
+        },
+        {
+          "s": 16.7,
+          "titulo": "El retiro no se certifica"
+        }
+      ],
+      "revision": "arreglado: miga atrasada; foco sobre la pantalla vacía · golpes revisados (app)"
+    },
+    {
+      "clave": "no-me-deja-escribir",
+      "titulo": "«No me deja escribir»",
+      "serie": "docente",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 47.9,
+      "rutas": [
+        "planilla-notas/:asignatura_id",
+        "colegio/:yearId/periodos"
+      ],
+      "fichero": "out/ayuda/no-me-deja-escribir.mp4",
+      "composicion": "Ayuda-No-Me-Deja",
+      "guion": "src/ayuda/no-me-deja-escribir/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la planilla, y el periodo"
+        },
+        {
+          "s": 12.9,
+          "titulo": "Casillas grises: el aviso de arriba"
+        },
+        {
+          "s": 21.3,
+          "titulo": "Los otros dos avisos"
+        },
+        {
+          "s": 30.2,
+          "titulo": "Quién lo abre: El colegio, Periodos"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "planilla-real-m-r",
+      "titulo": "Total, Real, M y R",
+      "serie": "docente",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 46.2,
+      "rutas": [
+        "planilla-notas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/planilla-real-m-r.mp4",
+      "composicion": "Ayuda-Real-M-R",
+      "guion": "src/ayuda/planilla-real-m-r/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Antes: nivelar abierto. Dónde está"
+        },
+        {
+          "s": 15,
+          "titulo": "Total y Real"
+        },
+        {
+          "s": 24,
+          "titulo": "Escribir la Real enciende M"
+        },
+        {
+          "s": 31,
+          "titulo": "Qué protege M, y qué es R"
+        }
+      ],
+      "revision": "arreglado: el aviso tapaba la miga · limpio"
+    },
+    {
+      "clave": "rubricas-montar",
+      "titulo": "Rúbricas: montar la matriz",
+      "serie": "docente",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 60.5,
+      "rutas": [
+        "rubricas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/rubricas-montar.mp4",
+      "composicion": "Ayuda-Rubricas-Montar",
+      "guion": "src/ayuda/rubricas-montar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Mis asignaturas, Rúbricas"
+        },
+        {
+          "s": 7.5,
+          "titulo": "Nueva rúbrica y sus niveles"
+        },
+        {
+          "s": 19.3,
+          "titulo": "Criterios y pesos: que sumen 100"
+        },
+        {
+          "s": 36,
+          "titulo": "Descriptores y Guardar"
+        },
+        {
+          "s": 47.4,
+          "titulo": "En uso: cambiarla no recalcula"
+        }
+      ],
+      "revision": "arreglado: aviso bajo la cabecera; focos que seguían en el cambio de pantalla · golpes revisados (app)"
+    },
+    {
+      "clave": "rubricas-calificar",
+      "titulo": "Rúbricas: calificar",
+      "serie": "docente",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 47.1,
+      "rutas": [
+        "rubricas/calificar/:subunidad_id",
+        "rubricas/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/rubricas-calificar.mp4",
+      "composicion": "Ayuda-Rubricas-Calificar",
+      "guion": "src/ayuda/rubricas-calificar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la rúbrica y su indicador"
+        },
+        {
+          "s": 15.5,
+          "titulo": "La parrilla: un nivel por criterio"
+        },
+        {
+          "s": 25.7,
+          "titulo": "A medias no da nota; sin casilla"
+        },
+        {
+          "s": 34.8,
+          "titulo": "Guardar marcas y notas"
+        }
+      ],
+      "revision": "arreglado: aviso bajo la cabecera; foco antes del clic · golpes revisados (app)"
+    },
+    {
+      "clave": "asistencias-consulta",
+      "titulo": "Asistencias",
+      "serie": "docente",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 30.8,
+      "rutas": [
+        "asistencias"
+      ],
+      "fichero": "out/ayuda/asistencias-consulta.mp4",
+      "composicion": "Ayuda-Asistencias",
+      "guion": "src/ayuda/asistencias-consulta/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Disciplina, Asistencias"
+        },
+        {
+          "s": 9.1,
+          "titulo": "Las de clase sólo se miran"
+        },
+        {
+          "s": 13.4,
+          "titulo": "Las de la institución se editan"
+        },
+        {
+          "s": 21.8,
+          "titulo": "Periodo cerrado: también la asistencia"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "nivelaciones-lote",
+      "titulo": "Nivelaciones del grupo, en lote",
+      "serie": "docente",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 46.9,
+      "rutas": [
+        "nivelaciones/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/nivelaciones-lote.mp4",
+      "composicion": "Ayuda-Nivelaciones-Lote",
+      "guion": "src/ayuda/nivelaciones-lote/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la planilla, en nivelaciones"
+        },
+        {
+          "s": 13.3,
+          "titulo": "La lista: lo perdido del grupo"
+        },
+        {
+          "s": 22.1,
+          "titulo": "La regla no se ve antes"
+        },
+        {
+          "s": 26.9,
+          "titulo": "Registrar con el botón"
+        }
+      ],
+      "revision": "arreglado: aviso bajo la cabecera · golpes revisados (app)"
+    },
+    {
+      "clave": "mis-desempenos",
+      "titulo": "Mis desempeños",
+      "serie": "docente",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 34.8,
+      "rutas": [
+        "mis-competencias",
+        "mis-desempenos"
+      ],
+      "fichero": "out/ayuda/mis-desempenos.mp4",
+      "composicion": "Ayuda-Mis-Desempenos",
+      "guion": "src/ayuda/mis-desempenos/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: ahora «Mis competencias»"
+        },
+        {
+          "s": 4.8,
+          "titulo": "Las mismas filas que la coordinación"
+        },
+        {
+          "s": 8.6,
+          "titulo": "Clase y periodo"
+        },
+        {
+          "s": 17.1,
+          "titulo": "Editar y añadir"
+        },
+        {
+          "s": 26,
+          "titulo": "Las del plan de área"
+        }
+      ],
+      "revision": "golpes revisados (app)"
+    },
+    {
+      "clave": "copiar-unidades",
+      "titulo": "Copiar unidades a otra asignatura",
+      "serie": "docente",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 46.3,
+      "rutas": [
+        "copiar-unidades",
+        "unidades/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/copiar-unidades.mp4",
+      "composicion": "Ayuda-Copiar-Unidades",
+      "guion": "src/ayuda/copiar-unidades/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Logros, Copiar"
+        },
+        {
+          "s": 12.6,
+          "titulo": "Origen y destino"
+        },
+        {
+          "s": 27.3,
+          "titulo": "Otro grupo: las notas no se copian"
+        },
+        {
+          "s": 32.4,
+          "titulo": "Copiar lo marcado"
+        }
+      ],
+      "revision": "arreglado: el puntero llegaba tarde al botón; etiqueta con otro tamaño que su foco; aviso bajo la cabecera · golpes revisados (app)"
+    },
+    {
+      "clave": "boletin-independiente",
+      "titulo": "Boletín independiente",
+      "serie": "docente",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 44.8,
+      "rutas": [
+        "boletin-independiente/:asignatura_id"
+      ],
+      "fichero": "out/ayuda/boletin-independiente.mp4",
+      "composicion": "Ayuda-Boletin-Independiente",
+      "guion": "src/ayuda/boletin-independiente/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: el aviso de la planilla"
+        },
+        {
+          "s": 13.3,
+          "titulo": "Calificar su boletín aparte"
+        },
+        {
+          "s": 26.3,
+          "titulo": "«Aparte» lo marca secretaría"
+        },
+        {
+          "s": 35.8,
+          "titulo": "Montar: «Copiar de…»"
+        }
+      ],
+      "revision": "arreglado: aviso bajo la cabecera · limpio"
+    },
+    {
+      "clave": "actividades",
+      "titulo": "Actividades",
+      "serie": "docente",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 54.4,
+      "rutas": [
+        "act",
+        "act/:id/resultados",
+        "act/:id/entregas"
+      ],
+      "fichero": "out/ayuda/actividades.mp4",
+      "composicion": "Ayuda-Actividades",
+      "guion": "src/ayuda/actividades/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: el menú, Actividades"
+        },
+        {
+          "s": 5.5,
+          "titulo": "La bandeja: las que creaste"
+        },
+        {
+          "s": 14.5,
+          "titulo": "Las respuestas: pulsar la fila"
+        },
+        {
+          "s": 32.9,
+          "titulo": "Una tarea: sus Entregas"
+        }
+      ],
+      "revision": "arreglado: rehecho para /act (la pantalla /actividades ya no está en el menú) · golpes revisados (app)"
+    },
+    {
+      "clave": "sin-internet-bajar",
+      "titulo": "Bajar el libro",
+      "serie": "sin-internet",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 49.3,
+      "rutas": [
+        "notas/sin-internet"
+      ],
+      "fichero": "out/ayuda/sin-internet-bajar.mp4",
+      "composicion": "Ayuda-SinInternet-Bajar",
+      "guion": "src/ayuda/sin-internet-bajar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Académico, Trabajar sin internet"
+        },
+        {
+          "s": 4.6,
+          "titulo": "El periodo y las asignaturas"
+        },
+        {
+          "s": 17.2,
+          "titulo": "«Sin pasar» es la que decide"
+        },
+        {
+          "s": 28.7,
+          "titulo": "«sin indicadores»: la que más interesa"
+        },
+        {
+          "s": 37.9,
+          "titulo": "Descargar el libro"
+        }
+      ],
+      "revision": "arreglado: el puntero tapaba la pastilla «Sin pasar»; rótulo acortado · limpio"
+    },
+    {
+      "clave": "sin-internet-excel",
+      "titulo": "Rellenar el Excel",
+      "serie": "sin-internet",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 48.1,
+      "rutas": [
+        "notas/sin-internet"
+      ],
+      "fichero": "out/ayuda/sin-internet-excel.mp4",
+      "composicion": "Ayuda-SinInternet-Excel",
+      "guion": "src/ayuda/sin-internet-excel/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "La portada: cómo se usa"
+        },
+        {
+          "s": 9.9,
+          "titulo": "La hoja de una asignatura"
+        },
+        {
+          "s": 18.4,
+          "titulo": "Vacío, guion y enteros"
+        },
+        {
+          "s": 29.3,
+          "titulo": "Reserva, Def, Aus y Tar"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "sin-internet-subir-columnas",
+      "titulo": "Subir: el archivo y las columnas",
+      "serie": "sin-internet",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 59.5,
+      "rutas": [
+        "notas/sin-internet/subir"
+      ],
+      "fichero": "out/ayuda/sin-internet-subir-columnas.mp4",
+      "composicion": "Ayuda-SinInternet-SubirColumnas",
+      "guion": "src/ayuda/sin-internet-subir-columnas/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Subir una planilla"
+        },
+        {
+          "s": 17.1,
+          "titulo": "Elegir el archivo: primero se lee"
+        },
+        {
+          "s": 26.2,
+          "titulo": "Los pasos: sólo los que hacen falta"
+        },
+        {
+          "s": 35.9,
+          "titulo": "Columnas nuevas: crear el indicador"
+        }
+      ],
+      "revision": "arreglado: foco 24 px bajo el botón, medido a ojo: ahora sale de la geometría; foco sobre la pantalla siguiente; rótulos acortados · golpes revisados (app)"
+    },
+    {
+      "clave": "sin-internet-subir-choques",
+      "titulo": "Subir: choques, ausencias y qué va a pasar",
+      "serie": "sin-internet",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 62.8,
+      "rutas": [
+        "notas/sin-internet/subir"
+      ],
+      "fichero": "out/ayuda/sin-internet-subir-choques.mp4",
+      "composicion": "Ayuda-SinInternet-SubirChoques",
+      "guion": "src/ayuda/sin-internet-subir-choques/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Choques: manda el sistema, o una por una"
+        },
+        {
+          "s": 15.8,
+          "titulo": "Ausencias: lo único que borra historia"
+        },
+        {
+          "s": 37.8,
+          "titulo": "Qué va a pasar: volver a leer"
+        },
+        {
+          "s": 49.8,
+          "titulo": "Importar"
+        }
+      ],
+      "revision": "arreglado: foco sobre la pantalla siguiente; rótulo acortado · golpes revisados (app)"
+    },
+    {
+      "clave": "ruta-inclusion-grupo",
+      "titulo": "Ruta de inclusión: el grupo",
+      "serie": "inclusion",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 46.3,
+      "rutas": [
+        "ruta-inclusion"
+      ],
+      "fichero": "out/ayuda/ruta-inclusion-grupo.mp4",
+      "composicion": "Ayuda-RutaInclusion-Grupo",
+      "guion": "src/ayuda/ruta-inclusion-grupo/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Académico, Ruta de inclusión"
+        },
+        {
+          "s": 8.7,
+          "titulo": "Primero, el grupo"
+        },
+        {
+          "s": 20.6,
+          "titulo": "El titular, el contexto y la lista"
+        },
+        {
+          "s": 37.8,
+          "titulo": "Abrir la ficha"
+        }
+      ],
+      "revision": "arreglado: escudo del colegio en el informe · golpes revisados (app)"
+    },
+    {
+      "clave": "ruta-inclusion-partes",
+      "titulo": "Ruta de inclusión: las cinco partes",
+      "serie": "inclusion",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 49.7,
+      "rutas": [
+        "ruta-inclusion/:grupo_id/:alumno_id"
+      ],
+      "fichero": "out/ayuda/ruta-inclusion-partes.mp4",
+      "composicion": "Ayuda-RutaInclusion-Partes",
+      "guion": "src/ayuda/ruta-inclusion-partes/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Del grupo a la ficha"
+        },
+        {
+          "s": 10,
+          "titulo": "Las cinco partes y quién escribe"
+        },
+        {
+          "s": 23.3,
+          "titulo": "Ajustes: el docente de cada materia"
+        },
+        {
+          "s": 31.5,
+          "titulo": "Actas e informe"
+        },
+        {
+          "s": 41,
+          "titulo": "Sin titular"
+        }
+      ],
+      "revision": "arreglado: botones 8 px fuera de su geometría; escudo del colegio · golpes revisados (app)"
+    },
+    {
+      "clave": "ordinales",
+      "titulo": "Ordinales del manual",
+      "serie": "disciplina",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 45.9,
+      "rutas": [
+        "ordinales"
+      ],
+      "fichero": "out/ayuda/ordinales.mp4",
+      "composicion": "Ayuda-Ordinales",
+      "guion": "src/ayuda/ordinales/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Disciplina, Ordinales"
+        },
+        {
+          "s": 7.5,
+          "titulo": "Corregir en la celda"
+        },
+        {
+          "s": 14.8,
+          "titulo": "Crear un ordinal"
+        },
+        {
+          "s": 22.4,
+          "titulo": "Configurar comportamiento"
+        },
+        {
+          "s": 34.4,
+          "titulo": "Año cerrado: sólo consulta"
+        }
+      ],
+      "revision": "arreglado: el ordinal nuevo traía una página que no se tecleó · golpes revisados (app)"
+    },
+    {
+      "clave": "situaciones-por-grupos",
+      "titulo": "Situaciones por grupos",
+      "serie": "disciplina",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 25.1,
+      "rutas": [
+        "disciplina/situaciones-por-grupos"
+      ],
+      "fichero": "out/ayuda/situaciones-por-grupos.mp4",
+      "composicion": "Ayuda-SituacionesPorGrupos",
+      "guion": "src/ayuda/situaciones-por-grupos/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Disciplina, Situaciones por grupos"
+        },
+        {
+          "s": 7.7,
+          "titulo": "Sale sólo quien tiene alguna"
+        },
+        {
+          "s": 17.6,
+          "titulo": "Imprimir"
+        }
+      ],
+      "revision": "arreglado: el puntero no caía en Imprimir · limpio"
+    },
+    {
+      "clave": "montar-el-ano-mapa",
+      "titulo": "El orden de montar un año",
+      "serie": "montar-el-ano",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 58.3,
+      "rutas": [
+        "colegio"
+      ],
+      "fichero": "out/ayuda/montar-el-ano-mapa.mp4",
+      "composicion": "Ayuda-Montar-El-Ano-Mapa",
+      "guion": "src/ayuda/montar-el-ano-mapa/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "1. El colegio: año, periodos y ficha"
+        },
+        {
+          "s": 14.6,
+          "titulo": "2. Niveles, grados y grupos"
+        },
+        {
+          "s": 24.2,
+          "titulo": "3. Áreas y materias"
+        },
+        {
+          "s": 28.7,
+          "titulo": "4. Asignaturas"
+        },
+        {
+          "s": 37.4,
+          "titulo": "5. Plan de evaluación"
+        },
+        {
+          "s": 48.2,
+          "titulo": "6. Abrir el periodo"
+        }
+      ],
+      "revision": "arreglado: el puntero caía en Informes: se cierra Referencias antes de abrir Configuración · limpio"
+    },
+    {
+      "clave": "ajustes-del-ano",
+      "titulo": "Los ajustes del año",
+      "serie": "montar-el-ano",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 46.2,
+      "rutas": [
+        "colegio/:yearId/ajustes"
+      ],
+      "fichero": "out/ayuda/ajustes-del-ano.mp4",
+      "composicion": "Ayuda-Ajustes-Del-Ano",
+      "guion": "src/ayuda/ajustes-del-ano/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: El colegio, Ajustes del año"
+        },
+        {
+          "s": 13.1,
+          "titulo": "Los interruptores se guardan solos"
+        },
+        {
+          "s": 17.3,
+          "titulo": "Cambiar el año en curso"
+        },
+        {
+          "s": 38.3,
+          "titulo": "Enviar un año a la papelera"
+        }
+      ],
+      "revision": "arreglado: foco más largo que su paso · golpes revisados (app)"
+    },
+    {
+      "clave": "plan-evaluacion-modelo",
+      "titulo": "Plan de evaluación: el modelo",
+      "serie": "montar-el-ano",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 38.9,
+      "rutas": [
+        "plan-evaluacion"
+      ],
+      "fichero": "out/ayuda/plan-evaluacion-modelo.mp4",
+      "composicion": "Ayuda-Plan-Evaluacion-Modelo",
+      "guion": "src/ayuda/plan-evaluacion-modelo/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Plan de evaluación"
+        },
+        {
+          "s": 9.5,
+          "titulo": "Los dos modelos"
+        },
+        {
+          "s": 14.5,
+          "titulo": "Cambiarlo: qué pasa y qué no"
+        },
+        {
+          "s": 31,
+          "titulo": "Volver atrás"
+        }
+      ],
+      "revision": "arreglado: la tarjeta decía «pestaña ①» · golpes revisados (app)"
+    },
+    {
+      "clave": "plan-evaluacion-plantilla",
+      "titulo": "Plan de evaluación: la plantilla",
+      "serie": "montar-el-ano",
+      "ola": 2,
+      "estado": "hecho",
+      "dura_s": 58.6,
+      "rutas": [
+        "plan-evaluacion"
+      ],
+      "fichero": "out/ayuda/plan-evaluacion-plantilla.mp4",
+      "composicion": "Ayuda-Plan-Evaluacion-Plantilla",
+      "guion": "src/ayuda/plan-evaluacion-plantilla/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Plan de evaluación, Plantilla de notas"
+        },
+        {
+          "s": 8.7,
+          "titulo": "Criterios, columnas y la suma"
+        },
+        {
+          "s": 19,
+          "titulo": "Cuadrar a 100"
+        },
+        {
+          "s": 28.8,
+          "titulo": "Aplicar la plantilla: lo que toca"
+        },
+        {
+          "s": 50.1,
+          "titulo": "El resumen"
+        }
+      ],
+      "revision": "golpes revisados: cambio de pestaña (app) y rótulo rojo"
+    },
+    {
+      "clave": "niveles-grados",
+      "titulo": "Niveles, grados y grupos",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 42,
+      "rutas": [
+        "niveles",
+        "grados",
+        "grupos"
+      ],
+      "fichero": "out/ayuda/niveles-grados.mp4",
+      "composicion": "Ayuda-Niveles-Grados",
+      "guion": "src/ayuda/niveles-grados/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "La cadena: niveles, grados, grupos"
+        },
+        {
+          "s": 12.9,
+          "titulo": "Grados: cada uno con su nivel"
+        },
+        {
+          "s": 26.3,
+          "titulo": "Lo que no se deja borrar"
+        },
+        {
+          "s": 30.3,
+          "titulo": "Grupos: grado e IH semanal"
+        }
+      ],
+      "revision": "arreglado: rótulos y foco que salían antes de montarse la pantalla · limpio"
+    },
+    {
+      "clave": "areas-materias",
+      "titulo": "Áreas, materias y directores",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 43.3,
+      "rutas": [
+        "materias",
+        "areas",
+        "areas/directores"
+      ],
+      "fichero": "out/ayuda/areas-materias.mp4",
+      "composicion": "Ayuda-Areas-Materias",
+      "guion": "src/ayuda/areas-materias/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Referencias, Materias"
+        },
+        {
+          "s": 8.6,
+          "titulo": "Cambiar una materia de área"
+        },
+        {
+          "s": 17.5,
+          "titulo": "Directores de área: son del año"
+        },
+        {
+          "s": 28.5,
+          "titulo": "Los heredados sin contrato"
+        }
+      ],
+      "revision": "arreglado: foco sobre una fila en movimiento; clic antes de verse la pantalla · golpes revisados: la materia cae en su sitio (app)"
+    },
+    {
+      "clave": "colegio-ficha",
+      "titulo": "La ficha del colegio y el membrete",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 48.6,
+      "rutas": [
+        "colegio/:yearId/ficha"
+      ],
+      "fichero": "out/ayuda/colegio-ficha.mp4",
+      "composicion": "Ayuda-Colegio-Ficha",
+      "guion": "src/ayuda/colegio-ficha/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: El colegio, Ficha del colegio"
+        },
+        {
+          "s": 8.6,
+          "titulo": "No se guarda sola"
+        },
+        {
+          "s": 18.1,
+          "titulo": "Salir con cambios sin guardar"
+        },
+        {
+          "s": 30.5,
+          "titulo": "Los cargos y los nombres de las cosas"
+        },
+        {
+          "s": 40.6,
+          "titulo": "El membrete, en Certificados"
+        }
+      ],
+      "revision": "arreglado: foco sobre la pantalla subiendo · limpio"
+    },
+    {
+      "clave": "imagenes",
+      "titulo": "Imágenes: fotos y firmas",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 47.7,
+      "rutas": [
+        "imagenes/galeria",
+        "imagenes/asignar",
+        "imagenes/firmas"
+      ],
+      "fichero": "out/ayuda/imagenes.mp4",
+      "composicion": "Ayuda-Imagenes",
+      "guion": "src/ayuda/imagenes/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Configuración, Imágenes"
+        },
+        {
+          "s": 9.3,
+          "titulo": "La imagen de perfil y la foto oficial"
+        },
+        {
+          "s": 24.5,
+          "titulo": "La foto oficial de un alumno"
+        },
+        {
+          "s": 38.9,
+          "titulo": "Las firmas de los docentes"
+        }
+      ],
+      "revision": "arreglado: foco de un paso sobre la pantalla siguiente · golpes revisados: visor y galería (app)"
+    },
+    {
+      "clave": "compromiso-academico",
+      "titulo": "Compromiso académico",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 42,
+      "rutas": [
+        "colegio/:yearId/compromisos"
+      ],
+      "fichero": "out/ayuda/compromiso-academico.mp4",
+      "composicion": "Ayuda-Compromiso-Academico",
+      "guion": "src/ayuda/compromiso-academico/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: El colegio, Compromisos"
+        },
+        {
+          "s": 8.5,
+          "titulo": "Por defecto no es en blanco"
+        },
+        {
+          "s": 14,
+          "titulo": "A quién se le propone"
+        },
+        {
+          "s": 22.5,
+          "titulo": "Guardar, y que se herede"
+        },
+        {
+          "s": 32.5,
+          "titulo": "El texto del papel"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "frases-ciudades-calendario-muro",
+      "titulo": "Frases, ciudades, calendario y muro",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 61.6,
+      "rutas": [
+        "frases",
+        "ciudades",
+        "calendario",
+        "publicaciones"
+      ],
+      "fichero": "out/ayuda/frases-ciudades-calendario-muro.mp4",
+      "composicion": "Ayuda-FrasesCiudades",
+      "guion": "src/ayuda/frases-ciudades-calendario-muro/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Frases: el texto y su Tipo"
+        },
+        {
+          "s": 20.5,
+          "titulo": "Ciudades y departamentos"
+        },
+        {
+          "s": 37.1,
+          "titulo": "Calendario y cumpleaños"
+        },
+        {
+          "s": 44.8,
+          "titulo": "Publicaciones: el muro"
+        }
+      ],
+      "revision": "arreglado: rótulo y miga de la pantalla anterior sobre Calendario y Muro; pasos partidos · limpio"
+    },
+    {
+      "clave": "votaciones",
+      "titulo": "Votaciones",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 49.2,
+      "rutas": [
+        "votaciones/config",
+        "votaciones/candidatos"
+      ],
+      "fichero": "out/ayuda/votaciones.mp4",
+      "composicion": "Ayuda-Votaciones",
+      "guion": "src/ayuda/votaciones/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Configuración, Votaciones"
+        },
+        {
+          "s": 5,
+          "titulo": "Sólo tus elecciones"
+        },
+        {
+          "s": 13.8,
+          "titulo": "Del año y abierta; no borrar"
+        },
+        {
+          "s": 36.7,
+          "titulo": "Candidatos y la foto del tarjetón"
+        }
+      ],
+      "revision": "arreglado: Candidatos se montaba con el rótulo de Configurar · limpio"
+    },
+    {
+      "clave": "promocionar-notas",
+      "titulo": "Promocionar notas",
+      "serie": "montar-el-ano",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 47.3,
+      "rutas": [
+        "promocionar-notas"
+      ],
+      "fichero": "out/ayuda/promocionar-notas.mp4",
+      "composicion": "Ayuda-PromocionarNotas",
+      "guion": "src/ayuda/promocionar-notas/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Académico"
+        },
+        {
+          "s": 7.8,
+          "titulo": "De aquí y a aquí: alumno y periodos"
+        },
+        {
+          "s": 19.3,
+          "titulo": "El pareo, antes de copiar"
+        },
+        {
+          "s": 32.5,
+          "titulo": "Copiar: no hay vuelta atrás"
+        }
+      ],
+      "revision": "golpes revisados: la tabla se actualiza al copiar (app)"
+    },
+    {
+      "clave": "horario-programa",
+      "titulo": "Descargar el programa",
+      "serie": "horario",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 27.9,
+      "rutas": [
+        "horario/programa"
+      ],
+      "fichero": "out/ayuda/horario-programa.mp4",
+      "composicion": "Ayuda-HorarioPrograma",
+      "guion": "src/ayuda/horario-programa/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Horario"
+        },
+        {
+          "s": 8.7,
+          "titulo": "Cuál descargar"
+        },
+        {
+          "s": 17,
+          "titulo": "Si sale el aviso azul"
+        }
+      ],
+      "revision": "arreglado: el corte decía «otro colegio» · limpio"
+    },
+    {
+      "clave": "horario-cuadrar",
+      "titulo": "Cuadrar el horario",
+      "serie": "horario",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 30.3,
+      "rutas": [
+        "horario/cuadrar"
+      ],
+      "fichero": "out/ayuda/horario-cuadrar.mp4",
+      "composicion": "Ayuda-HorarioCuadrar",
+      "guion": "src/ayuda/horario-cuadrar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Horario"
+        },
+        {
+          "s": 5.3,
+          "titulo": "El clic y la otra pestaña"
+        },
+        {
+          "s": 19.7,
+          "titulo": "Si el navegador la bloquea"
+        }
+      ],
+      "revision": "arreglado: rótulo y miga ~30 f por detrás de la pantalla · golpes revisados (app)"
+    },
+    {
+      "clave": "horario-cual-rige",
+      "titulo": "Cuál horario rige",
+      "serie": "horario",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 39.8,
+      "rutas": [
+        "horario",
+        "horario/:id"
+      ],
+      "fichero": "out/ayuda/horario-cual-rige.mp4",
+      "composicion": "Ayuda-HorarioCualRige",
+      "guion": "src/ayuda/horario-cual-rige/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: Horario"
+        },
+        {
+          "s": 9.2,
+          "titulo": "La que rige y la más reciente"
+        },
+        {
+          "s": 16.7,
+          "titulo": "Un borrador, por dentro"
+        },
+        {
+          "s": 22.7,
+          "titulo": "Publicar, desde su fila"
+        }
+      ],
+      "revision": "limpio"
+    },
+    {
+      "clave": "horario-imprimir",
+      "titulo": "Imprimir el horario",
+      "serie": "horario",
+      "ola": 3,
+      "estado": "hecho",
+      "dura_s": 35,
+      "rutas": [
+        "horario/:id/imprimir"
+      ],
+      "fichero": "out/ayuda/horario-imprimir.mp4",
+      "composicion": "Ayuda-HorarioImprimir",
+      "guion": "src/ayuda/horario-imprimir/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde está: la versión, en Horario"
+        },
+        {
+          "s": 8.4,
+          "titulo": "La dirección, con /imprimir"
+        },
+        {
+          "s": 12.7,
+          "titulo": "Elegir los informes y contar hojas"
+        },
+        {
+          "s": 23,
+          "titulo": "Qué dice cada hoja"
+        }
+      ],
+      "revision": "arreglado: rótulos por detrás de la pantalla · limpio"
+    }
+  ]
+}

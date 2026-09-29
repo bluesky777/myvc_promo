@@ -36,6 +36,16 @@ interface Props {
 	/** Fotograma en el que el lote confirmó. Antes de él, el aro sigue puesto. */
 	confirmadoEn?: number | null;
 	ancho?: number;
+	/**
+	 * LA CASILLA NO SE DEJA TOCAR: el periodo está cerrado (`[disabled]` en app2). Gris, como el
+	 * `nz-input` apagado. Por defecto, no.
+	 */
+	apagada?: boolean;
+	/**
+	 * EL RATÓN ENCIMA CON LA NOTA RÁPIDA PUESTA: `.planilla--rapida .nota:hover` de app2, borde y
+	 * letra ámbar sobre fondo crema. Es lo que avisa de que un clic ahí ESCRIBE. Por defecto, no.
+	 */
+	rapida?: boolean;
 }
 
 /*
@@ -52,7 +62,7 @@ function marcaDe(valor: string): 'perdida' | 'superior' | null {
 	return null;
 }
 
-export const Casilla: React.FC<Props> = ({ valor, foco = false, conCursor = true, aroDesde = null, confirmadoEn = null, ancho = 92 }) => {
+export const Casilla: React.FC<Props> = ({ valor, foco = false, conCursor = true, aroDesde = null, confirmadoEn = null, ancho = 92, apagada = false, rapida = false }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 	const marca = marcaDe(valor);
@@ -123,11 +133,11 @@ export const Casilla: React.FC<Props> = ({ valor, foco = false, conCursor = true
 					width: ancho,
 					height: 46,
 					borderRadius: 7,
-					border: `1px solid ${colorLinea}`,
-					backgroundColor: SUPERFICIE,
-					backgroundImage: tinte,
+					border: `1px solid ${rapida ? '#fecf49' : apagada ? BORDE : colorLinea}`,
+					backgroundColor: rapida ? '#fefbf1' : apagada ? '#f5f5f5' : SUPERFICIE,
+					backgroundImage: rapida || apagada ? 'none' : tinte,
 					boxShadow: foco && marca === null ? `0 0 0 3px ${ACENTO}22` : 'none',
-					color: marca === 'perdida' ? PERDIDA_LETRA : marca === 'superior' ? SUPERIOR_LETRA : TEXTO,
+					color: rapida ? '#f4b400' : apagada ? 'rgba(0, 0, 0, 0.25)' : marca === 'perdida' ? PERDIDA_LETRA : marca === 'superior' ? SUPERIOR_LETRA : TEXTO,
 					fontWeight: marca === 'perdida' ? 700 : 500,
 					fontSize: 23,
 					fontVariantNumeric: 'tabular-nums',

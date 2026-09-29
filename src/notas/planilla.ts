@@ -19,15 +19,18 @@ export interface Alumno {
 	sexo: 'mujer' | 'hombre';
 	/** Taller, Quiz, Examen. `null` es la casilla vacía. */
 	notas: (number | null)[];
+	/** Las columnas Aus y Tard de la planilla: cuántas lleva en el periodo. */
+	ausencias: number;
+	tardanzas: number;
 }
 
 export const ALUMNOS: Alumno[] = [
-	{ nombre: 'Acosta Rivera, Sara Isabel', sexo: 'mujer', notas: [88, 91, 84] },
-	{ nombre: 'Rojas Valencia, Mateo David', sexo: 'hombre', notas: [74, null, 71] },
-	{ nombre: 'Cardona Ruiz, Mariana', sexo: 'mujer', notas: [95, 92, 97] },
-	{ nombre: 'Delgado Peña, Samuel', sexo: 'hombre', notas: [69, null, 73] },
-	{ nombre: 'Escobar Lozano, Valentina', sexo: 'mujer', notas: [58, null, 62] },
-	{ nombre: 'Fajardo Mejía, Tomás Andrés', sexo: 'hombre', notas: [81, 79, 85] },
+	{ nombre: 'Acosta Rivera, Sara Isabel', sexo: 'mujer', notas: [88, 91, 84], ausencias: 0, tardanzas: 1 },
+	{ nombre: 'Rojas Valencia, Mateo David', sexo: 'hombre', notas: [74, null, 71], ausencias: 2, tardanzas: 0 },
+	{ nombre: 'Cardona Ruiz, Mariana', sexo: 'mujer', notas: [95, 92, 97], ausencias: 0, tardanzas: 0 },
+	{ nombre: 'Delgado Peña, Samuel', sexo: 'hombre', notas: [69, null, 73], ausencias: 1, tardanzas: 2 },
+	{ nombre: 'Escobar Lozano, Valentina', sexo: 'mujer', notas: [58, null, 62], ausencias: 3, tardanzas: 1 },
+	{ nombre: 'Fajardo Mejía, Tomás Andrés', sexo: 'hombre', notas: [81, 79, 85], ausencias: 0, tardanzas: 0 },
 ];
 
 export const COLUMNAS = ['Taller', 'Quiz', 'Examen'];

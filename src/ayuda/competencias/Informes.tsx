@@ -46,7 +46,7 @@ export const Informes: React.FC<{
 	const ficha = entra(frame, fps, fichaDesde, 16);
 
 	return (
-		<div style={{ width: ANCHO, height: '100%', padding: `${I.arriba}px ${I.lados}px`, boxSizing: 'border-box', display: 'flex', gap: 24 }}>
+		<div style={{ width: ANCHO, height: '100%', padding: `${I.arriba}px ${I.lados}px`, boxSizing: 'border-box', display: 'flex', gap: I.huecoConfig }}>
 			<div style={{ flex: 1, opacity: 1 - fuera }}>
 				<div style={{ height: I.titulo }}>
 					<div style={{ fontSize: 28, fontWeight: 700, color: TEXTO, whiteSpace: 'pre' }}>
@@ -113,7 +113,7 @@ export const Informes: React.FC<{
 			{/* ── El configurador: dos preguntas, y el periodo no es ninguna de las dos. ──────── */}
 			<div
 				style={{
-					width: 330,
+					width: I.config,
 					padding: 20,
 					boxSizing: 'border-box',
 					borderRadius: 12,

@@ -2,8 +2,9 @@ import { ACADEMICO, MEDIDAS, MIS_ASIGNATURAS, alturaDeEntrada } from '../medidas
 import { Ritmo } from '../../notas/guion';
 import { Cierre } from '../Tarjeta';
 import { enElFotograma } from '../encuadre';
-import { Paso, compruebaElGuion } from '../tiempos';
-import { LA_QUE_SE_ABRE, LISTA, PLANILLA, rectanguloDelBoton } from './datos';
+import { Capitulo, Paso, compruebaElGuion, compruebaLosCapitulos } from '../tiempos';
+import { LA_QUE_SE_ABRE, PLANILLA, rectanguloDelBoton } from './datos';
+import { HISTORIAL, historialEnElFotograma } from './historial-geometria';
 
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
@@ -46,25 +47,26 @@ export const FPS = 30;
 
 export const LLEGADA = {
 	/** El puntero entra por abajo, que es de donde viene una mano. */
-	cursorEntra: 20,
+	cursorEntra: 4,
 	/** Llega a «Académico» y pulsa. */
-	llegaAcademico: 58,
-	pulsaAcademico: 64,
+	llegaAcademico: 30,
+	pulsaAcademico: 36,
 	/** La sección se despliega empujando a las de abajo. */
-	abreAcademico: 66,
+	abreAcademico: 38,
 	/** Baja a «Mis asignaturas» y pulsa. */
-	llegaMisAsignaturas: 170,
-	pulsaMisAsignaturas: 182,
+	llegaMisAsignaturas: 86,
+	pulsaMisAsignaturas: 94,
 	/** La lista se monta. */
-	montaLista: 186,
-	/** Cruza hasta el botón «Planilla» de la fila de 9°B y pulsa. */
-	llegaBoton: 340,
-	pulsaBoton: 366,
-	cursorSale: 380,
+	montaLista: 98,
+	/** Se queda quieto mientras la lista llega, y cruza hasta el botón «Planilla» de la fila de 9°B. */
+	dejaMisAsignaturas: 150,
+	llegaBoton: 168,
+	pulsaBoton: 208,
+	cursorSale: 218,
 	/** La cáscara se va acercando y se apaga: no es un corte, es entrar en la pantalla. */
-	seVaLaCascara: 400,
+	seVaLaCascara: 222,
 	/** Y la planilla empieza a montarse. */
-	entraLaPlanilla: 445,
+	entraLaPlanilla: 248,
 };
 
 /** Dónde caen las dos cosas que hay que señalar, ya en coordenadas del fotograma. */
@@ -133,33 +135,47 @@ export const RITMO_AYUDA: Ritmo = {
 	PASO_SALIDA: 4,
 };
 
-/**
- * LO QUE DURA EL AVISO EN PANTALLA. En la aplicación son 2,5 s (`nzDuration: 2500`) y aquí se queda
- * hasta que la pantalla se va, que son nueve. **Es la única licencia del clip y va dicha aquí**: el
- * aviso es la prueba de que las tres se guardaron, y el paso 7 lo está explicando mientras se ve.
- * Quitarlo antes dejaría el rótulo hablando de algo que ya no está en pantalla.
+/*
+ * EL RITMO DE ESTE VÍDEO (2026-09-29, encargo de voz: un tercio más corto). `RITMO_AYUDA` se queda
+ * como estaba porque lo importan otros vídeos (cierre-1, cierre-3, docente-asistencia, nota rápida…);
+ * este clip adelanta los tecleos y los junta, y **no toca la espera de la aplicación**: la puerta de
+ * abajo exige los mismos 105 fotogramas entre la última tecla y el lote.
  */
-export const AVISO_DURA = RITMO_AYUDA.SALIDA - RITMO_AYUDA.CONFIRMA;
+const PRIMER_TECLEO = 143;
+const ENTRE_TECLEOS = 56;
+export const RITMO_TECLEAR: Ritmo = {
+	...RITMO_AYUDA,
+	TECLEOS: [
+		{ fila: 1, valor: '92', empieza: PRIMER_TECLEO },
+		{ fila: 3, valor: '78', empieza: PRIMER_TECLEO + ENTRE_TECLEOS },
+		{ fila: 4, valor: '55', empieza: PRIMER_TECLEO + 2 * ENTRE_TECLEOS },
+	],
+	CONFIRMA: PRIMER_TECLEO + 2 * ENTRE_TECLEOS + 10 + 105,
+	SALIDA: 0,
+};
 
 /*
  * LA PUERTA DEL RITMO: el lote tiene que volver **exactamente** cuando empieza el paso que lo
  * explica, y la espera tiene que ser la de la aplicación. Las dos cosas se rompen solas en cuanto
  * alguien mueve un rótulo, y ninguna de las dos da error al renderizar: lo que sale es un vídeo que
- * dice una cosa mientras en pantalla pasa otra.
+ * dice una cosa mientras en pantalla pasa otra. Vale para `RITMO_AYUDA`, que usan otros vídeos, y
+ * para el de éste.
  */
-const ULTIMA_TECLA = (() => {
-	const t = RITMO_AYUDA.TECLEOS[RITMO_AYUDA.TECLEOS.length - 1];
-	return t.empieza + t.valor.length * RITMO_AYUDA.POR_TECLA;
-})();
+const ultimaTecla = (r: Ritmo): number => {
+	const t = r.TECLEOS[r.TECLEOS.length - 1];
+	return t.empieza + t.valor.length * r.POR_TECLA;
+};
 
 /** 1 s de la celda + 2 s de la ventana del lote + la ida y vuelta. */
 const LO_QUE_TARDA_EL_LOTE = 105;
 
-if (RITMO_AYUDA.CONFIRMA - ULTIMA_TECLA !== LO_QUE_TARDA_EL_LOTE) {
-	throw new Error(
-		`Guion: el lote vuelve ${RITMO_AYUDA.CONFIRMA - ULTIMA_TECLA} fotogramas después de la última ` +
-			`tecla, y la aplicación tarda ${LO_QUE_TARDA_EL_LOTE}.`,
-	);
+for (const r of [RITMO_AYUDA, RITMO_TECLEAR]) {
+	if (r.CONFIRMA - ultimaTecla(r) !== LO_QUE_TARDA_EL_LOTE) {
+		throw new Error(
+			`Guion: el lote vuelve ${r.CONFIRMA - ultimaTecla(r)} fotogramas después de la última ` +
+				`tecla, y la aplicación tarda ${LO_QUE_TARDA_EL_LOTE}.`,
+		);
+	}
 }
 
 /* ── Los pasos: lo que se lee abajo ───────────────────────────────────────────────────────── */
@@ -171,19 +187,82 @@ const EN_LA_PLANILLA = {
 	url: '/planilla-notas/1222',
 };
 
+/** Fotograma del clip: la escena de la planilla empieza en `entraLaPlanilla`. */
+const E = LLEGADA.entraLaPlanilla;
+
+/*
+ * EL HISTORIAL (2026-09-29, pedido por Joseth; app2 ya se lo enseña al docente). Después del aviso
+ * del lote, la cámara se corre a la izquierda y aparece la última columna, «Historial», con su reloj
+ * y su fecha; el puntero pulsa la de la primera fila y se abre el diálogo con un cambio que hizo
+ * otra persona. Fotogramas del clip.
+ */
+export const EL_HISTORIAL = {
+	/** El aviso de «Cambiadas» se va (en la aplicación dura 2,5 s). */
+	seVaElAviso: E + RITMO_TECLEAR.CONFIRMA + 90,
+	/** La cámara se corre y la columna aparece. */
+	seCorre: E + RITMO_TECLEAR.CONFIRMA + 88,
+	yaCorrida: E + RITMO_TECLEAR.CONFIRMA + 106,
+	cursorEntra: E + RITMO_TECLEAR.CONFIRMA + 110,
+	llegaCelda: E + RITMO_TECLEAR.CONFIRMA + 132,
+	pulsaCelda: 0,
+	abreDialogo: 0,
+	cierraDialogo: 0,
+	cursorSale: 0,
+};
+
 export const PASOS: Paso[] = [
-	{ desde: 10, texto: 'Todo lo del docente está en el menú, en Académico.', ...EN_EL_MENU, foco: FOCOS.academico },
-	{ desde: 160, texto: 'Mis asignaturas: una fila por cada una de las tuyas.', ...EN_EL_MENU },
-	{ desde: 310, texto: 'Cada fila lleva cuatro botones. El segundo es la planilla.', ...EN_LA_LISTA, foco: FOCOS.botonPlanilla },
-	{ desde: 460, texto: 'Cada fila es un alumno y cada columna, una nota.', ...EN_LA_PLANILLA },
-	{ desde: 610, texto: 'Escribes la nota y aparece el aro: escrita, todavía sin confirmar.', ...EN_LA_PLANILLA },
-	{ desde: 772, texto: 'Tarda un par de segundos: espera a juntar toda la tanda.', ...EN_LA_PLANILLA },
-	{ desde: 934, texto: 'Se apagan los tres a la vez y sale un aviso con las tres notas.', ...EN_LA_PLANILLA },
+	{ desde: 8, texto: 'Abre Académico y entra en Mis asignaturas.', ...EN_EL_MENU, foco: FOCOS.academico, focoHasta: LLEGADA.pulsaMisAsignaturas - 4 },
+	{ desde: 124, texto: 'En la fila de 9°B, pulsa Planilla.', voz: 'En la fila de noveno B, pulsa Planilla.', ...EN_LA_LISTA, foco: FOCOS.botonPlanilla, focoHasta: LLEGADA.seVaLaCascara - 6 },
+	{ desde: E + 8, texto: 'Una fila por alumno y una columna por nota.', ...EN_LA_PLANILLA },
+	{ desde: E + RITMO_TECLEAR.TECLEOS[0].empieza - 20, texto: 'Escribes la nota y sale el aro: sin confirmar.', ...EN_LA_PLANILLA },
+	{ desde: E + RITMO_TECLEAR.TECLEOS[2].empieza, texto: 'Tarda dos segundos: junta la tanda.', ...EN_LA_PLANILLA },
+	{ desde: E + RITMO_TECLEAR.CONFIRMA, texto: 'Se apagan a la vez y sale un aviso.', ...EN_LA_PLANILLA },
+	{
+		desde: E + RITMO_TECLEAR.CONFIRMA + 100,
+		texto: 'El historial siempre deja ver tu actividad.',
+		...EN_LA_PLANILLA,
+	},
+	{ desde: 0, texto: 'Cada cambio a tus notas, tuyo o de otra persona, queda con su nombre y la hora.', ...EN_LA_PLANILLA },
 ];
 
+/* El diálogo se abre justo antes de que el último rótulo lo cuente, y se cierra con la tarjeta. */
+const H1 = PASOS.length - 2;
+const H2 = PASOS.length - 1;
+PASOS[H2].desde = PASOS[H1].desde + 112;
+EL_HISTORIAL.pulsaCelda = PASOS[H2].desde - 12;
+EL_HISTORIAL.abreDialogo = PASOS[H2].desde - 8;
+EL_HISTORIAL.cursorSale = PASOS[H2].desde + 6;
+PASOS[H1].focoHasta = EL_HISTORIAL.abreDialogo;
+
 /** Cuándo entra la tarjeta del final, y cuánto se queda quieta. */
-export const TARJETA = 1150;
-export const DURACION = 1260;
+export const TARJETA = PASOS[H2].desde + 190;
+export const DURACION = TARJETA + 136;
+EL_HISTORIAL.cierraDialogo = TARJETA - 14;
+
+/*
+ * LA SALIDA de la planilla, ya que la tarjeta está puesta: las filas se apartan cuando el diálogo ya
+ * se cerró, y la tarjeta entra encima.
+ */
+RITMO_TECLEAR.SALIDA = TARJETA - E - 12;
+
+/* El foco del primer paso del historial: la columna entera, ya con la cámara corrida. */
+PASOS[H1].foco = historialEnElFotograma(HISTORIAL.columna, EL_HISTORIAL.yaCorrida - E, RITMO_TECLEAR.SALIDA);
+/** El aviso del lote dura lo que en la aplicación, más o menos: se va antes de que llegue el historial. */
+export const AVISO_DURA = EL_HISTORIAL.seVaElAviso - E - RITMO_TECLEAR.CONFIRMA;
+
+/** La clave con la que la aplicación pide este vídeo: `data: { ayuda: '…' }` en `app.routes.ts`. */
+export const CLAVE = 'planilla-teclear';
+
+export const TITULO = 'La planilla: teclear y que quede guardado';
+
+/** Los cinco momentos, para el índice del panel de ayuda y para el `?start=` de cada «?». */
+export const CAPITULOS: Capitulo[] = [
+	{ desde: 0, titulo: 'Dónde está la planilla' },
+	{ desde: E, titulo: 'La pantalla: una fila por alumno' },
+	{ desde: PASOS[3].desde, titulo: 'El aro: escrita y sin confirmar' },
+	{ desde: E + RITMO_TECLEAR.CONFIRMA, titulo: 'Un aviso por tanda' },
+	{ desde: PASOS[H1].desde, titulo: 'El historial de cada fila' },
+];
 
 export const CIERRE: Cierre = {
 	hiciste: 'Calificaste tres notas en la planilla de 9°B.',
@@ -192,19 +271,20 @@ export const CIERRE: Cierre = {
 };
 
 /*
- * LA PUERTA. Si un rótulo dura menos de lo que se tarda en leerlo, esto revienta **al abrir el
+ * LA PUERTA. Si un rótulo dura menos de lo que se tarda en decirlo, esto revienta **al abrir el
  * estudio**, con el paso y el texto delante. Ver `ayuda/tiempos.ts`.
  */
 compruebaElGuion(PASOS, FPS, TARJETA);
+compruebaLosCapitulos(CAPITULOS, DURACION);
 
 /*
- * Y la otra mitad: que el aviso caiga donde lo explica el paso 7. Va aquí abajo porque necesita
- * `PASOS`, y `PASOS` necesita los focos, que necesitan la geometría.
+ * Y la otra mitad: que el aviso caiga donde lo explica el último paso. Va aquí abajo porque
+ * necesita `PASOS`, y `PASOS` necesita los focos, que necesitan la geometría.
  */
-const EXPLICA_EL_AVISO = PASOS.length - 1;
-if (LLEGADA.entraLaPlanilla + RITMO_AYUDA.CONFIRMA !== PASOS[EXPLICA_EL_AVISO].desde) {
+const EXPLICA_EL_AVISO = PASOS.length - 3;
+if (E + RITMO_TECLEAR.CONFIRMA !== PASOS[EXPLICA_EL_AVISO].desde) {
 	throw new Error(
-		`Guion: el lote vuelve en el fotograma ${LLEGADA.entraLaPlanilla + RITMO_AYUDA.CONFIRMA} y el paso ` +
+		`Guion: el lote vuelve en el fotograma ${E + RITMO_TECLEAR.CONFIRMA} y el paso ` +
 			`que lo explica empieza en el ${PASOS[EXPLICA_EL_AVISO].desde}. Tienen que ser el mismo.`,
 	);
 }
@@ -213,6 +293,6 @@ if (LLEGADA.entraLaPlanilla + RITMO_AYUDA.CONFIRMA !== PASOS[EXPLICA_EL_AVISO].d
 if (LA_QUE_SE_ABRE < 0) {
 	throw new Error('Guion: la asignatura que el vídeo abre no está en ASIGNATURAS.');
 }
-if (LISTA.boton.ancho < 90) {
+if (rectanguloDelBoton(LA_QUE_SE_ABRE, PLANILLA).ancho < 90) {
 	throw new Error('Guion: el botón es más estrecho de lo que su texto necesita.');
 }

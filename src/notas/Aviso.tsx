@@ -21,9 +21,14 @@ interface Props {
 	desde: number;
 	/** Lo que dura antes de irse. En la aplicación, `nzDuration: 2500`. */
 	dura: number;
+	/**
+	 * EL ICONO DEL `nz-message`: el círculo verde de `success` (por defecto) o el azul de `info`, que
+	 * es como sale un `aviso.open()` sin acción en app2 (`comunes/avisos/avisos.ts`: neutro, no verde).
+	 */
+	tipo?: 'success' | 'info';
 }
 
-export const Aviso: React.FC<Props> = ({ texto, desde, dura }) => {
+export const Aviso: React.FC<Props> = ({ texto, desde, dura, tipo = 'success' }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 
@@ -72,10 +77,18 @@ export const Aviso: React.FC<Props> = ({ texto, desde, dura }) => {
 				}}
 			>
 				{/* El círculo de «bien» de Ant, dibujado: así no hace falta cargar la fuente de iconos. */}
-				<svg width="50" height="50" viewBox="0 0 24 24" aria-hidden>
-					<circle cx="12" cy="12" r="11" fill="#52c41a" />
-					<path d="M6.8 12.3l3.4 3.4 6.9-7.1" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-				</svg>
+				{tipo === 'success' ? (
+					<svg width="50" height="50" viewBox="0 0 24 24" aria-hidden>
+						<circle cx="12" cy="12" r="11" fill="#52c41a" />
+						<path d="M6.8 12.3l3.4 3.4 6.9-7.1" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+					</svg>
+				) : (
+					<svg width="50" height="50" viewBox="0 0 24 24" aria-hidden>
+						<circle cx="12" cy="12" r="11" fill="#1677ff" />
+						<rect x="10.8" y="10" width="2.4" height="7.4" rx="1.2" fill="#fff" />
+						<circle cx="12" cy="6.9" r="1.45" fill="#fff" />
+					</svg>
+				)}
 				<span style={{ fontVariantNumeric: 'tabular-nums' }}>{texto}</span>
 			</div>
 		</div>

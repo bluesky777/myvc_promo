@@ -1,4 +1,5 @@
 import { VOCABULARIO } from '../../comunes/vocabulario';
+import { COLEGIO as COLEGIO_DE_TODOS } from '../colegio';
 import { MEDIDAS } from '../medidas';
 import { ANCHO_LISTA } from '../planilla/datos';
 
@@ -117,7 +118,8 @@ export function arribaDeLaAyuda(): number {
  * ───────────────────────────────────────────────────────────────────────────────────────────── */
 
 export const DESEMPENOS_TEXTOS = {
-	titulo: 'Desempeños de mis clases',
+	/* El `<h1>` de `docente-competencias.html` desde el 26 sep 2026. */
+	titulo: 'Mis competencias',
 	entradilla:
 		'Lo que va a salir en el boletín de tus clases. Son las mismas filas que escribe la coordinación: ' +
 		'lo que cambies aquí lo ve ella, y lo que ella escriba lo ves tú.',
@@ -140,7 +142,16 @@ export const DESEMPENOS_TEXTOS = {
 };
 
 /** Las clases de la tira de arriba. La primera es la del vídeo. */
-export const MIS_CLASES = ['9. MAT', '9. EST', '8. MAT', '10. MAT'];
+/*
+ * Las de Ana María (`montar-el-ano/reparto.ts`): Matemáticas y Estadística en noveno --9°A y 9°B son
+ * una sola clase, porque los desempeños son de un par (materia, grado)--, Ciencias Naturales en 8°A y
+ * Estadística en 10°A. El rótulo es el de la aplicación: el corto del grado, punto, el de la materia.
+ */
+export const MIS_CLASES = ['9. MAT', '9. EST', '8. NAT', '10. EST'];
+
+/** Cada pastilla de la tira mide lo mismo, para que el foco de «tu clase» salga de la cuenta. */
+export const PASTILLA_CLASE = { ancho: 96, hueco: 10 };
+export const ANCHO_TIRA_CLASES = MIS_CLASES.length * PASTILLA_CLASE.ancho + (MIS_CLASES.length - 1) * PASTILLA_CLASE.hueco;
 
 export interface Desempeno {
 	texto: string;
@@ -232,7 +243,15 @@ export const INFORMES_ALTO = {
 	buscador: 56,
 	huecoTrasBuscador: 20,
 	ficha: 132,
+	/** El configurador de la derecha, y el hueco que lo separa del buscador. */
+	config: 330,
+	huecoConfig: 24,
 };
+
+/** El buscador ocupa lo que dejan el configurador y su hueco: de aquí sale también su foco. */
+export function anchoDelBuscador(): number {
+	return ANCHO - INFORMES_ALTO.lados * 2 - INFORMES_ALTO.config - INFORMES_ALTO.huecoConfig;
+}
 
 export function arribaDelBuscador(): number {
 	return MEDIDAS.barra + INFORMES_ALTO.arriba + INFORMES_ALTO.titulo;
@@ -257,10 +276,9 @@ export const ANCHO = ANCHO_LISTA;
  */
 export const HOJA = { ancho: 740, alto: 980 };
 
+/* El colegio es el de todos los vídeos (`colegio/`); aquí sólo se le añade la pastilla del papel. */
 export const COLEGIO = {
-	nombre: 'COLEGIO DE DEMOSTRACIÓN MyVC',
-	abreviatura: 'CDM',
-	resolucion: 'Resolución 0000 de 2019 · DANE 000000000000',
+	...COLEGIO_DE_TODOS,
 	/** La pastilla azul del membrete. Va sin tilde en el código de la aplicación. */
 	pastilla: 'BOLETIN PERIODO 2 - 2026',
 };

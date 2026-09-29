@@ -283,7 +283,36 @@ mata** (lo que justifica que el vídeo exista; si el vídeo no enseña eso, sobr
 | 3 | **Cuál horario rige** | `/horario` | 55 | subir no es publicar: un borrador y el oficial se pintan igual |
 | 3 | **Imprimir el horario** | `/horario/:id/imprimir` | 45 | nada viene marcado; 13 grupos + 12 docentes = 34 hojas |
 
-**Cuenta:** 5 + 19 + 4 + 13 + 7 + 15 + 14 + 4 = **81 vídeos**. Ola 1: **12**. Ola 2: **28**.
+### LA OLA QUE VA PRIMERO — pedida el 2026-09-28
+
+*Sustituye a la «ola 1» de las tablas de arriba: la pidió Joseth a través de la sesión de
+`myvc_front`, que ya está construyendo el botón de ayuda de `app2`.* **25 vídeos en cuatro series**,
+y la lista con sus claves, duraciones y capítulos vive en **`CATALOGO-AYUDA.json`**, que es lo que
+el front copia a `catalogo-de-ayuda.ts`.
+
+| serie | cuántos | cuándo se usa | pantallas nuevas que hay que dibujar |
+|---|---|---|---|
+| **Cierre de notas** (8, numerados: cada tarjeta final anuncia el siguiente) | 8 | **ahora**, el cierre de periodo | periodos, notas perdidas, definitivas, nivelación, boletín tipo 1, tablero viejo, promovidos, las dos actas |
+| **Docente, día a día** | 8 (2 hechos) | todo el año | portada, planilla con Aus/Tard, comportamiento, disciplina, observador |
+| **Montar el año** | 6 | diciembre–enero | asignaturas, grupos |
+| **Certificado del año** | 4 | secretaría, todo el año | certificados del colegio, el papel impreso |
+
+**El orden es por calendario y no por gusto:** hoy es finales de septiembre, y lo que los colegios
+tienen delante es cerrar un periodo. «Montar el año» no se usa hasta enero, así que va el último
+aunque sea el que menos cuesta.
+
+**Lo que NO cabe en 90 s, y se parte:**
+
+- **`certificado-imprimir`** traía cuatro papeles. Se parte en dos: los certificados de estudio, y
+  **`constancia-estudio`**, que no lleva ni una nota y es otro papel (el más pedido de secretaría).
+- **`cierre-4-boletines`** se queda con sacar el boletín. Los ajustes de impresión y la pila siguen
+  siendo sus propios vídeos: los tres juntos pasan de 150 s.
+
+**Aus y Tard, decidido (2026-09-28):** la planilla dibujada ya las tiene, después del Total como en
+app2, y el promocional y los dos vídeos de ayuda se volvieron a renderizar con ellas. Sirven a
+`docente-asistencia`, `planilla-real-m-r` y `cierre-1`.
+
+**Cuenta de las tablas de arriba:** 5 + 19 + 4 + 13 + 7 + 15 + 14 + 4 = **81 vídeos**. Ola 2: **28**.
 El resto, ola 3 o bajo demanda — y «bajo demanda» quiere decir *cuando alguien llame preguntando
 eso*, que es la única medida honesta de qué hace falta.
 
@@ -410,7 +439,7 @@ ha perdido un día y no tres semanas.
 ```sh
 npm run todo-ayuda        # los dos
 npm run ayuda-planilla    # -> out/ayuda/planilla-teclear.mp4   42 s, 7 pasos
-npm run ayuda-competencias # -> out/ayuda/competencias.mp4     103 s, 17 pasos
+npm run ayuda-competencias # -> out/ayuda/competencias-docente.mp4  109 s, 18 pasos
 ```
 
 ### 9.1 El piloto: «La planilla: teclear y que quede guardado»

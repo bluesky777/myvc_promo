@@ -1,6 +1,8 @@
 import React from 'react';
 import { Easing, interpolate, useCurrentFrame } from 'remotion';
 
+import { Efecto } from '../ayuda/voz';
+
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
  * EL PUNTERO. Va **dentro del panel**, no sobre el fotograma, y eso es lo que hace que sus
@@ -47,7 +49,9 @@ export const Cursor: React.FC<Props> = ({ puntos, clics = [], aparece, sale, tam
 		interpolate(frame, [aparece, aparece + 8], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) *
 		interpolate(frame, [sale, sale + 8], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-	if (opacidad <= 0.001) { return null; }
+	/* El clic suena (sólo en los vídeos de ayuda: `Efecto` lo decide), y va antes del `return null`. */
+	const suenan = clics.map((c) => <Efecto key={`s${c}`} cual="clic" en={c} />);
+	if (opacidad <= 0.001) { return <>{suenan}</>; }
 
 	/* Al pulsar, el puntero se encoge un poco: es lo que hace que el clic se vea y no sólo se deduzca. */
 	const hundido = clics.reduce((peor, c) => {
@@ -58,6 +62,7 @@ export const Cursor: React.FC<Props> = ({ puntos, clics = [], aparece, sale, tam
 
 	return (
 		<div style={{ position: 'absolute', left: x, top: y, pointerEvents: 'none', opacity: opacidad, zIndex: 40 }}>
+			{suenan}
 			{/* La onda del clic sale del punto exacto de la punta. */}
 			{clics.map((c) => {
 				const t = frame - c;

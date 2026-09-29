@@ -1,3 +1,4 @@
+import { RESPIRO_VOZ, RETRASO_VOZ, segundosDeVoz } from './voz';
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
  * CUÁNTO TIENE QUE DURAR UN RÓTULO. **La regla de los vídeos sin audio, en un solo sitio.**
@@ -62,6 +63,13 @@ export interface Paso {
 	 * pantalla siguiente señala un sitio que ya no existe, y eso se ve como un fallo de dibujo.
 	 */
 	focoHasta?: number;
+	/**
+	 * LO IRREVERSIBLE (PLAN §2.8): el rótulo sale en rojo y **se queda un segundo más** de lo que su
+	 * texto necesita. `compruebaElGuion` lo exige. Sin esto, el rótulo es el de siempre.
+	 */
+	rojo?: boolean;
+	/** Lo que dice la voz, si no es el rótulo tal cual (un rótulo con «Aus, Tard» no se lee en voz alta). */
+	voz?: string;
 }
 
 /**
@@ -69,10 +77,14 @@ export interface Paso {
  * Se llama al cargar el módulo del guion, así que falla en `npm run studio` y no en el render.
  */
 export function compruebaElGuion(pasos: Paso[], fps: number, final: number): void {
+	/* `tools/voz.mjs` carga los guiones sólo para sacar sus textos: ahí no hay puerta que valga. */
+	if ((globalThis as { SIN_PUERTA_DE_VOZ?: boolean }).SIN_PUERTA_DE_VOZ) { return; }
 	pasos.forEach((paso, i) => {
 		const acaba = i + 1 < pasos.length ? pasos[i + 1].desde : final;
 		const dura = acaba - paso.desde;
-		const hace_falta = fotogramasDeLectura(paso.texto, fps);
+		const voz = segundosDeVoz(paso.voz ?? paso.texto);
+		const hace_falta =
+			(voz === null ? fotogramasDeLectura(paso.texto, fps) : RETRASO_VOZ + Math.ceil(voz * fps) + RESPIRO_VOZ) + (paso.rojo ? fps : 0);
 
 		if (dura < 0) {
 			throw new Error(`Guion: el paso ${i + 1} empieza en ${paso.desde} y el siguiente antes.`);
@@ -80,8 +92,51 @@ export function compruebaElGuion(pasos: Paso[], fps: number, final: number): voi
 		if (dura < hace_falta) {
 			throw new Error(
 				`Guion: el paso ${i + 1} dura ${dura} fotogramas y su texto necesita ${hace_falta} ` +
-					`(${palabras(paso.texto)} palabras). Alarga el paso o recorta el texto:\n  «${paso.texto}»`,
+					`(${voz === null ? `${palabras(paso.texto)} palabras` : `${voz} s de voz`}). Alarga el paso o recorta el texto:\n  «${paso.texto}»`,
 			);
+		}
+	});
+}
+
+/*
+ * ═══════════════════════════════════════════════════════════════════════════════════════════════
+ * LOS CAPÍTULOS. **No son los pasos.**
+ *
+ * Un vídeo de dieciocho pasos no tiene dieciocho capítulos: tiene cuatro o cinco momentos, y un
+ * índice de dieciocho renglones no se lee. Los capítulos son para dos cosas de la aplicación, las
+ * dos de `catalogo-de-ayuda.ts` en el front:
+ *
+ *   1. el índice que se pinta al lado del vídeo, para saltar;
+ *   2. el `?start=` de los «?» pegados a un mando concreto -- un vídeo de 109 s con cinco
+ *      capítulos sirve a cinco botones de ayuda sin grabar cinco vídeos.
+ *
+ * Van en fotogramas, como todo lo demás del guion, y `CATALOGO-AYUDA.json` los publica en segundos.
+ */
+export interface Capitulo {
+	/** Fotograma en el que empieza. */
+	desde: number;
+	/** Cómo se lee en el índice. Corto: es una entrada de lista, no un rótulo. */
+	titulo: string;
+}
+
+/**
+ * LA PUERTA DE LOS CAPÍTULOS: en orden, dentro del vídeo, y ni demasiados ni uno solo. Falla en el
+ * estudio, como la de los rótulos.
+ */
+export function compruebaLosCapitulos(capitulos: Capitulo[], duracion: number): void {
+	/* Entre 2 y 6: es lo que cabe en el índice del panel de ayuda de la aplicación sin hacer scroll. */
+	if (capitulos.length < 2 || capitulos.length > 6) {
+		throw new Error(`Capítulos: son ${capitulos.length}, y un índice se lee con entre 2 y 6.`);
+	}
+	if (capitulos[0].desde !== 0) {
+		throw new Error('Capítulos: el primero tiene que empezar en 0, o el índice arranca a mitad.');
+	}
+	capitulos.forEach((c, i) => {
+		if (c.desde >= duracion) {
+			throw new Error(`Capítulos: «${c.titulo}» empieza en ${c.desde} y el vídeo dura ${duracion}.`);
+		}
+		if (i > 0 && c.desde <= capitulos[i - 1].desde) {
+			throw new Error(`Capítulos: «${c.titulo}» no va después del anterior.`);
 		}
 	});
 }

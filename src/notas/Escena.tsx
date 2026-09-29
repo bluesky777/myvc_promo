@@ -28,15 +28,142 @@ import { ACENTO, BORDE, FUENTE, PERDIDA_LETRA, SUPERFICIE, SUPERIOR_LETRA, TEXTO
  * translúcidos, así que el cruce **se sigue sumando**, que era lo que valía.
  */
 
-const ANCHOS = { num: 64, alumno: 440, nota: 170, total: 140, relleno: 32 };
+/*
+ * AUS Y TARD VAN DESPUÉS DEL TOTAL, como en app2. Para que quepan sin bajar el encuadre se estrechó
+ * lo que sobraba --el nombre más largo no llega a 400, y la casilla mide 92--: la tabla sigue midiendo
+ * lo mismo que antes de tenerlas.
+ */
+/*
+ * `real` y `marca` sólo se usan con la opción `definitivas` (Real, M y R entre el Total y Aus): sin
+ * ella no entran en ninguna cuenta y la tabla mide lo de siempre.
+ */
+const ANCHOS = { num: 64, alumno: 400, nota: 150, total: 120, falta: 88, relleno: 32, real: 116, marca: 58 };
 const ALTO_FILA = 62;
 const ALTO_UNIDAD = 44;
 const ALTO_SUBCOLUMNA = 48;
 
-const ANCHO_TABLA = ANCHOS.num + ANCHOS.alumno + ANCHOS.nota * 3 + ANCHOS.total;
+const ANCHO_TABLA = ANCHOS.num + ANCHOS.alumno + ANCHOS.nota * COLUMNAS.length + ANCHOS.total + ANCHOS.falta * 2;
 
 /** El bloque del título: su alto más el hueco que deja debajo. Hace falta para colocar cosas encima. */
 const ALTO_TITULO = 40 + 22;
+
+export type Anchos = typeof ANCHOS;
+export type ColumnaDePlanilla = 'num' | 'alumno' | 'total' | 'real' | 'm' | 'r' | 'ausencias' | 'tardanzas' | number;
+
+/** Lo que ocupan Real, M y R juntas; 0 sin la opción `definitivas`. */
+const anchoDefinitivas = (a: Anchos, con: boolean) => (con ? a.real + a.marca * 2 : 0);
+
+/*
+ * LA GEOMETRÍA DE LA PLANILLA, PARA QUIEN LA SEÑALA DESDE FUERA (los vídeos de ayuda). Sale de las
+ * mismas constantes que el dibujo, así que el foco y el puntero no pueden señalar al vecino. Todo va
+ * en coordenadas del PANEL (su esquina de arriba a la izquierda, con el relleno dentro); para pasar
+ * al fotograma, `planillaEnElFotograma`, que sólo vale con la escena `quieta`.
+ *
+ * `filas` es cuántas filas se ven (el buscador puede esconder algunas: el hueco se conserva igual).
+ */
+export function geometriaDePlanilla(o: { anchos?: Partial<Anchos>; encima?: number; definitivas?: boolean } = {}) {
+	const a: Anchos = { ...ANCHOS, ...o.anchos };
+	const encima = o.encima ?? 0;
+	const def = anchoDefinitivas(a, o.definitivas ?? false);
+	const anchoTabla = a.num + a.alumno + a.nota * COLUMNAS.length + a.total + def + a.falta * 2;
+	const arribaTabla = a.relleno + ALTO_TITULO + encima;
+	/* El borde de la tabla (1) y la cabecera con su raya (92 + 1). */
+	const arribaFilas = arribaTabla + 1 + ALTO_UNIDAD + ALTO_SUBCOLUMNA + 1;
+
+	const izquierdaDe = (c: ColumnaDePlanilla): number => {
+		const base = a.relleno + 1;
+		if (c === 'num') { return base; }
+		if (c === 'alumno') { return base + a.num; }
+		const notas = base + a.num + a.alumno;
+		if (typeof c === 'number') { return notas + a.nota * c; }
+		const total = notas + a.nota * COLUMNAS.length;
+		if (c === 'total') { return total; }
+		if (c === 'real') { return total + a.total; }
+		if (c === 'm') { return total + a.total + a.real; }
+		if (c === 'r') { return total + a.total + a.real + a.marca; }
+		return c === 'ausencias' ? total + a.total + def : total + a.total + def + a.falta;
+	};
+	const anchoDe = (c: ColumnaDePlanilla): number =>
+		c === 'num' ? a.num : c === 'alumno' ? a.alumno : c === 'total' ? a.total : c === 'real' ? a.real : c === 'm' || c === 'r' ? a.marca : typeof c === 'number' ? a.nota : a.falta;
+
+	return {
+		anchos: a,
+		ancho: anchoTabla + a.relleno * 2,
+		alto: a.relleno * 2 + ALTO_TITULO + encima + 2 + ALTO_UNIDAD + ALTO_SUBCOLUMNA + 1 + ALUMNOS.length * ALTO_FILA,
+		/** El hueco de `encima`, entre el título y la tabla. */
+		encima: { x: a.relleno, y: a.relleno + ALTO_TITULO, ancho: anchoTabla, alto: encima },
+		/** Una celda de la fila que se ve en el puesto `puesto` (0 = la primera que se ve). */
+		celda: (puesto: number, c: ColumnaDePlanilla) => ({
+			x: izquierdaDe(c),
+			y: arribaFilas + puesto * ALTO_FILA,
+			ancho: anchoDe(c),
+			alto: ALTO_FILA - 1,
+		}),
+		/** La casilla de nota de esa celda: 92 × 46, centrada. */
+		casilla: (puesto: number, c: number) => ({
+			x: izquierdaDe(c) + (a.nota - 92) / 2,
+			y: arribaFilas + puesto * ALTO_FILA + (ALTO_FILA - 1 - 46) / 2,
+			ancho: 92,
+			alto: 46,
+		}),
+		/** El título de una columna de notas (la segunda fila de la cabecera). */
+		cabecera: (c: number) => ({
+			x: izquierdaDe(c),
+			y: arribaTabla + 1 + ALTO_UNIDAD,
+			ancho: a.nota,
+			alto: ALTO_SUBCOLUMNA,
+		}),
+		/** El título de una columna de las de dos pisos (Total, Real, M, R, Aus, Tard). */
+		cabeceraDe: (c: ColumnaDePlanilla) => ({
+			x: izquierdaDe(c),
+			y: arribaTabla + 1,
+			ancho: anchoDe(c),
+			alto: ALTO_UNIDAD + ALTO_SUBCOLUMNA,
+		}),
+		/** De la cabecera a la última fila, una columna entera. */
+		columna: (c: ColumnaDePlanilla) => ({
+			x: izquierdaDe(c),
+			y: arribaTabla + 1,
+			ancho: anchoDe(c),
+			alto: ALTO_UNIDAD + ALTO_SUBCOLUMNA + 1 + ALUMNOS.length * ALTO_FILA,
+		}),
+	};
+}
+
+/**
+ * DE COORDENADAS DEL PANEL AL FOTOGRAMA, con la escena `quieta` y el `ajuste` que se le pasó. El
+ * panel va centrado y se escala desde su centro; `ajuste.y` lo sube.
+ */
+export function planillaEnElFotograma(
+	g: { ancho: number; alto: number },
+	r: { x: number; y: number; ancho: number; alto: number },
+	ajuste: { escala?: number; y?: number } = {},
+) {
+	const k = ENCUADRE.planilla * (ajuste.escala ?? 1);
+	const cx = 1920 / 2;
+	const cy = 1080 / 2 + (ajuste.y ?? 0);
+	return {
+		x: cx + (r.x - g.ancho / 2) * k,
+		y: cy + (r.y - g.alto / 2) * k,
+		ancho: r.ancho * k,
+		alto: r.alto * k,
+	};
+}
+
+/*
+ * LO QUE HAY EN LA PLANILLA EN UN FOTOGRAMA, cuando lo cuenta otro guion y no los tecleos del ritmo
+ * (la nota rápida: clics que ponen, borran y deshacen). Todo opcional salvo las notas.
+ */
+export interface EstadoDePlanilla {
+	/** Una fila por alumno de `ALUMNOS`, en su orden; `null` es la casilla vacía. */
+	notas: (number | null)[][];
+	/** El aro de cada casilla: desde cuándo está y cuándo lo apaga el lote. */
+	aros?: ({ desde: number; confirma: number } | null)[][];
+	/** Las filas que se ven, en su orden (el buscador). Sin esto, todas. */
+	filas?: number[];
+	/** La casilla que el ratón tiene encima con la nota rápida puesta. */
+	senalada?: { fila: number; columna: number } | null;
+}
 
 /** El centro de una casilla, en coordenadas del panel. Es lo que necesitan el puntero y el botón. */
 function centroDeCasilla(fila: number, columna: number) {
@@ -62,11 +189,28 @@ export interface RubricaEnCasilla {
 	clic: number;
 }
 
-/** Dónde empieza la columna que se está calificando, para poder pintarle la banda debajo. */
-const IZQUIERDA_COLUMNA = ANCHOS.num + ANCHOS.alumno + ANCHOS.nota * COLUMNA_TECLEADA;
-
 /** Las cabeceras, en el orden en que se escriben. */
-const TITULOS = ['No', 'Alumno', UNIDAD, ...COLUMNAS, 'Total'];
+const TITULOS = ['No', 'Alumno', UNIDAD, ...COLUMNAS, 'Total', 'Aus', 'Tard'];
+/** Y con Real, M y R: van después del Total, como en app2 (`planilla-notas.html`). */
+const TITULOS_CON_DEFINITIVAS = ['No', 'Alumno', UNIDAD, ...COLUMNAS, 'Total', 'Real', 'M', 'R', 'Aus', 'Tard'];
+
+/*
+ * LA DEFINITIVA DE UNA FILA, cuando se pintan Real, M y R (opción `definitivas`). Real es un campo
+ * como el de las notas --mismo aro, mismo `[disabled]`-- y M y R son dos `nz-checkbox`.
+ */
+export interface DefinitivaEnFila {
+	/** Lo que se ve en Real. Cadena vacía, vacía. */
+	real: string;
+	m: boolean;
+	r: boolean;
+	/** Real con el foco y el cursor de escribir. */
+	foco?: boolean;
+	aro?: { desde: number; confirma: number } | null;
+	/** Las tres apagadas (`!puedeNivelar()`). */
+	apagada?: boolean;
+	/** La marca que el ratón tiene encima. */
+	senalada?: 'm' | 'r' | null;
+}
 
 function loTecleado(frame: number, valor: string, empieza: number, porTecla: number): string {
 	if (frame < empieza) { return ''; }
@@ -106,7 +250,28 @@ export const Escena: React.FC<{
 	 * encima hay además una cabecera de ayuda y el hueco no es el de siempre.
 	 */
 	ajuste?: { escala?: number; y?: number };
-}> = ({ conRotulo = false, salidaEn, avisoDura, rubrica = null, ritmo = RITMO, ajuste }) => {
+	/*
+	 * LO QUE AÑADEN LOS VÍDEOS DE AYUDA DE LA NOTA RÁPIDA Y DE LA ASISTENCIA. Todo opcional y, sin
+	 * pasarlo, la planilla sale byte a byte como antes (medido con `cmp` sobre Notas-Aro y
+	 * Ayuda-Planilla-Teclear).
+	 */
+	/** Las notas de cada fotograma, cuando no salen de `ritmo.TECLEOS`. Ver `EstadoDePlanilla`. */
+	estado?: (frame: number) => EstadoDePlanilla;
+	/** Lo que va entre el título y la tabla (la franja de la nota rápida, el buscador, un aviso). */
+	encima?: { alto: number; nodo: React.ReactNode };
+	/** Lo que se pinta encima del panel en sus coordenadas: el puntero, sobre todo. */
+	sobre?: React.ReactNode;
+	/** Otros anchos de columna: Aus y Tard con sus botones de fecha no caben en 88. */
+	anchos?: Partial<Anchos>;
+	/** Lo que va en Aus y Tard cuando no es sólo el número. */
+	falta?: (fila: number, cual: 'ausencias' | 'tardanzas') => React.ReactNode;
+	/** El periodo está cerrado: ninguna casilla se deja tocar. */
+	cerrada?: boolean;
+	/** Sin el acercamiento lento: el foco de fuera tiene que caer en un sitio que no se mueva. */
+	quieta?: boolean;
+	/** Real, M y R después del Total, con lo que hay en cada fila. Sin esto, no se pintan. */
+	definitivas?: (fila: number, frame: number) => DefinitivaEnFila;
+}> = ({ conRotulo = false, salidaEn, avisoDura, rubrica = null, ritmo = RITMO, ajuste, estado, encima, sobre, anchos, falta, cerrada = false, quieta = false, definitivas }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 
@@ -130,7 +295,11 @@ export const Escena: React.FC<{
 			: null;
 
 	/* Lo que hay en cada casilla AHORA. El total sale de aquí, así que se recalcula al escribir. */
-	const notasAhora = ALUMNOS.map((a) => [...a.notas]);
+	const e = estado ? estado(frame) : null;
+	const notasAhora = e ? e.notas.map((n) => [...n]) : ALUMNOS.map((a) => [...a.notas]);
+	const orden = e?.filas ?? ALUMNOS.map((_, i) => i);
+	const A: Anchos = anchos ? { ...ANCHOS, ...anchos } : ANCHOS;
+	const anchoTabla = A.num + A.alumno + A.nota * COLUMNAS.length + A.total + anchoDefinitivas(A, Boolean(definitivas)) + A.falta * 2;
 	r.TECLEOS.forEach((t) => {
 		const texto = loTecleado(frame, t.valor, t.empieza, r.POR_TECLA);
 		notasAhora[t.fila][COLUMNA_TECLEADA] = texto === '' ? null : Number(texto);
@@ -138,7 +307,7 @@ export const Escena: React.FC<{
 
 	/* El panel: lo único que entra de golpe, porque es el marco y no el contenido. */
 	const panel = entra(frame, fps, 0, 14);
-	const escala = interpolate(frame, [0, salida + 46], [ENCUADRE.planilla, ENCUADRE.planilla + 0.05]);
+	const escala = quieta ? ENCUADRE.planilla : interpolate(frame, [0, salida + 46], [ENCUADRE.planilla, ENCUADRE.planilla + 0.05]);
 
 	/*
 	 * Y AL FINAL SE VA EL PANEL TAMBIÉN, después de las filas: primero se vacía y luego se recoge.
@@ -167,8 +336,8 @@ export const Escena: React.FC<{
 					<div
 						style={{
 							position: 'relative',
-							width: ANCHO_TABLA + ANCHOS.relleno * 2,
-							padding: ANCHOS.relleno,
+							width: anchoTabla + A.relleno * 2,
+							padding: A.relleno,
 							borderRadius: 14,
 							background: SUPERFICIE,
 							boxShadow: '0 24px 64px rgba(15, 28, 52, .16), 0 2px 8px rgba(15, 28, 52, .06)',
@@ -176,10 +345,14 @@ export const Escena: React.FC<{
 					>
 						<Titulo frame={frame} fps={fps} fuera={salidaCabecera} r={r} />
 
+						{encima && (
+							<div style={{ position: 'relative', height: encima.alto, opacity: 1 - salidaCabecera }}>{encima.nodo}</div>
+						)}
+
 						<div
 							style={{
 								position: 'relative',
-								width: ANCHO_TABLA,
+								width: anchoTabla,
 								border: `1px solid ${BORDE}`,
 								borderRadius: 6,
 								overflow: 'hidden',
@@ -194,8 +367,8 @@ export const Escena: React.FC<{
 								<div
 									style={{
 										position: 'absolute',
-										left: IZQUIERDA_COLUMNA,
-										width: ANCHOS.nota,
+										left: A.num + A.alumno + A.nota * COLUMNA_TECLEADA,
+										width: A.nota,
 										top: 0,
 										bottom: 0,
 										background: `${ACENTO}17`,
@@ -205,9 +378,10 @@ export const Escena: React.FC<{
 								/>
 							)}
 
-							<Cabecera frame={frame} fps={fps} fuera={salidaCabecera} r={r} />
+							<Cabecera frame={frame} fps={fps} fuera={salidaCabecera} r={r} a={A} conDefinitivas={Boolean(definitivas)} />
 
-							{ALUMNOS.map((alumno, fila) => {
+							{orden.map((fila, puesto) => {
+								const alumno = ALUMNOS[fila];
 								const t = r.TECLEOS.find((x) => x.fila === fila) ?? null;
 								const escrito2 = t ? loTecleado(frame, t.valor, t.empieza, r.POR_TECLA) : null;
 								const suma = total(notasAhora[fila]);
@@ -223,57 +397,74 @@ export const Escena: React.FC<{
 											display: 'flex',
 											height: ALTO_FILA,
 											alignItems: 'center',
-											borderBottom: fila === ALUMNOS.length - 1 ? 'none' : `1px solid ${BORDE}`,
+											borderBottom: puesto === orden.length - 1 ? 'none' : `1px solid ${BORDE}`,
 											/* El sombreado alterno: es lo que hace que el ojo no se salte de renglón. */
-											backgroundColor: fila % 2 === 1 ? 'rgb(128 128 128 / 8%)' : 'transparent',
+											backgroundColor: puesto % 2 === 1 ? 'rgb(128 128 128 / 8%)' : 'transparent',
 											/* Y la franja de la fila tocada, que se va apagando hacia la derecha. */
 											backgroundImage: fila === filaTocada ? `linear-gradient(90deg, ${ACENTO}38, ${ACENTO}0a)` : undefined,
 											opacity: llegada.opacidad * fuera.opacidad,
 											transform: `translate(${llegada.x + fuera.x}px, ${llegada.y}px) scale(${fuera.escala})`,
 										}}
 									>
-										<Hueco ancho={ANCHOS.num}>
-											<span style={{ color: TEXTO_TENUE, fontSize: 21 }}>{fila + 1}</span>
+										<Hueco ancho={A.num}>
+											<span style={{ color: TEXTO_TENUE, fontSize: 21 }}>{puesto + 1}</span>
 										</Hueco>
 
-										<Hueco ancho={ANCHOS.alumno} izquierda>
+										<Hueco ancho={A.alumno} izquierda>
 											<Avatar tipo={alumno.sexo} variante={fila} tam={42} />
 											<span style={{ fontSize: 21, marginLeft: 14 }}>{alumno.nombre}</span>
 										</Hueco>
 
 										{COLUMNAS.map((col, c) => {
 											const esLaQueSeTeclea = t !== null && c === COLUMNA_TECLEADA;
+											const aro = e?.aros?.[fila]?.[c] ?? null;
 											const valor = esLaQueSeTeclea
 												? (escrito2 as string)
 												: notasAhora[fila][c] === null ? '' : String(notasAhora[fila][c]);
 
 											return (
-												<Hueco key={col} ancho={ANCHOS.nota}>
+												<Hueco key={col} ancho={A.nota}>
 													<Casilla
+														apagada={cerrada}
+														rapida={e?.senalada?.fila === fila && e.senalada.columna === c}
 														valor={valor}
 														foco={esLaQueSeTeclea && activo !== null && r.TECLEOS[activo].fila === fila}
 														/*
 														 * EL ARO SE ENCIENDE CON LA PRIMERA TECLA y no cuando sale la petición:
 														 * la marca compara **lo que se ve** con lo último que el servidor confirmó.
 														 */
-														aroDesde={esLaQueSeTeclea && t ? t.empieza : null}
-														confirmadoEn={esLaQueSeTeclea ? r.CONFIRMA : null}
+														aroDesde={aro ? aro.desde : esLaQueSeTeclea && t ? t.empieza : null}
+														confirmadoEn={aro ? aro.confirma : esLaQueSeTeclea ? r.CONFIRMA : null}
 													/>
 												</Hueco>
 											);
 										})}
 
-										<Hueco ancho={ANCHOS.total} ultimo>
+										<Hueco ancho={A.total}>
 											<span style={{ fontSize: 22, fontWeight: 600, color: colorDeNota(suma), fontVariantNumeric: 'tabular-nums' }}>
 												{suma ?? ''}
 											</span>
+										</Hueco>
+
+										{definitivas && <CeldasDefinitiva d={definitivas(fila, frame)} a={A} />}
+
+										<Hueco ancho={A.falta}>
+											{falta ? falta(fila, 'ausencias') : <Falta cuantas={alumno.ausencias} />}
+										</Hueco>
+										<Hueco ancho={A.falta} ultimo>
+											{falta ? falta(fila, 'tardanzas') : <Falta cuantas={alumno.tardanzas} />}
 										</Hueco>
 									</div>
 								);
 							})}
 						</div>
 
+						{/* El buscador esconde filas y la tabla encoge; el hueco se guarda para que el panel no salte. */}
+						{e?.filas && <div style={{ height: (ALUMNOS.length - orden.length) * ALTO_FILA }} />}
+
 						{rubrica && <RubricaSobreCasilla frame={frame} fps={fps} rubrica={rubrica} />}
+
+						{sobre}
 					</div>
 				</div>
 			</AbsoluteFill>
@@ -349,14 +540,24 @@ const Titulo: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo }> 
  * el total. **La geometría no se mueve** -- se mueve el texto: si cada celda entrara volando, las
  * rayas de la tabla bailarían y lo que se ve sería un desorden, no una pantalla montándose.
  */
-const Cabecera: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo }> = ({ frame, fps, fuera, r }) => {
+/** Una casilla de Aus o Tard: el número de faltas del periodo. El cero se ve, pero apagado. */
+const Falta: React.FC<{ cuantas: number }> = ({ cuantas }) => (
+	<span style={{ fontSize: 21, color: cuantas === 0 ? TEXTO_TENUE : TEXTO, fontVariantNumeric: 'tabular-nums' }}>
+		{cuantas}
+	</span>
+);
+
+const Cabecera: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo; a?: Anchos; conDefinitivas?: boolean }> = ({ frame, fps, fuera, r, a = ANCHOS, conDefinitivas = false }) => {
+	const titulos = conDefinitivas ? TITULOS_CON_DEFINITIVAS : TITULOS;
+	/* Dónde caen Aus y Tard en la lista de títulos: detrás de Real, M y R si las hay. */
+	const aus = conDefinitivas ? 10 : 7;
 	const letra = (i: number): React.CSSProperties => ({
 		fontSize: 19,
 		fontWeight: 600,
 		opacity: entra(frame, fps, r.CABECERAS + i * r.PASO_CABECERA, 8),
 		whiteSpace: 'pre',
 	});
-	const dice = (i: number) => escrito(frame, TITULOS[i], r.CABECERAS + i * r.PASO_CABECERA, 2);
+	const dice = (i: number) => escrito(frame, titulos[i], r.CABECERAS + i * r.PASO_CABECERA, 2);
 
 	const fondo: React.CSSProperties = {
 		/* Gris medio con alfa: sirve igual sobre fondo claro que sobre oscuro, y deja pasar la banda. */
@@ -374,14 +575,14 @@ const Cabecera: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo }
 				transform: `translateY(${-fuera * 30}px)`,
 			}}
 		>
-			<Hueco ancho={ANCHOS.num} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
+			<Hueco ancho={a.num} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
 				<span style={letra(0)}>{dice(0)}</span>
 			</Hueco>
-			<Hueco ancho={ANCHOS.alumno} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA} izquierda>
+			<Hueco ancho={a.alumno} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA} izquierda>
 				<span style={letra(1)}>{dice(1)}</span>
 			</Hueco>
 
-			<div style={{ width: ANCHOS.nota * 3, borderRight: `1px solid ${BORDE}` }}>
+			<div style={{ width: a.nota * COLUMNAS.length, borderRight: `1px solid ${BORDE}` }}>
 				<div
 					style={{
 						height: ALTO_UNIDAD,
@@ -395,19 +596,84 @@ const Cabecera: React.FC<{ frame: number; fps: number; fuera: number; r: Ritmo }
 				</div>
 				<div style={{ display: 'flex', height: ALTO_SUBCOLUMNA }}>
 					{COLUMNAS.map((col, i) => (
-						<Hueco key={col} ancho={ANCHOS.nota} ultimo={i === COLUMNAS.length - 1}>
+						<Hueco key={col} ancho={a.nota} ultimo={i === COLUMNAS.length - 1}>
 							<span style={letra(3 + i)}>{dice(3 + i)}</span>
 						</Hueco>
 					))}
 				</div>
 			</div>
 
-			<Hueco ancho={ANCHOS.total} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA} ultimo>
+			<Hueco ancho={a.total} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
 				<span style={letra(6)}>{dice(6)}</span>
+			</Hueco>
+			{conDefinitivas && (
+				<>
+					<Hueco ancho={a.real} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
+						<span style={letra(7)}>{dice(7)}</span>
+					</Hueco>
+					<Hueco ancho={a.marca} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
+						<span style={letra(8)}>{dice(8)}</span>
+					</Hueco>
+					<Hueco ancho={a.marca} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
+						<span style={letra(9)}>{dice(9)}</span>
+					</Hueco>
+				</>
+			)}
+			<Hueco ancho={a.falta} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA}>
+				<span style={letra(aus)}>{dice(aus)}</span>
+			</Hueco>
+			<Hueco ancho={a.falta} alto={ALTO_UNIDAD + ALTO_SUBCOLUMNA} ultimo>
+				<span style={letra(aus + 1)}>{dice(aus + 1)}</span>
 			</Hueco>
 		</div>
 	);
 };
+
+/*
+ * REAL, M Y R DE UNA FILA (opción `definitivas`). Real es una casilla como las de nota, con su aro;
+ * M y R, dos casillas de verificación de Ant: cuadrado con borde, y azul con la palomita al marcarse.
+ */
+const CeldasDefinitiva: React.FC<{ d: DefinitivaEnFila; a: Anchos }> = ({ d, a }) => (
+	<>
+		<Hueco ancho={a.real}>
+			<Casilla
+				valor={d.real}
+				foco={d.foco ?? false}
+				aroDesde={d.aro ? d.aro.desde : null}
+				confirmadoEn={d.aro ? d.aro.confirma : null}
+				apagada={d.apagada ?? false}
+			/>
+		</Hueco>
+		<Hueco ancho={a.marca}>
+			<Marca puesta={d.m} apagada={d.apagada ?? false} senalada={d.senalada === 'm'} />
+		</Hueco>
+		<Hueco ancho={a.marca}>
+			<Marca puesta={d.r} apagada={d.apagada ?? false} senalada={d.senalada === 'r'} />
+		</Hueco>
+	</>
+);
+
+const Marca: React.FC<{ puesta: boolean; apagada: boolean; senalada: boolean }> = ({ puesta, apagada, senalada }) => (
+	<span
+		style={{
+			display: 'inline-flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			width: 26,
+			height: 26,
+			borderRadius: 5,
+			boxSizing: 'border-box',
+			border: `1.5px solid ${puesta && !apagada ? ACENTO : senalada ? ACENTO : BORDE}`,
+			background: apagada ? '#f5f5f5' : puesta ? ACENTO : SUPERFICIE,
+		}}
+	>
+		{puesta && (
+			<svg width="16" height="16" viewBox="0 0 16 16">
+				<path d="M3.2 8.4 L6.6 11.6 L12.8 4.8" fill="none" stroke={apagada ? 'rgba(0,0,0,.25)' : '#fff'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		)}
+	</span>
+);
 
 /*
  * EL RÓTULO va en una composición aparte para que quien monta el vídeo pueda elegir: si él pone sus

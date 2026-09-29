@@ -4,6 +4,7 @@ import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import { entra } from '../comunes/movimiento';
 import { CABECERA_ALTO, FUENTE, PAPEL, ROTULO_ALTO, TINTA, TINTA_SUAVE } from './tema';
 import { Paso, pasoEn } from './tiempos';
+import { RETRASO_VOZ, Voz } from './voz';
 
 /*
  * ═══════════════════════════════════════════════════════════════════════════════════════════════
@@ -36,7 +37,9 @@ export const Marco: React.FC<{ pasos: Paso[]; final: number }> = ({ pasos, final
 	const { fps } = useVideoConfig();
 
 	const cual = pasoEn(pasos, frame);
-	if (cual < 0) { return null; }
+	/* Las voces van fuera del `return null`: un audio tiene que estar montado desde que empieza. */
+	const voces = pasos.map((p, i) => <Voz key={i} texto={p.voz ?? p.texto} en={p.desde + RETRASO_VOZ} />);
+	if (cual < 0) { return <>{voces}</>; }
 
 	const paso = pasos[cual];
 	const acaba = cual + 1 < pasos.length ? pasos[cual + 1].desde : final;
@@ -51,11 +54,16 @@ export const Marco: React.FC<{ pasos: Paso[]; final: number }> = ({ pasos, final
 
 	return (
 		<>
+			{voces}
 			<Cabecera ubicacion={paso.ubicacion} url={paso.url} />
-			<Rotulo texto={paso.texto} cual={cual + 1} cuantos={pasos.length} vivo={vivo} entrada={entra(frame, fps, 0, 18)} />
+			<Rotulo texto={paso.texto} cual={cual + 1} cuantos={pasos.length} vivo={vivo} entrada={entra(frame, fps, 0, 18)} rojo={paso.rojo} />
 		</>
 	);
 };
+
+/** El cartel rojo de lo irreversible: sólo si el paso lo pide (`Paso.rojo`). */
+const ROJO = '#cf1322';
+const ROJO_FONDO = '#fff1f0';
 
 /*
  * LA CABECERA. Va pegada arriba y con fondo propio: sobre la pantalla de la aplicación, sin fondo,
@@ -99,8 +107,8 @@ const Cabecera: React.FC<{ ubicacion: string; url: string }> = ({ ubicacion, url
  * UN TEXTO A LA VEZ. No hay sitio para dos, y no es por espacio: dos carteles compiten y se pierde
  * el que importaba.
  */
-const Rotulo: React.FC<{ texto: string; cual: number; cuantos: number; vivo: number; entrada: number }> = ({
-	texto, cual, cuantos, vivo, entrada,
+const Rotulo: React.FC<{ texto: string; cual: number; cuantos: number; vivo: number; entrada: number; rojo?: boolean }> = ({
+	texto, cual, cuantos, vivo, entrada, rojo = false,
 }) => (
 	<div
 		style={{
@@ -119,14 +127,16 @@ const Rotulo: React.FC<{ texto: string; cual: number; cuantos: number; vivo: num
 		<div
 			style={{
 				maxWidth: 1360,
-				background: PAPEL,
+				/* EL CARTEL ROJO (PLAN §2.8): lo que no tiene vuelta atrás no se enseña de pasada. */
+				background: rojo ? ROJO_FONDO : PAPEL,
+				borderLeft: rojo ? `10px solid ${ROJO}` : undefined,
 				borderRadius: 16,
 				padding: '26px 34px',
 				boxShadow: '0 18px 48px rgba(15, 28, 52, .18), 0 2px 6px rgba(15, 28, 52, .06)',
 			}}
 		>
-			<div style={{ fontSize: 19, fontWeight: 700, color: TINTA_SUAVE, letterSpacing: 1.4, textTransform: 'uppercase' }}>
-				Paso {cual} de {cuantos}
+			<div style={{ fontSize: 19, fontWeight: 700, color: rojo ? ROJO : TINTA_SUAVE, letterSpacing: 1.4, textTransform: 'uppercase' }}>
+				Paso {cual} de {cuantos}{rojo ? ' · Cuidado' : ''}
 			</div>
 			<div
 				style={{

@@ -3,6 +3,7 @@ import { useCurrentFrame, useVideoConfig } from 'remotion';
 
 import { Avatar } from '../../comunes/Avatar';
 import { entra, llega } from '../../comunes/movimiento';
+import { ALMENDROS, Escudo, apellidosDe } from '../colegio';
 import { ALUMNO, AreaDelBoletin, BOLETIN, COLEGIO, HOJA, SIN_DESEMPENOS } from './datos';
 
 /*
@@ -95,8 +96,8 @@ export const Boletin: React.FC<{
  */
 const Membrete: React.FC = () => (
 	<div style={{ display: 'flex', alignItems: 'center', gap: 14, paddingBottom: 10, borderBottom: `1px solid ${AZUL_SUAVE}` }}>
-		<div style={{ width: 56, height: 56, borderRadius: 4, background: BANDA, display: 'flex', alignItems: 'center', justifyContent: 'center', color: AZUL, fontWeight: 700, fontSize: 15 }}>
-			{COLEGIO.abreviatura}
+		<div style={{ width: 56, height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+			<Escudo tam={50} />
 		</div>
 
 		<div style={{ flex: 1, textAlign: 'center' }}>
@@ -254,7 +255,7 @@ const Pie: React.FC<{ desde: number }> = ({ desde }) => {
 		<div style={{ marginTop: 22, opacity: nace }}>
 			<div style={{ display: 'flex', justifyContent: 'space-around', gap: 40, marginBottom: 14 }}>
 				{[
-					{ nombre: 'Villalba Mora, Jorge Enrique', cargo: 'Rector' },
+					{ nombre: apellidosDe(ALMENDROS.rector), cargo: 'Rector' },
 					{ nombre: ALUMNO.titular, cargo: 'Titular' },
 				].map((f) => (
 					<div key={f.cargo} style={{ flex: 1, textAlign: 'center' }}>
