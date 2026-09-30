@@ -707,7 +707,7 @@
       "fichero": "out/ayuda/asignaturas-copiar.mp4",
       "composicion": "Ayuda-AsignaturasCopiar",
       "guion": "src/ayuda/asignaturas-copiar/guion.ts",
-      "youtube": "https://youtu.be/l7GW6Zayrh4",
+      "youtube": "https://youtu.be/bNi49W_J2iY",
       "capitulos": [
         {
           "s": 0,
@@ -1583,7 +1583,7 @@
       "fichero": "out/ayuda/alumno-crear.mp4",
       "composicion": "Ayuda-AlumnoCrear",
       "guion": "src/ayuda/alumno-crear/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/DSLbgcwpnVM",
       "capitulos": [
         {
           "s": 0,
@@ -1664,7 +1664,7 @@
       "fichero": "out/ayuda/alumnos-directorio.mp4",
       "composicion": "Ayuda-AlumnosDirectorio",
       "guion": "src/ayuda/alumnos-directorio/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/syW3Niu5WHQ",
       "capitulos": [
         {
           "s": 0,
@@ -2768,7 +2768,7 @@
       "fichero": "out/ayuda/ajustes-del-ano.mp4",
       "composicion": "Ayuda-Ajustes-Del-Ano",
       "guion": "src/ayuda/ajustes-del-ano/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/lgoCj2JI2wY",
       "capitulos": [
         {
           "s": 0,
@@ -2912,7 +2912,7 @@
       "fichero": "out/ayuda/areas-materias.mp4",
       "composicion": "Ayuda-Areas-Materias",
       "guion": "src/ayuda/areas-materias/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/uf2woC0MVT4",
       "capitulos": [
         {
           "s": 0,
