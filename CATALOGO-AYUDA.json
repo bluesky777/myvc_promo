@@ -641,7 +641,7 @@
       "fichero": "out/ayuda/asignaturas-crear.mp4",
       "composicion": "Ayuda-AsignaturasCrear",
       "guion": "src/ayuda/asignaturas-crear/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/a4-ttTUHVEw",
       "capitulos": [
         {
           "s": 0,
@@ -736,7 +736,7 @@
       "fichero": "out/ayuda/asignaturas-dias.mp4",
       "composicion": "Ayuda-AsignaturasDias",
       "guion": "src/ayuda/asignaturas-dias/guion.ts",
-      "youtube": "https://youtu.be/bZMjW7LWihQ",
+      "youtube": "https://youtu.be/RdqfDl3hx9A",
       "capitulos": [
         {
           "s": 0,
