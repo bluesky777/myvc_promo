@@ -1175,7 +1175,7 @@
       "fichero": "out/ayuda/a-tu-gusto.mp4",
       "composicion": "Ayuda-A-Tu-Gusto",
       "guion": "src/ayuda/a-tu-gusto/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/I6ougJEUFFM",
       "capitulos": [
         {
           "s": 0,
@@ -2006,7 +2006,7 @@
       "fichero": "out/ayuda/acudientes.mp4",
       "composicion": "Ayuda-Acudientes",
       "guion": "src/ayuda/acudientes/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Z4wATxG0C5E",
       "capitulos": [
         {
           "s": 0,
@@ -2412,7 +2412,7 @@
       "fichero": "out/ayuda/actividades.mp4",
       "composicion": "Ayuda-Actividades",
       "guion": "src/ayuda/actividades/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/XKunoktsdFI",
       "capitulos": [
         {
           "s": 0,
