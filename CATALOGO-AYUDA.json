@@ -20,7 +20,7 @@
     "   habrá otro del mismo tema para coordinación (el plan de evaluación). Si el front prefiere",
     "   «competencias», se cambia aquí y en su guion: es una línea."
   ],
-  "version": "2026-09-29",
+  "version": "2026-09-30",
   "fps": 30,
   "videos": [
     {
@@ -1197,6 +1197,44 @@
       "revision": "golpes revisados: modo oscuro y densidad (app)"
     },
     {
+      "clave": "informes-encontrar",
+      "titulo": "Encontrar el papel que necesitas",
+      "serie": "informes",
+      "ola": 1,
+      "estado": "hecho",
+      "dura_s": 44.8,
+      "rutas": [
+        "informes"
+      ],
+      "fichero": "out/ayuda/informes-encontrar.mp4",
+      "composicion": "Ayuda-Informes-Encontrar",
+      "guion": "src/ayuda/informes-encontrar/guion.ts",
+      "youtube": null,
+      "capitulos": [
+        {
+          "s": 0,
+          "titulo": "Dónde: Informes"
+        },
+        {
+          "s": 4.5,
+          "titulo": "Las familias son un filtro"
+        },
+        {
+          "s": 16,
+          "titulo": "Buscar con tus palabras: «sabana»"
+        },
+        {
+          "s": 28.3,
+          "titulo": "«Vive fuera»: se saca en otra pantalla"
+        },
+        {
+          "s": 32.2,
+          "titulo": "«paz y salvo», y cuando no sale nada"
+        }
+      ],
+      "revision": "arreglado: foco que se encendía antes de acabar la búsqueda · golpes revisados (app)"
+    },
+    {
       "clave": "entrega-de-notas",
       "titulo": "Entrega de notas: bloquear y qué imprimir",
       "serie": "informes",
@@ -1238,44 +1276,6 @@
         }
       ],
       "revision": "nuevo 2026-09-29"
-    },
-    {
-      "clave": "informes-encontrar",
-      "titulo": "Encontrar el papel que necesitas",
-      "serie": "informes",
-      "ola": 1,
-      "estado": "hecho",
-      "dura_s": 44.8,
-      "rutas": [
-        "informes"
-      ],
-      "fichero": "out/ayuda/informes-encontrar.mp4",
-      "composicion": "Ayuda-Informes-Encontrar",
-      "guion": "src/ayuda/informes-encontrar/guion.ts",
-      "youtube": null,
-      "capitulos": [
-        {
-          "s": 0,
-          "titulo": "Dónde: Informes"
-        },
-        {
-          "s": 4.5,
-          "titulo": "Las familias son un filtro"
-        },
-        {
-          "s": 16,
-          "titulo": "Buscar con tus palabras: «sabana»"
-        },
-        {
-          "s": 28.3,
-          "titulo": "«Vive fuera»: se saca en otra pantalla"
-        },
-        {
-          "s": 32.2,
-          "titulo": "«paz y salvo», y cuando no sale nada"
-        }
-      ],
-      "revision": "arreglado: foco que se encendía antes de acabar la búsqueda · golpes revisados (app)"
     },
     {
       "clave": "informes-ajustes",
