@@ -802,7 +802,7 @@
       "fichero": "out/ayuda/grupos-juntos.mp4",
       "composicion": "Ayuda-GruposJuntos",
       "guion": "src/ayuda/grupos-juntos/guion.ts",
-      "youtube": "https://youtu.be/Woun9HM9UVs",
+      "youtube": "https://youtu.be/HMLysjFwiXs",
       "capitulos": [
         {
           "s": 0,
@@ -2986,7 +2986,7 @@
       "fichero": "out/ayuda/imagenes.mp4",
       "composicion": "Ayuda-Imagenes",
       "guion": "src/ayuda/imagenes/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/cJdjQNXi0cc",
       "capitulos": [
         {
           "s": 0,
@@ -3164,7 +3164,7 @@
       "fichero": "out/ayuda/horario-programa.mp4",
       "composicion": "Ayuda-HorarioPrograma",
       "guion": "src/ayuda/horario-programa/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/0vZBt5uEa3s",
       "capitulos": [
         {
           "s": 0,
@@ -3194,7 +3194,7 @@
       "fichero": "out/ayuda/horario-cuadrar.mp4",
       "composicion": "Ayuda-HorarioCuadrar",
       "guion": "src/ayuda/horario-cuadrar/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/0Pt5xueROeA",
       "capitulos": [
         {
           "s": 0,
@@ -3225,7 +3225,7 @@
       "fichero": "out/ayuda/horario-cual-rige.mp4",
       "composicion": "Ayuda-HorarioCualRige",
       "guion": "src/ayuda/horario-cual-rige/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/zYLKZkCo7bE",
       "capitulos": [
         {
           "s": 0,
@@ -3259,7 +3259,7 @@
       "fichero": "out/ayuda/horario-imprimir.mp4",
       "composicion": "Ayuda-HorarioImprimir",
       "guion": "src/ayuda/horario-imprimir/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/ZGULhApfmBE",
       "capitulos": [
         {
           "s": 0,
