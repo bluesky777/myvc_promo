@@ -2446,7 +2446,7 @@
       "fichero": "out/ayuda/sin-internet-bajar.mp4",
       "composicion": "Ayuda-SinInternet-Bajar",
       "guion": "src/ayuda/sin-internet-bajar/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/0AKgm1ZuhK8",
       "capitulos": [
         {
           "s": 0,
