@@ -537,7 +537,7 @@
       "fichero": "out/ayuda/docente-situacion.mp4",
       "composicion": "Ayuda-Situacion",
       "guion": "src/ayuda/docente-situacion/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/J9ZsnDqbgUQ",
       "capitulos": [
         {
           "s": 0,
@@ -574,7 +574,7 @@
       "fichero": "out/ayuda/docente-uniforme-tardanzas.mp4",
       "composicion": "Ayuda-UniformeTardanzas",
       "guion": "src/ayuda/docente-uniforme-tardanzas/guion.ts",
-      "youtube": "https://youtu.be/4qS9hRXRc50",
+      "youtube": "https://youtu.be/OZabRpfLVV0",
       "capitulos": [
         {
           "s": 0,
@@ -1816,7 +1816,7 @@
       "fichero": "out/ayuda/documento-usuario.mp4",
       "composicion": "Ayuda-DocumentoUsuario",
       "guion": "src/ayuda/documento-usuario/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/mWmHR50PgyY",
       "capitulos": [
         {
           "s": 0,
@@ -1892,7 +1892,7 @@
       "fichero": "out/ayuda/duplicados.mp4",
       "composicion": "Ayuda-Duplicados",
       "guion": "src/ayuda/duplicados/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/OFs4bGIVL94",
       "capitulos": [
         {
           "s": 0,
