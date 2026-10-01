@@ -438,7 +438,7 @@
       "fichero": "out/ayuda/docente-portada.mp4",
       "composicion": "Ayuda-Portada",
       "guion": "src/ayuda/docente-portada/guion.ts",
-      "youtube": "https://youtu.be/AdHH1uW1yjs",
+      "youtube": "https://youtu.be/ONC57Dl_wlc",
       "capitulos": [
         {
           "s": 0,
@@ -504,7 +504,7 @@
       "fichero": "out/ayuda/docente-comportamiento.mp4",
       "composicion": "Ayuda-Comportamiento",
       "guion": "src/ayuda/docente-comportamiento/guion.ts",
-      "youtube": "https://youtu.be/PK1ipBxafNM",
+      "youtube": "https://youtu.be/mG-9RRIgtnA",
       "capitulos": [
         {
           "s": 0,
@@ -608,7 +608,7 @@
       "fichero": "out/ayuda/docente-observador.mp4",
       "composicion": "Ayuda-Observador",
       "guion": "src/ayuda/docente-observador/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/E3udwaE7ub0",
       "capitulos": [
         {
           "s": 0,
