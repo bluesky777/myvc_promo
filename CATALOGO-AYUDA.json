@@ -1446,7 +1446,7 @@
       "fichero": "out/ayuda/notas-perdidas-comision.mp4",
       "composicion": "Ayuda-Notas-Perdidas-Comision",
       "guion": "src/ayuda/notas-perdidas-comision/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/nqJjbJFkuCU",
       "capitulos": [
         {
           "s": 0,
@@ -2093,7 +2093,7 @@
       "fichero": "out/ayuda/no-me-deja-escribir.mp4",
       "composicion": "Ayuda-No-Me-Deja",
       "guion": "src/ayuda/no-me-deja-escribir/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Mh_1S87LWo8",
       "capitulos": [
         {
           "s": 0,
@@ -2268,7 +2268,7 @@
       "fichero": "out/ayuda/nivelaciones-lote.mp4",
       "composicion": "Ayuda-Nivelaciones-Lote",
       "guion": "src/ayuda/nivelaciones-lote/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/5SX406bho28",
       "capitulos": [
         {
           "s": 0,
@@ -2876,7 +2876,7 @@
       "fichero": "out/ayuda/niveles-grados.mp4",
       "composicion": "Ayuda-Niveles-Grados",
       "guion": "src/ayuda/niveles-grados/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/a2pioKtM8PM",
       "capitulos": [
         {
           "s": 0,
