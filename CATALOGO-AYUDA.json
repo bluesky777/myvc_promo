@@ -74,7 +74,7 @@
       "fichero": "out/ayuda/competencias-docente.mp4",
       "composicion": "Ayuda-Competencias",
       "guion": "src/ayuda/competencias/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/phzprhxBe2s",
       "capitulos": [
         {
           "s": 0,
@@ -371,7 +371,7 @@
       "fichero": "out/ayuda/cierre-7-acta.mp4",
       "composicion": "Ayuda-Cierre-7",
       "guion": "src/ayuda/cierre-7/guion.ts",
-      "youtube": "https://youtu.be/EnaoBAOmvMI",
+      "youtube": "https://youtu.be/jXWXQT0ok38",
       "capitulos": [
         {
           "s": 0,
@@ -405,7 +405,7 @@
       "fichero": "out/ayuda/cierre-8-acta-nivelacion.mp4",
       "composicion": "Ayuda-Cierre-8",
       "guion": "src/ayuda/cierre-8/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/LqdMpNsiaOo",
       "capitulos": [
         {
           "s": 0,
@@ -471,7 +471,7 @@
       "fichero": "out/ayuda/docente-asistencia.mp4",
       "composicion": "Ayuda-Asistencia",
       "guion": "src/ayuda/docente-asistencia/guion.ts",
-      "youtube": "https://youtu.be/Hef4ewKO3KA",
+      "youtube": "https://youtu.be/CxPxdozS-CA",
       "capitulos": [
         {
           "s": 0,
@@ -933,7 +933,7 @@
       "fichero": "out/ayuda/constancia-estudio.mp4",
       "composicion": "Ayuda-Constancia-Estudio",
       "guion": "src/ayuda/constancia-estudio/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/rQJ6mlr2mlk",
       "capitulos": [
         {
           "s": 0,
@@ -2342,7 +2342,7 @@
       "fichero": "out/ayuda/copiar-unidades.mp4",
       "composicion": "Ayuda-Copiar-Unidades",
       "guion": "src/ayuda/copiar-unidades/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/U_EOQHl2EO4",
       "capitulos": [
         {
           "s": 0,
@@ -2946,7 +2946,7 @@
       "fichero": "out/ayuda/colegio-ficha.mp4",
       "composicion": "Ayuda-Colegio-Ficha",
       "guion": "src/ayuda/colegio-ficha/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/HREleHlBfyU",
       "capitulos": [
         {
           "s": 0,
@@ -3020,7 +3020,7 @@
       "fichero": "out/ayuda/compromiso-academico.mp4",
       "composicion": "Ayuda-Compromiso-Academico",
       "guion": "src/ayuda/compromiso-academico/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/WHsHy4r8czk",
       "capitulos": [
         {
           "s": 0,
