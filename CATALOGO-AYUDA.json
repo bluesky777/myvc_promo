@@ -150,7 +150,7 @@
       "fichero": "out/ayuda/cierre-1-quien-falta.mp4",
       "composicion": "Ayuda-Cierre-1",
       "guion": "src/ayuda/cierre-1/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/glPH2ZoEnlg",
       "capitulos": [
         {
           "s": 0,
@@ -831,7 +831,7 @@
       "fichero": "out/ayuda/certificado-membrete.mp4",
       "composicion": "Ayuda-Certificado-Membrete",
       "guion": "src/ayuda/certificado-membrete/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/HNLgZ-k5uw4",
       "capitulos": [
         {
           "s": 0,
@@ -865,7 +865,7 @@
       "fichero": "out/ayuda/certificado-del-ano.mp4",
       "composicion": "Ayuda-Certificado-Del-Ano",
       "guion": "src/ayuda/certificado-del-ano/guion.ts",
-      "youtube": "https://youtu.be/nQF5eg26WiQ",
+      "youtube": "https://youtu.be/ZcHr5Yl69Mk",
       "capitulos": [
         {
           "s": 0,
@@ -900,7 +900,7 @@
       "fichero": "out/ayuda/certificado-imprimir.mp4",
       "composicion": "Ayuda-Certificado-Imprimir",
       "guion": "src/ayuda/certificado-imprimir/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Jl77PyNOYM8",
       "capitulos": [
         {
           "s": 0,
@@ -2062,7 +2062,7 @@
       "fichero": "out/ayuda/certificados-alumno.mp4",
       "composicion": "Ayuda-Certificados-Alumno",
       "guion": "src/ayuda/certificados-alumno/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/8MlzFqtf_To",
       "capitulos": [
         {
           "s": 0,
