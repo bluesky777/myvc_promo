@@ -2161,7 +2161,7 @@
       "fichero": "out/ayuda/rubricas-montar.mp4",
       "composicion": "Ayuda-Rubricas-Montar",
       "guion": "src/ayuda/rubricas-montar/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/6EHT7UXfGqo",
       "capitulos": [
         {
           "s": 0,
@@ -2200,7 +2200,7 @@
       "fichero": "out/ayuda/rubricas-calificar.mp4",
       "composicion": "Ayuda-Rubricas-Calificar",
       "guion": "src/ayuda/rubricas-calificar/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/klV9x862RUY",
       "capitulos": [
         {
           "s": 0,
@@ -2586,7 +2586,7 @@
       "fichero": "out/ayuda/ruta-inclusion-grupo.mp4",
       "composicion": "Ayuda-RutaInclusion-Grupo",
       "guion": "src/ayuda/ruta-inclusion-grupo/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/-Cr8a3O3g-I",
       "capitulos": [
         {
           "s": 0,
@@ -2620,7 +2620,7 @@
       "fichero": "out/ayuda/ruta-inclusion-partes.mp4",
       "composicion": "Ayuda-RutaInclusion-Partes",
       "guion": "src/ayuda/ruta-inclusion-partes/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/OLE5sHjpkFc",
       "capitulos": [
         {
           "s": 0,
