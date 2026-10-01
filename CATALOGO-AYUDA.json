@@ -674,7 +674,7 @@
       "fichero": "out/ayuda/asignaturas-modificar.mp4",
       "composicion": "Ayuda-AsignaturasModificar",
       "guion": "src/ayuda/asignaturas-modificar/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/R7R6TPPlVGA",
       "capitulos": [
         {
           "s": 0,
@@ -1005,7 +1005,7 @@
       "fichero": "out/ayuda/buscar-escribiendo.mp4",
       "composicion": "Ayuda-Buscar-Escribiendo",
       "guion": "src/ayuda/buscar-escribiendo/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/6N5zKWPb1aI",
       "capitulos": [
         {
           "s": 0,
@@ -1850,7 +1850,7 @@
       "fichero": "out/ayuda/cartera.mp4",
       "composicion": "Ayuda-Cartera",
       "guion": "src/ayuda/cartera/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/EqLEEwt3OSA",
       "capitulos": [
         {
           "s": 0,
@@ -2234,7 +2234,7 @@
       "fichero": "out/ayuda/asistencias-consulta.mp4",
       "composicion": "Ayuda-Asistencias",
       "guion": "src/ayuda/asistencias-consulta/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/ff0CspzjFjQ",
       "capitulos": [
         {
           "s": 0,
@@ -2376,7 +2376,7 @@
       "fichero": "out/ayuda/boletin-independiente.mp4",
       "composicion": "Ayuda-Boletin-Independiente",
       "guion": "src/ayuda/boletin-independiente/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/hnSknAVmtFE",
       "capitulos": [
         {
           "s": 0,
