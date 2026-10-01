@@ -35,7 +35,7 @@
       "fichero": "out/ayuda/planilla-teclear.mp4",
       "composicion": "Ayuda-Planilla-Teclear",
       "guion": "src/ayuda/planilla/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/XaaEBSMuoxs",
       "capitulos": [
         {
           "s": 0,
@@ -1411,7 +1411,7 @@
       "fichero": "out/ayuda/puestos.mp4",
       "composicion": "Ayuda-Puestos",
       "guion": "src/ayuda/puestos/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Ep5R6p-WJHY",
       "capitulos": [
         {
           "s": 0,
@@ -1482,7 +1482,7 @@
       "fichero": "out/ayuda/planillas-aula.mp4",
       "composicion": "Ayuda-Planillas-Aula",
       "guion": "src/ayuda/planillas-aula/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/RAxJbvYJosw",
       "capitulos": [
         {
           "s": 0,
@@ -1706,7 +1706,7 @@
       "fichero": "out/ayuda/prematriculas.mp4",
       "composicion": "Ayuda-Prematriculas",
       "guion": "src/ayuda/prematriculas/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/d7FYuK2Ve8A",
       "capitulos": [
         {
           "s": 0,
@@ -1744,7 +1744,7 @@
       "fichero": "out/ayuda/requisitos-alumno.mp4",
       "composicion": "Ayuda-RequisitosAlumno",
       "guion": "src/ayuda/requisitos-alumno/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/ixGQQ-hmfiU",
       "capitulos": [
         {
           "s": 0,
@@ -3130,7 +3130,7 @@
       "fichero": "out/ayuda/promocionar-notas.mp4",
       "composicion": "Ayuda-PromocionarNotas",
       "guion": "src/ayuda/promocionar-notas/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/7zI9tpknVcU",
       "capitulos": [
         {
           "s": 0,
