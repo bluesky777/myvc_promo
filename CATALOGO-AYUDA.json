@@ -1073,7 +1073,7 @@
       "fichero": "out/ayuda/unidades-100.mp4",
       "composicion": "Ayuda-Unidades-100",
       "guion": "src/ayuda/unidades-100/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/0kHrlNkKQ6E",
       "capitulos": [
         {
           "s": 0,
@@ -2518,7 +2518,7 @@
       "fichero": "out/ayuda/sin-internet-subir-columnas.mp4",
       "composicion": "Ayuda-SinInternet-SubirColumnas",
       "guion": "src/ayuda/sin-internet-subir-columnas/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/jQt65fmDVCw",
       "capitulos": [
         {
           "s": 0,
@@ -2552,7 +2552,7 @@
       "fichero": "out/ayuda/sin-internet-subir-choques.mp4",
       "composicion": "Ayuda-SinInternet-SubirChoques",
       "guion": "src/ayuda/sin-internet-subir-choques/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/lW0TekRWSys",
       "capitulos": [
         {
           "s": 0,
@@ -2696,7 +2696,7 @@
       "fichero": "out/ayuda/situaciones-por-grupos.mp4",
       "composicion": "Ayuda-SituacionesPorGrupos",
       "guion": "src/ayuda/situaciones-por-grupos/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/m-v0s8bmP68",
       "capitulos": [
         {
           "s": 0,
