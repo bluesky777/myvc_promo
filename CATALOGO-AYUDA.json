@@ -2484,7 +2484,7 @@
       "fichero": "out/ayuda/sin-internet-excel.mp4",
       "composicion": "Ayuda-SinInternet-Excel",
       "guion": "src/ayuda/sin-internet-excel/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/tvn9sY2OCAU",
       "capitulos": [
         {
           "s": 0,
