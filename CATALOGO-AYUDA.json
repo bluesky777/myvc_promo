@@ -769,7 +769,7 @@
       "fichero": "out/ayuda/grupos-crear.mp4",
       "composicion": "Ayuda-GruposCrear",
       "guion": "src/ayuda/grupos-crear/guion.ts",
-      "youtube": "https://youtu.be/vXJ390MNo7U",
+      "youtube": "https://youtu.be/syBgvjfxPZs",
       "capitulos": [
         {
           "s": 0,
@@ -1248,7 +1248,7 @@
       "fichero": "out/ayuda/entrega-de-notas.mp4",
       "composicion": "Ayuda-Entrega-De-Notas",
       "guion": "src/ayuda/entrega-de-notas/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/YPRz9r6v1Bc",
       "capitulos": [
         {
           "s": 0,
@@ -1552,7 +1552,7 @@
       "fichero": "out/ayuda/ficha-matricula.mp4",
       "composicion": "Ayuda-Ficha-Matricula",
       "guion": "src/ayuda/ficha-matricula/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/T5Xfdaiy-ys",
       "capitulos": [
         {
           "s": 0,
@@ -2032,7 +2032,7 @@
       "fichero": "out/ayuda/editar-docentes.mp4",
       "composicion": "Ayuda-Editar-Docentes",
       "guion": "src/ayuda/editar-docentes/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/MdbBrisIFog",
       "capitulos": [
         {
           "s": 0,
@@ -3061,7 +3061,7 @@
       "fichero": "out/ayuda/frases-ciudades-calendario-muro.mp4",
       "composicion": "Ayuda-FrasesCiudades",
       "guion": "src/ayuda/frases-ciudades-calendario-muro/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Y7weg7QRppQ",
       "capitulos": [
         {
           "s": 0,
