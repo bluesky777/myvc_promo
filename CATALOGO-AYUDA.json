@@ -1141,7 +1141,7 @@
       "fichero": "out/ayuda/volver-rastro.mp4",
       "composicion": "Ayuda-Volver-Rastro",
       "guion": "src/ayuda/volver-rastro/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/cvdDpUghI6o",
       "capitulos": [
         {
           "s": 0,
@@ -1369,7 +1369,7 @@
       "fichero": "out/ayuda/semaforo.mp4",
       "composicion": "Ayuda-Semaforo",
       "guion": "src/ayuda/semaforo/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/uHE7aOj-wAI",
       "capitulos": [
         {
           "s": 0,
@@ -1778,7 +1778,7 @@
       "fichero": "out/ayuda/usuarios.mp4",
       "composicion": "Ayuda-Usuarios",
       "guion": "src/ayuda/usuarios/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Pyy2vmh2OQk",
       "capitulos": [
         {
           "s": 0,
@@ -3096,7 +3096,7 @@
       "fichero": "out/ayuda/votaciones.mp4",
       "composicion": "Ayuda-Votaciones",
       "guion": "src/ayuda/votaciones/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/9PrEY4pwBB8",
       "capitulos": [
         {
           "s": 0,
