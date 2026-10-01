@@ -1517,7 +1517,7 @@
       "fichero": "out/ayuda/inasistencias-alumno.mp4",
       "composicion": "Ayuda-Inasistencias-Alumno",
       "guion": "src/ayuda/inasistencias-alumno/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/WSb1tI_iQ4w",
       "capitulos": [
         {
           "s": 0,
@@ -1930,7 +1930,7 @@
       "fichero": "out/ayuda/importar-hojas.mp4",
       "composicion": "Ayuda-Importar-Hojas",
       "guion": "src/ayuda/importar-hojas/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/CsINy9i_4SI",
       "capitulos": [
         {
           "s": 0,
@@ -1964,7 +1964,7 @@
       "fichero": "out/ayuda/importar-decidir.mp4",
       "composicion": "Ayuda-Importar-Decidir",
       "guion": "src/ayuda/importar-decidir/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/S3Uay5Zg1LY",
       "capitulos": [
         {
           "s": 0,
