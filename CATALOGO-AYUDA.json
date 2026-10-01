@@ -1039,7 +1039,7 @@
       "fichero": "out/ayuda/mis-asignaturas.mp4",
       "composicion": "Ayuda-Mis-Asignaturas",
       "guion": "src/ayuda/mis-asignaturas/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/NpghiOAUwbI",
       "capitulos": [
         {
           "s": 0,
@@ -2303,7 +2303,7 @@
       "fichero": "out/ayuda/mis-desempenos.mp4",
       "composicion": "Ayuda-Mis-Desempenos",
       "guion": "src/ayuda/mis-desempenos/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/4K8TvVtyEVM",
       "capitulos": [
         {
           "s": 0,
@@ -2726,7 +2726,7 @@
       "fichero": "out/ayuda/montar-el-ano-mapa.mp4",
       "composicion": "Ayuda-Montar-El-Ano-Mapa",
       "guion": "src/ayuda/montar-el-ano-mapa/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/9SfOq3qJKgI",
       "capitulos": [
         {
           "s": 0,
