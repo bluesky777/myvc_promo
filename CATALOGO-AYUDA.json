@@ -111,7 +111,7 @@
       "fichero": "out/ayuda/planilla-nota-rapida.mp4",
       "composicion": "Ayuda-Nota-Rapida",
       "guion": "src/ayuda/planilla-nota-rapida/guion.ts",
-      "youtube": "https://youtu.be/f0c8jTcwl7c",
+      "youtube": "https://youtu.be/ekwJiFZGqT0",
       "capitulos": [
         {
           "s": 0,
@@ -967,7 +967,7 @@
       "fichero": "out/ayuda/periodo-arriba.mp4",
       "composicion": "Ayuda-Periodo-Arriba",
       "guion": "src/ayuda/periodo-arriba/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/Qt8AXK6Alt4",
       "capitulos": [
         {
           "s": 0,
@@ -2127,7 +2127,7 @@
       "fichero": "out/ayuda/planilla-real-m-r.mp4",
       "composicion": "Ayuda-Real-M-R",
       "guion": "src/ayuda/planilla-real-m-r/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/x74qndNKMVk",
       "capitulos": [
         {
           "s": 0,
@@ -2802,7 +2802,7 @@
       "fichero": "out/ayuda/plan-evaluacion-modelo.mp4",
       "composicion": "Ayuda-Plan-Evaluacion-Modelo",
       "guion": "src/ayuda/plan-evaluacion-modelo/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/DbMAJdO6qcQ",
       "capitulos": [
         {
           "s": 0,
@@ -2836,7 +2836,7 @@
       "fichero": "out/ayuda/plan-evaluacion-plantilla.mp4",
       "composicion": "Ayuda-Plan-Evaluacion-Plantilla",
       "guion": "src/ayuda/plan-evaluacion-plantilla/guion.ts",
-      "youtube": null,
+      "youtube": "https://youtu.be/qhesR1x9A0I",
       "capitulos": [
         {
           "s": 0,
